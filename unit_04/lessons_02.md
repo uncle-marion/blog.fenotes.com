@@ -1,0 +1,16 @@
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwjDMm9vV0YW0NtJESdRZ3pJvhk1uNPuEX/u4kofkK+Hm2ISIC5UZZWSdeY0AxB1Z0pNtQKfnD3LSGPH2TOW0hLFCWuLUpjh9BUqqfvcgc4llvLzSFPFfNWPmXIiWk/gtkFfdLxXJZHk64eVMFQS3b9NxWtfqpIk4V1q0uVS4Mvwa0pvrvbP06hkhX0sI9/BjYBcvABefCJhltnhrw5XITXvBYjvHhucd1BhjfZNf0oJWowSSYq/lKq/JQ+TMVgBqyjmuDHaVaPkKbSfl2HyBX+PjgIfcKRMVHaSuW7FxkPUCg/jQTnDzTmFZt/E9BTq+7I/5MZAmQsRGO1uCSACyN9W2f/P6lRmna1ZYSqKhhbvlRqmt9Z82P5UmkIkJ/qcsBQQx3fXwcKA9wvnA29IW1H3o3OM5Rr95GwBrcmjN8PBEhROJydTVcDWHAbX0q13O5ETbLGKdBerJDrN9lqSX2mUHHwbrGNb+vyPrrveYiWxKIqRwvOgl1N59M8/H3v5E= marion.lau@foxmail.com
+
+> 企业项目实战 > 项目实战准备知识 > 项目开发与工具使用 -> webpack 与 env 的配置
+
+# webpack 与 env 配置
+
+## 项目打包与发布
+
+项目发布时我们需要考虑很多种情况：
+首先，是我们需要知道发布环境是否有服务器支持：一般来说，在中大型公司，前端是会有自己的服务器架构的，那么我们只需要考虑整体的业务开发就行，项目规划这些我们都不用管，都由你们未来的 leader 来搞定。但在一些小型公司，可能前端就三两个人，根本没有什么所谓的服务器架构。那么项目上线就需要我们自己来建立一个 node 服务，这样需要做的事情就多了。今天的课程主要是围绕着我们在没有服务器支持下的项目发布应该怎样去做。
+
+在没有服务器支撑的情况下，我们首先得建立自己的服务器环境：
+项目开发最少存在的环境配置至少三个，一是本地开发环境，一是给测试同事使用的测试环境，还有一个生产环境。每一个环境所对应的变量都是不一样的，比如开发环境和测试环境可能使用同一台测试服务器提供的 api 来进行开发和测试，但生产环境的数据绝对是不可用于开发和测试的，这会造成数据的混乱。所以，我们要做的第一件事是配置环境变量：
+
+- .env 文件
+  .env 文件主要是用于存储各个环境的变量配置，我们需要在项目的根目录下建立三个文件：.env 这是默认文件，用于开发环境配置和所有环境的公共设定；.env.test，这是测试环境文件，如果是小公司的话，估计与.env 文件是一致的，但也不排除有其它可能，所以我们依然需要建立；.env.production，这个是生产环境的变量配置，它会覆盖我们在.env 中同名的配置。
