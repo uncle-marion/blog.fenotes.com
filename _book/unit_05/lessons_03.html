@@ -1,0 +1,1023 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>lessons_12. react hooks  · React Training</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="marion.lau@foxmail.com">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-tomorrow.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-copyright/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../assets/style.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="lessons_01.html" />
+    
+    
+    <link rel="prev" href="lessons_02.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../schedule.html">
+            
+                <a href="../schedule.html">
+            
+                    
+                    学习大纲
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    第一部分 代码规范与项目创建
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../unit_01/lessons_01.html">
+            
+                <a href="../unit_01/lessons_01.html">
+            
+                    
+                    lessons_01. 必须养成的 Coding 习惯
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../unit_01/lessons_02.html">
+            
+                <a href="../unit_01/lessons_02.html">
+            
+                    
+                    lessons_02. ES 中常用的一些方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    第二部分 React 基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../unit_02/lessons_01.html">
+            
+                <a href="../unit_02/lessons_01.html">
+            
+                    
+                    lessons_01. 为 React 补充的一些规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../unit_02/lessons_02.html">
+            
+                <a href="../unit_02/lessons_02.html">
+            
+                    
+                    lessons_02. 从新建一个项目开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../unit_02/lessons_03.html">
+            
+                <a href="../unit_02/lessons_03.html">
+            
+                    
+                    lessons_03. axios 与请求封装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../unit_02/lessons_04.html">
+            
+                <a href="../unit_02/lessons_04.html">
+            
+                    
+                    lessons_04. JSX 与虚拟 DOM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../unit_02/lessons_05.html">
+            
+                <a href="../unit_02/lessons_05.html">
+            
+                    
+                    lessons_05. React 的组件与 State
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../unit_02/lessons_06.html">
+            
+                <a href="../unit_02/lessons_06.html">
+            
+                    
+                    lessons_06. React 的 props 与组件通讯
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../unit_02/lessons_07.html">
+            
+                <a href="../unit_02/lessons_07.html">
+            
+                    
+                    lessons_07. React 的生命周期
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../unit_02/lessons_08.html">
+            
+                <a href="../unit_02/lessons_08.html">
+            
+                    
+                    lessons_08. React Router 与路由守卫
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../unit_02/lessons_09.md">
+            
+                <span>
+            
+                    
+                    lessons_09. React 路由懒加载
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    第三部分 React 进阶
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" >
+            
+                <span>
+            
+                    
+                    第一单元 Redux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1.1" data-path="../unit_03/lessons_01.html">
+            
+                <a href="../unit_03/lessons_01.html">
+            
+                    
+                    lessons_01. 状态管理工具 Redux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.2" data-path="../unit_03/lessons_02.html">
+            
+                <a href="../unit_03/lessons_02.html">
+            
+                    
+                    lessons_02. Redux 流程与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.3" data-path="../unit_03/lessons_03.html">
+            
+                <a href="../unit_03/lessons_03.html">
+            
+                    
+                    lessons_03. Redux ReactRedux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.4" data-path="../unit_03/lessons_04.html">
+            
+                <a href="../unit_03/lessons_04.html">
+            
+                    
+                    lessons_04. Redux ReduxThink
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.5" data-path="../unit_03/lessons_05.html">
+            
+                <a href="../unit_03/lessons_05.html">
+            
+                    
+                    lessons_05. Redux ReduxSaga
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.6" data-path="../unit_03/lessons_06.html">
+            
+                <a href="../unit_03/lessons_06.html">
+            
+                    
+                    lessons_06. Redux ReduxPromise
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.1.7" data-path="../unit_03/lessons_07.html">
+            
+                <a href="../unit_03/lessons_07.html">
+            
+                    
+                    lessons_07. Redux 数据驱动全世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" >
+            
+                <span>
+            
+                    
+                    第二单元 Antd
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.2.1" data-path="../unit_03/lessons_01.html">
+            
+                <a href="../unit_03/lessons_01.html">
+            
+                    
+                    lessons_01. Antd 模态窗(Modal)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.2" data-path="../unit_03/lessons_02.html">
+            
+                <a href="../unit_03/lessons_02.html">
+            
+                    
+                    lessons_02. Antd 表单(From)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.3" data-path="../unit_03/lessons_03.html">
+            
+                <a href="../unit_03/lessons_03.html">
+            
+                    
+                    lessons_03. Antd 文件上传(Upload)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.4" data-path="../unit_03/lessons_04.html">
+            
+                <a href="../unit_03/lessons_04.html">
+            
+                    
+                    lessons_04. Antd Tree 树 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.5" data-path="../unit_03/lessons_05.html">
+            
+                <a href="../unit_03/lessons_05.html">
+            
+                    
+                    lessons_05. Antd 数据分页 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    第四部分 React 项目实战 项目架构与协作开发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../unit_04/lessons_01.html">
+            
+                <a href="../unit_04/lessons_01.html">
+            
+                    
+                    lessons_01. 版本管理工具 GIT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../unit_04/lessons_02.html">
+            
+                <a href="../unit_04/lessons_02.html">
+            
+                    
+                    lessons_02. 服务器配置与项目发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../unit_04/lessons_03.html">
+            
+                <a href="../unit_04/lessons_03.html">
+            
+                    
+                    lessons_03. 项目的基础 框架搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../unit_04/lessons_04.md">
+            
+                <span>
+            
+                    
+                    lessons_04. 项目的核心 模块与组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../unit_04/lessons_05.md">
+            
+                <span>
+            
+                    
+                    lessons_05. 数据图表 echarts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../unit_04/lessons_06.md">
+            
+                <span>
+            
+                    
+                    lessons_06. echarts 的复杂实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    第五部分 React Hooks
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="lessons_01.html">
+            
+                <a href="lessons_01.html">
+            
+                    
+                    lessons_12. 什么是函数式编程 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="lessons_02.html">
+            
+                <a href="lessons_02.html">
+            
+                    
+                    lessons_12. 什么是函数式编程 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7.3" data-path="lessons_03.html">
+            
+                <a href="lessons_03.html">
+            
+                    
+                    lessons_12. react hooks 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="lessons_01.html">
+            
+                <a href="lessons_01.html">
+            
+                    
+                    lessons_12. react hooks 之 effect 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="lessons_01.html">
+            
+                <a href="lessons_01.html">
+            
+                    
+                    lessons_12. hooks 之 自定义 hooks 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="lessons_01.html">
+            
+                <a href="lessons_01.html">
+            
+                    
+                    lessons_12. antd4.x 有哪些变化 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="lessons_01.html">
+            
+                <a href="lessons_01.html">
+            
+                    
+                    lessons_12. antd mobile 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    第六部分 React 与 TypeScript
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    第七部分 React + TypeScript 项目实战之移动电商篇
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    第八部分 把 Vue 和小程序拉出来遛遛
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    第九部分 nodejs 与 Egg2.x
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >lessons_12. react hooks </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x4F01;&#x4E1A;&#x9879;&#x76EE;&#x5B9E;&#x6218; &gt; React &#x51FD;&#x6570;&#x5F0F;&#x7F16;&#x7A0B; &gt; React Hooks</p>
+</blockquote>
+<h1 id="react-&#x7684;&#x65B0;&#x7279;&#x6027;-hook">React &#x7684;&#x65B0;&#x7279;&#x6027; Hook</h1>
+<h3 id="&#x4EC0;&#x4E48;&#x662F;-hook-&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x4F7F;&#x7528;-hook">&#x4EC0;&#x4E48;&#x662F; Hook? &#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x4F7F;&#x7528; Hook?</h3>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x8981;&#x7406;&#x89E3;<strong>&#x4EC0;&#x4E48;&#x662F; Hook</strong>&#x3002;Hook&#xFF0C;&#x4E2D;&#x6587;&#x610F;&#x4E49;&#x662F;&#x201C;&#x94A9;&#x5B50;&#x201D;&#x7684;&#x610F;&#x601D;&#x3002;&#x5728; React &#x4E2D;&#xFF0C;Hook &#x662F;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x76D1;&#x89C6;&#x7CFB;&#x7EDF;&#x6216;&#x8FDB;&#x7A0B;&#x4E2D;&#x7684;&#x5404;&#x79CD;&#x72B6;&#x6001;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x5728;&#x51FD;&#x6570;&#x7EC4;&#x4EF6;&#x4E2D;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x72B6;&#x6001;&#x4EE5;&#x53CA;&#x5B9E;&#x73B0;&#x7C7B;&#x4F3C;&#x4E8E; componentDidMount &#x4E0E; componetDidUpdatet &#x7B49;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E00;&#x6837;&#x7684;&#x65B9;&#x6CD5;&#xFF1B;</p>
+<p><strong>&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x4F7F;&#x7528; Hook?</strong> &#x4E00;&#x662F;&#x56E0;&#x4E3A;&#x7C7B;&#x7EC4;&#x4EF6;&#x4E2D;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#x5927;&#x91CF;&#x7684; this &#x6307;&#x5411;&#x9020;&#x6210;&#x7684;&#x56F0;&#x60D1;&#xFF0C;&#x4F7F;&#x7528;&#x5185;&#x8054;&#x51FD;&#x6570;&#x53C8;&#x4F1A;&#x9020;&#x6210;&#x8FC7;&#x5EA6;&#x5730;&#x521B;&#x5EFA;&#x53E5;&#x67C4;&#xFF1B;&#x53E6;&#x4E00;&#x4E2A;&#x539F;&#x56E0;&#x662F;&#x7C7B;&#x7EC4;&#x4EF6;&#x4E2D;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x51FD;&#x6570;&#x672C;&#x8EAB;&#x7684;&#x7F3A;&#x9677;&#xFF0C;&#x9020;&#x6210;&#x6211;&#x4EEC;&#x5728;&#x7F16;&#x5199;&#x4E1A;&#x52A1;&#x65F6;&#x9700;&#x8981;&#x5C06;&#x76F8;&#x5E72;&#x903B;&#x8F91;&#x5206;&#x6563;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF0C;&#x540C;&#x65F6;&#xFF0C;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x751F;&#x547D;&#x5468;&#x671F;&#x51FD;&#x6570;&#x4E2D;&#x53C8;&#x5B58;&#x5728;&#x5927;&#x91CF;&#x4E0D;&#x76F8;&#x5E72;&#x903B;&#x8F91;&#xFF0C;&#x8FD9;&#x8BA9;&#x6211;&#x4EEC;&#x8BFB;&#x4EE3;&#x7801;&#x65F6;&#x7406;&#x89E3;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x53D8;&#x5F97;&#x56F0;&#x96BE;&#xFF1B;&#x7136;&#x540E;&#x6700;&#x5927;&#x7684;&#x95EE;&#x9898;&#x662F;&#xFF0C;&#x5728;&#x7EC4;&#x4EF6;&#x4E4B;&#x95F4;&#x590D;&#x7528;&#x72B6;&#x6001;&#x903B;&#x8F91;&#x53D8;&#x5F97;&#x8D8A;&#x6765;&#x8D8A;&#x56F0;&#x96BE;&#xFF0C;&#x7279;&#x522B;&#x5728;&#x4E00;&#x4E9B;&#x590D;&#x6742;&#x7684;&#x903B;&#x8F91;&#x7EC4;&#x4EF6;&#x548C;&#x9AD8;&#x9636;&#x7EC4;&#x4EF6;&#x4E2D;&#xFF0C;&#x590D;&#x7528;&#x6027;&#x53D8;&#x5F97;&#x8D8A;&#x6765;&#x8D8A;&#x5DEE;&#x3002;&#x800C; Hook &#x7684;&#x4F18;&#x52BF;&#x6070;&#x6070;&#x5728;&#x4E8E;&#x5B83;&#x662F;&#x57FA;&#x4E8E;&#x51FD;&#x6570;&#x7EC4;&#x4EF6;&#x5F00;&#x53D1;&#x7684;&#xFF0C;&#x5B8C;&#x5168;&#x6CA1;&#x6709; this &#x95EE;&#x9898;&#xFF1B;&#x6BCF;&#x4E00;&#x4E2A;&#x526F;&#x4F5C;&#x7528;&#x53EA;&#x7BA1;&#x7406;&#x81EA;&#x5DF1;&#x7684;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x540C;&#x65F6;&#x81EA;&#x5B9A;&#x4E49;&#x7684; Hook &#x66F4;&#x52A0;&#x65B9;&#x4FBF;&#x590D;&#x7528;&#x72B6;&#x6001;&#x903B;&#x8F91;&#xFF1B;&#x7136;&#x540E;&#x81EA;&#x5B9A;&#x4E49;&#x7684; Hook &#x53EF;&#x4EE5;&#x8BA9;&#x6211;&#x4EEC;&#x975E;&#x5E38;&#x65B9;&#x4FBF;&#x5730;&#x590D;&#x7528;&#x72B6;&#x6001;&#x903B;&#x8F91;&#x3002;</p>
+<h3 id="react-hook-&#x7684;&#x4F7F;&#x7528;&#x89C4;&#x5219;">React Hook &#x7684;&#x4F7F;&#x7528;&#x89C4;&#x5219;</h3>
+<ul>
+<li>&#x53EA;&#x5728;&#x6700;&#x9876;&#x5C42;&#x4F7F;&#x7528; Hook: &#x4E0D;&#x5141;&#x8BB8;&#x5728;&#x5FAA;&#x73AF;&#x3001;&#x6761;&#x4EF6;&#x5224;&#x65AD;&#x6216;&#x5D4C;&#x5957;&#x51FD;&#x6570;&#x4E2D;&#x8C03;&#x7528; Hook&#xFF0C;&#x8981;&#x786E;&#x4FDD;&#x603B;&#x662F;&#x5728;&#x4F60;&#x7684; React &#x51FD;&#x6570;&#x7684;&#x6700;&#x9876;&#x5C42;&#x8C03;&#x7528;&#x5B83;&#x4EEC;</li>
+<li>&#x53EA;&#x5728;&#x81EA;&#x5DF1;&#x7684;&#x4F9D;&#x8D56;&#x66F4;&#x65B0;&#x65F6;&#x624D;&#x6267;&#x884C; effect:</li>
+<li>.1 &#x4F7F;&#x7528; useEffect &#x5B8C;&#x6210;&#x526F;&#x4F5C;&#x7528;&#x64CD;&#x4F5C;&#xFF0C;&#x8D4B;&#x503C;&#x7ED9; useEffect &#x7684;&#x51FD;&#x6570;&#x4F1A;&#x5728;&#x7EC4;&#x4EF6;&#x6E32;&#x67D3;&#x5230;&#x5C4F;&#x5E55;&#x4E4B;&#x540E;&#x6267;&#x884C;&#xFF1B;</li>
+<li>.2 &#x4E0D;&#x8981;&#x5FD8;&#x8BB0;&#x51FD;&#x6570;&#x4F9D;&#x8D56;&#xFF0C;&#x9700;&#x8981;&#x628A; useEffect &#x5185;&#x90E8;&#x5F15;&#x7528;&#x5230;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x58F0;&#x660E;&#x4E3A;&#x5F53;&#x524D; effect &#x7684;&#x4F9D;&#x8D56;&#xFF1B;</li>
+<li>&#x7406;&#x89E3;&#x6BCF;&#x4E00;&#x6B21;&#x7684; rendering</li>
+</ul>
+<h3 id="react-hook-&#x6709;&#x54EA;&#x4E9B;&#x7279;&#x6027;">React Hook &#x6709;&#x54EA;&#x4E9B;&#x7279;&#x6027;</h3>
+<h4 id="usestate">useState</h4>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A; useState &#x7406;&#x89E3;&#x4E3A;&#x7C7B;&#x7EC4;&#x4EF6;&#x4E2D;&#x7684; this.setState&#x3002;useState &#x662F;&#x5141;&#x8BB8;&#x6211;&#x4EEC;&#x5728; React &#x51FD;&#x6570;&#x7EC4;&#x4EF6;&#x4E2D;&#x6DFB;&#x52A0;&#x72B6;&#x6001;&#x7684; Hook&#x3002;</p>
+<pre class="language-"><code class="lang-javascript"><span class="token comment">// &#x5E38;&#x7528;&#x7684;&#x5199;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x662F;&#x7528;es6&#x7684;&#x65B9;&#x6CD5;&#x5C06;useState&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x7EC4;&#x89E3;&#x6784;&#x4E86;</span>
+<span class="token keyword">const</span> <span class="token punctuation">[</span>inputValue<span class="token punctuation">,</span> setInputValue<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">&apos;&#x8BF7;&#x8F93;&#x5165;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>useState &#x65B9;&#x6CD5;&#x63A5;&#x53D7;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x503C;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#xFF0C;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#xFF1A;&#x6570;&#x7EC4;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x6210;&#x5458;&#x662F;&#x6211;&#x4EEC;&#x521A;&#x521A;&#x4F20;&#x5165;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x6210;&#x5458;&#x662F;&#x4E00;&#x4E2A;&#x7528;&#x4E8E;&#x6539;&#x53D8;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x7684;&#x533F;&#x540D;&#x51FD;&#x6570;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A;&#x7B2C;&#x4E8C;&#x4E2A;&#x6210;&#x5458;&#x5F53;&#x6210;&#x6211;&#x4EEC;&#x5728; class &#x7EC4;&#x4EF6;&#x4E2D;&#x7684; this.setState()&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x8FD9;&#x91CC;&#x8FD9;&#x4E2A;&#x533F;&#x540D;&#x51FD;&#x6570;&#x53EA;&#x80FD;&#x6539;&#x53D8;&#x5F53;&#x524D;&#x72B6;&#x6001;&#x7684;&#x503C;&#x3002;</p>
+<h5 id="&#x968B;&#x6027;&#x7684;-usestate">&#x968B;&#x6027;&#x7684; useState</h5>
+<p>&#x4E0E; setState &#x4E00;&#x6837;&#xFF0C;&#x5982;&#x679C;&#x521D;&#x59CB; state &#x9700;&#x8981;&#x901A;&#x8FC7;&#x590D;&#x6742;&#x8BA1;&#x7B97;&#x83B7;&#x5F97;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x5728;&#x51FD;&#x6570;&#x4E2D;&#x8BA1;&#x7B97;&#x5E76;&#x8FD4;&#x56DE;&#x521D;&#x59CB;&#x7684; state&#xFF0C;&#x5F53;&#x7136;&#xFF0C;&#x6B64;&#x51FD;&#x6570;&#x53EA;&#x5728;&#x521D;&#x59CB;&#x6E32;&#x67D3;&#x65F6;&#x88AB;&#x8C03;&#x7528;</p>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">const</span> <span class="token function-variable function">TestInput</span> <span class="token operator">=</span> <span class="token parameter">props</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// useState&#x5728;&#x9996;&#x6B21;&#x6E32;&#x67D3;&#x65F6;&#x4F7F;&#x7528;useState&#x4E2D;&#x4F20;&#x5165;&#x7684;&#x51FD;&#x6570;&#x6765;&#x521D;&#x59CB;&#x5316;inputValue, &#x4E8C;&#x6B21;&#x6E32;&#x67D3;&#x65F6;&#x5219;&#x76F4;&#x63A5;&#x8BFB;&#x53D6;inputValue&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#x7684;&#x503C;</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>inputValue<span class="token punctuation">,</span> setInputValue<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> props<span class="token punctuation">.</span>value <span class="token operator">||</span> <span class="token string">&apos;&#x8BF7;&#x8F93;&#x5165;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>input value<span class="token operator">=</span><span class="token punctuation">{</span>inputValue<span class="token punctuation">}</span> onChange<span class="token operator">=</span><span class="token punctuation">{</span><span class="token parameter">e</span> <span class="token operator">=&gt;</span> <span class="token function">setInputValue</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+      <span class="token punctuation">{</span>inputValue<span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<h5 id="&#x51FD;&#x6570;&#x5F0F;&#x66F4;&#x65B0;">&#x51FD;&#x6570;&#x5F0F;&#x66F4;&#x65B0;</h5>
+<p>&#x5982;&#x679C;&#x65B0;&#x7684; state &#x9700;&#x8981;&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x5148;&#x524D;&#x7684; state &#x8BA1;&#x7B97;&#x5F97;&#x51FA;&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x5C06;&#x51FD;&#x6570;&#x4F20;&#x9012;&#x7ED9; setState&#x3002;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5C06;&#x63A5;&#x6536;&#x5148;&#x524D;&#x7684; state&#xFF0C;&#x7136;&#x540E;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x66F4;&#x65B0;&#x540E;&#x7684;&#x503C;</p>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">function</span> <span class="token function">TestCount</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> initialCount <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>count<span class="token punctuation">,</span> setCount<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span>initialCount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+      &#x6570;&#x91CF;<span class="token operator">:</span> <span class="token punctuation">{</span>count<span class="token punctuation">}</span>
+      <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">setCount</span><span class="token punctuation">(</span>initialCount<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token operator">&gt;</span>&#x91CD;&#x7F6E;<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">setCount</span><span class="token punctuation">(</span><span class="token parameter">prevCount</span> <span class="token operator">=&gt;</span> prevCount <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token operator">&gt;</span><span class="token operator">+</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>button onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">setCount</span><span class="token punctuation">(</span><span class="token parameter">prevCount</span> <span class="token operator">=&gt;</span> prevCount <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token operator">&gt;</span><span class="token operator">-</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="&#x5BF9;&#x8C61;&#x66F4;&#x65B0;">&#x5BF9;&#x8C61;&#x66F4;&#x65B0;</h5>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x4E0E; class &#x7EC4;&#x4EF6;&#x4E2D;&#x7684; setState &#x65B9;&#x6CD5;&#x4E0D;&#x540C;&#xFF0C;useState &#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x5408;&#x5E76;&#x66F4;&#x65B0;&#x5BF9;&#x8C61;&#x3002;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7528;&#x51FD;&#x6570;&#x5F0F;&#x7684; setState &#x7ED3;&#x5408;&#x5C55;&#x5F00;&#x8FD0;&#x7B97;&#x7B26;&#x6765;&#x8FBE;&#x5230;&#x5408;&#x5E76;&#x66F4;&#x65B0;&#x5BF9;&#x8C61;&#x7684;&#x6548;&#x679C;</p>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">const</span> defaultObj <span class="token operator">=</span> <span class="token punctuation">{</span>
+  a<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  b<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">TestObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>obj<span class="token punctuation">,</span> setObj<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token operator">...</span>defaultObj<span class="token punctuation">,</span>
+      c<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+      obj<span class="token punctuation">.</span>a<span class="token operator">:</span> <span class="token punctuation">{</span>obj<span class="token punctuation">.</span>a<span class="token punctuation">}</span>
+      obj<span class="token punctuation">.</span>b<span class="token operator">:</span> <span class="token punctuation">{</span>obj<span class="token punctuation">.</span>b<span class="token punctuation">}</span>
+      obj<span class="token punctuation">.</span>c<span class="token operator">:</span> <span class="token punctuation">{</span>obj<span class="token punctuation">.</span>c<span class="token punctuation">}</span>
+      <span class="token operator">&lt;</span>button
+        onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+          <span class="token function">setObj</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token operator">...</span>obj<span class="token punctuation">,</span>
+            c<span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token operator">&gt;</span>
+        &#x6539;&#x5199;
+      <span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="useeffect">useEffect</h4>
+<p>useEffect&#xFF0C;&#x8FD9;&#x4E2A;&#x8BCD;&#x4E2D;&#x6587;&#x5B98;&#x7F51;&#x6216;&#x8005;&#x8BF4;&#x4E00;&#x4E9B;&#x4E2D;&#x6587;&#x7FFB;&#x8BD1;&#x7F51;&#x7AD9;&#xFF0C;&#x5C06;&#x5B83;&#x8BD1;&#x4E3A;&#x526F;&#x4F5C;&#x7528;&#x3002;&#x4E3A;&#x4E86;&#x66F4;&#x597D;&#x5730;&#x7406;&#x89E3;&#x526F;&#x4F5C;&#x7528;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x91CD;&#x6E29;&#x4E00;&#x4E0B;&#x4EC0;&#x4E48;&#x662F;&#x7EAF;&#x51FD;&#x6570;</p>
+<h5 id="&#x7EAF;&#x51FD;&#x6570;">&#x7EAF;&#x51FD;&#x6570;</h5>
+<blockquote>
+<p>&#x5F53;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x53EA;&#x4F9D;&#x8D56;&#x4E8E;&#x5B83;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x5E76;&#x4E14;&#x6CA1;&#x6709;&#x526F;&#x4F5C;&#x7528;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5C06;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x79F0;&#x4E4B;&#x4E3A;&#x4E00;&#x4E2A;&#x7EAF;&#x51FD;&#x6570;&#x3002;</p>
+<ol>
+<li>&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x53EA;&#x4F9D;&#x8D56;&#x4E8E;&#x5B83;&#x7684;&#x53C2;&#x6570;</li>
+<li>&#x51FD;&#x6570;&#x7684;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x91CC;&#x9762;&#x6CA1;&#x6709;&#x526F;&#x4F5C;&#x7528;</li>
+</ol>
+</blockquote>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">// &#x7EAF;&#x7684;&#x51FD;&#x6570;</span>
+<span class="token keyword">function</span> <span class="token function">pureFun</span><span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> start<span class="token punctuation">,</span> end</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> arr<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> end<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// &#x975E;&#x7EAF;&#x51FD;&#x6570;</span>
+<span class="token keyword">function</span> <span class="token function">fun</span><span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> start<span class="token punctuation">,</span> end</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> arr<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> end<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">pureFun</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#x65E0;&#x8BBA;&#x8C03;&#x7528;&#x591A;&#x5C11;&#x6B21;&#xFF0C;&#x90FD;&#x662F;[1,2]</span>
+<span class="token function">fun</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#x7B2C;&#x4E00;&#x6B21;&#x662F;[1,2],&#x7B2C;&#x4E8C;&#x6B21;&#x662F;[3,4],&#x7B2C;&#x4E09;&#x6B21;&#x662F;[5],&#x7136;&#x540E;&#x662F;[],&#x5B83;&#x751A;&#x81F3;&#x8FD8;&#x5F3A;&#x884C;&#x6539;&#x53D8;&#x4E86;&#x5916;&#x90E8;&#x7684;arr</span>
+</code></pre>
+<h5 id="&#x526F;&#x4F5C;&#x7528;">&#x526F;&#x4F5C;&#x7528;</h5>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5F97;&#x77E5;&#xFF0C;&#x6240;&#x8C13;&#x7684;&#x526F;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x6307;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x505A;&#x4E86;&#x548C;&#x672C;&#x8EAB;&#x8FD0;&#x7B97;&#x8FD4;&#x56DE;&#x503C;&#x65E0;&#x5173;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x4FEE;&#x6539;&#x4E86;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x3001;&#x4FEE;&#x6539;&#x4E86;&#x4F20;&#x5165;&#x7684;&#x53C2;&#x6570;&#x3001;&#x751A;&#x81F3;&#x662F; console.log()&#xFF0C;&#x6240;&#x4EE5; ajax &#x4E0E;&#x83B7;&#x53D6; dom &#x7684;&#x64CD;&#x4F5C;&#x90FD;&#x7B97;&#x662F;&#x526F;&#x4F5C;&#x7528;&#x7684;&#x3002;</p>
+<h4 id="uselayouteffect">useLayoutEffect</h4>
+<h4 id="usecontext">useContext</h4>
+<h4 id="useref">useRef</h4>
+<h4 id="usememo">useMemo</h4>
+<h4 id="usecallback">useCallback</h4>
+<h4 id="usereducer">useReducer</h4>
+<footer class="footer"><div class="footer__container--normal" alt=""><div class="footer__description--normal"><p class="paragraph footer__author--normal" style="color: #000 !important;">marion.lau<sup class="super">&#xAE;</sup></p><p class="paragraph footer__quote--normal" style="color: #000 !important;">Frontend Developer &amp; overall web enthusiast</p><div class="footer__main--normal"><p class="paragraph footer__main__paragraph--normal copyright" style="color: #666 !important;">Copyright &#xA9; marion.lau all right reserved</p><p class="paragraph footer__main__paragraph--normal footer__modifyTime--normal" style="color: #666 !important;"><span style="color: #666 !important;">modified at</span>
+2021-02-06 16:10:02
+</p></div></div></div><div class="box__issues">
+
+</div></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="lessons_02.html" class="navigation navigation-prev " aria-label="Previous page: lessons_12. 什么是函数式编程 ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="lessons_01.html" class="navigation navigation-next " aria-label="Next page: lessons_12. react hooks 之 effect ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"lessons_12. react hooks ","level":"1.7.3","depth":2,"next":{"title":"lessons_12. react hooks 之 effect ","level":"1.7.4","depth":2,"path":"unit_05/lessons_01.md","ref":"unit_05/lessons_01.md","articles":[]},"previous":{"title":"lessons_12. 什么是函数式编程 ","level":"1.7.2","depth":2,"path":"unit_05/lessons_02.md","ref":"unit_05/lessons_02.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","prism","-highlight","copy-code-button","page-copyright","custom-favicon","livereload"],"styles":{"website":"./assets/style.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"livereload":{},"search":{},"page-copyright":{"wisdom":"Frontend Developer & overall web enthusiast","noPowered":true,"copyright":"Copyright &#169; marion.lau","styles (normal, symmetrical)":"normal","style":"normal","isShowQRCode":false,"timeColor":"#666","utcOffset":"8","format":"YYYY-MM-dd hh:mm:ss","signature":"marion.lau","baseUri":"http://www.fenoters.com","copyrightColor":"#666","description":"modified at"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":"./assets/m.png","custom-favicon":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"marion.lau@foxmail.com","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React Training","gitbook":"*","description":"加入八维团队后，在教学生时总感觉有些力不从心的样子，于是抽时间，把所能想起来的一些内容梳理了一下，放在这里，做为以后上课时的索引","theme-default":{"showLevel":true}},"file":{"path":"unit_05/lessons_03.md","mtime":"2021-02-06T08:10:02.700Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-02T03:37:30.461Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
