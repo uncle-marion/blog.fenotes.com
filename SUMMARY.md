@@ -33,18 +33,11 @@
 - 第四部分 React 项目实战 项目架构与协作开发
   - [lessons_01. 版本管理工具 GIT](unit_04/lessons_01.md)
   - [lessons_02. 服务器配置与项目发布](unit_04/lessons_02.md)
-  - [lessons_03. 项目的基础 框架搭建](unit_04/lessons_03.md)
-  - [lessons_04. 项目的核心 模块与组件](unit_04/lessons_04.md)
-  - [lessons_05. 数据图表 echarts](unit_04/lessons_05.md)
-  - [lessons_06. echarts 的复杂实现](unit_04/lessons_06.md)
 - 第五部分 React Hooks
-  - [lessons_12. 什么是函数式编程 ](unit_05/lessons_01.md)
-  - [lessons_12. 什么是函数式编程 ](unit_05/lessons_02.md)
-  - [lessons_12. react hooks ](unit_05/lessons_03.md)
-  - [lessons_12. react hooks 之 effect ](unit_05/lessons_01.md)
-  - [lessons_12. hooks 之 自定义 hooks ](unit_05/lessons_01.md)
-  - [lessons_12. antd4.x 有哪些变化 ](unit_05/lessons_01.md)
-  - [lessons_12. antd mobile ](unit_05/lessons_01.md)
+  - [lessons_01. react hooks ](unit_05/lessons_03.md)
+  - [lessons_02. 自定义 hook ](unit_05/lessons_04.md)
+  - [lessons_03. 函数式编程的一些小知识 ](unit_05/lessons_01.md)
+  - [lessons_04. 函数式编程的实例讲解 ](unit_05/lessons_02.md)
 - 第六部分 React 与 TypeScript
 - 第七部分 React + TypeScript 项目实战之移动电商篇
 - 第八部分 把 Vue 和小程序拉出来遛遛
