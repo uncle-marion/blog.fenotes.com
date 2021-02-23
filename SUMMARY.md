@@ -39,6 +39,12 @@
   - [lessons_03. 函数式编程的一些小知识 ](unit_05/lessons_01.md)
   - [lessons_04. 函数式编程的实例讲解 ](unit_05/lessons_02.md)
 - 第六部分 React 与 TypeScript
-- 第七部分 React + TypeScript 项目实战之移动电商篇
-- 第八部分 把 Vue 和小程序拉出来遛遛
-- 第九部分 nodejs 与 Egg2.x
+  - [lessons_01. typeScript 基础知识 ](unit_06/lessons_01.md)
+  - [lessons_02. typeScript 函数重载 ](unit_06/lessons_02.md)
+  - [lessons_03. typeScript 类 ](unit_06/lessons_03.md)
+  - [lessons_04. typeScript 泛型 ](unit_06/lessons_04.md)
+  - [lessons_05. typeScript 装饰器 ](unit_06/lessons_05.md)
+- 第七部分 nodejs 与 Egg2.x（了解即可）
+- 第八部分 websocket 与 RESTful API（了解即可）
+- 第九部分 把 Vue 和小程序拉出来遛遛
+- 第十部分 完整复习
