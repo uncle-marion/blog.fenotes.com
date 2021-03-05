@@ -44,6 +44,9 @@
   - [lessons_03. typeScript 类 ](unit_06/lessons_03.md)
   - [lessons_04. typeScript 泛型 ](unit_06/lessons_04.md)
   - [lessons_05. typeScript 装饰器 ](unit_06/lessons_05.md)
+- 第七部分 JavaScript进阶
+  - [lessons_01. JavaScript事件机制](unit_07/lessons_01.md)
+  - [lessons_01. JavaScript事件机制](unit_07/lessons_01.md)
 - 第七部分 nodejs 与 Egg2.x（了解即可）
 - 第八部分 websocket 与 RESTful API（了解即可）
 - 第九部分 把 Vue 和小程序拉出来遛遛

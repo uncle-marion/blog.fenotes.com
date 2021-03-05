@@ -9,6 +9,37 @@
 
 最后就是两个应该是用不着的：比如 useImperativeHandle，useDebugValue；前者一般是用于高阶组件中，后者的功能几乎没什么用处。
 
+#### React 核心 Hook 的简单描述
+
+- useState
+  > 用于在函数组件中声明状态
+  > 该方法接收一个初始值，返回一个数组，成员一是定义的状态，成员二是修改状态的方法；
+  > 该方法与 this.setState 有一些区别：无法自动合并对象，只能覆盖；无法实时获取新赋予的状态；
+- useEffect
+  > 用于调用 api 或修改其它状态的副作用操作
+  > 该方法接收一个必填参数：副作用的方法；一个可选参数：依赖的状态数组，当该可选参数不存在时，此方法会在函数组件每一次执行时被调用
+  > 该方法使用方式与类组件中的生命周期函数类似，不同的我们可以通过定义它的依赖数组成员来设定它的执行方式；
+- useRef
+  > 用于定义一个返回固定对象的方法
+  > useRef 在函数组件每次渲染时都会返回同一个 ref 对象，我们可以利用这个方法来保存一些变量或元素节点来提供给组件中其它生命周期函数使用
+- useContext
+  > 用于接收一个 context 对象并返回该 context 的当前值
+  > 该方法可以简化 context consumer 组件的写法，定义后可以像使用普通状态一样使用 context provider 中创建的 value 内容
+- memo
+  > 一个应用于函数组件的类 PureComponent 的高阶函数
+  > 该方法接收一个必填参数：需要优化的函数组件，当父组件 state 发生变化时进行一个浅比较来判断是否需要重新渲染组件；一个可选参数：该参数是一个方法，可以通过比较参数的属性来判断是否需要渲染组件
+  > 该方法用于解决函数组件因为没有 shouldComponentUpdate 方法导致的子组件反复渲染的问题
+- useMemo
+  > 用于储存一个变量，避免每次渲染组件时都会重新计算
+  > 该方法接收一个必填参数：返回一个变量的函数，当依赖参数变化时执行该方法并返回一个新的变量；一个可选参数，依赖的状态数组，作用与 useEffect 方法的依赖数组一致
+  > 该方法主要用于优化子组件的反复渲染问题，也会用于缓存某些需要大量计算资源的变量定义上
+- useCallback
+  > 用于储存一个方法，避免每次渲染组件时都会重新定义
+  > 该方法接收一个必填参数：一个回调函数，当依赖参数变化时返回一个新的函数；一个可选参数，依赖的状态数组，作用与 useEffect 方法的依赖数组一致
+  > 该方法主要用于优化子组件的反复渲染问题
+- useReducer
+  > 与 redux 中的 reducer 差不多，它是一个纯函数，接收当前组件的 state 和一个用于描述操作目的的 action，通过 reducer 方法计算后返回一个新的 state
+
 #### 自定义 hook
 
 先看一段代码：
@@ -251,29 +282,39 @@ export default function Home(props) {
 但是在 hook 组件中的 useState 不支持第二个参数回调了，而在某些场景下我们的组件中有太多的 state 需要监听，不愿意使用太多的 useEffect 来监听 state 的变化，我们想要像 this.setState 中一样来使用回调函数获取最新的 state，怎么办呢？下面我们就来实现一个获取最新 state 的自定义 hook:
 
 ```javascript
+/**
+ * 用于监听state变化的hook
+ * @param {any} initState state的初始值
+ */
 function useXState(initState) {
+  // 定义一个 useState 用于记录 state 和获得修改 state 的方法
   const [state, setState] = useState(initState);
-  // 思考一下，为什么这里要使用useRef??
-  let isUpdate = useRef();
-  // 自定义一个setState方法，它接受两个参数，第一个参数是传入的state,第二个参数是一个回调
+  // 定义一个 ref 对象用于保存 callback 方法
+  const isUpdate = useRef();
+  // 定义一个函数，该函数用于接收调用时传入的 state 的值和用于监听 state 变化的回调，并在调用时通过第一步所获取的方法将参数一写入 state
   const setXState = (state, callback) => {
-    // 我们使用函数式更新来改变传入的state
     setState(prev => {
       isUpdate.current = typeof callback === 'function' ? callback : null;
-      // 要注意这里，我们可能会接收到一个function
       return typeof state === 'function' ? state(prev) : state;
     });
   };
-  // 这个副作用依赖了state,当state发生变化后就立刻执行它
+  // 定义一个副作用，在 state 变化完成后执行第三步的参数二，也就是用于监听 state 变化的回调函数
   useEffect(() => {
-    // 如果isUpdate.current存在的话就把当前的state当成参数传出去
     if (isUpdate.current) {
       isUpdate.current(state);
     }
   }, [state]);
+  // 参照useState的返回，将state与接收监听函数的方法以数组的方式返回
   return [state, setXState];
 }
 ```
+
+- 实现 hooks 中监听 state 实时变化的算法
+  > 1. 定义一个 useState 用于记录 state 和获得修改 state 的方法
+  > 2. 定义一个 ref 对象用于保存 callback 方法
+  > 3. 定义一个函数，该函数用于接收调用时传入的 state 的值和用于监听 state 变化的回调，并在调用时通过第一步所获取的方法将参数一写入 state
+  > 4. 定义一个副作用，在 state 变化完成后执行第三步的参数二，也就是用于监听 state 变化的回调函数
+  > 5. 参照 useState 的返回，将 state 与接收监听函数的方法以数组的方式返回
 
 ##### 实现组件的强制更新
 
@@ -412,30 +453,72 @@ function throttle(
 - hooks 的实现
 
 ```javascript
-export default function useThrottle(func, ms = 30, deps = []) {
-  // 使用ref来记录一个原始值用于表示上次执行时间
-  let previous = useRef(0);
-  // 等待时间
-  let [time, setTime] = useState(ms);
-
-  useEffect(() => {
-    let now = Date.now();
-    // 如果等待时间已经达到约定的时间
-    if (now - previous.current > time) {
-      // 执行方法
-      func();
-      // 修改上次执行时间为当前时间
+/**
+ * 用于节流的hook
+ * 节流的意义在于我们可以控制高频触发的事件在同一个时间周期内发生的频率
+ *
+ * @param {function} func 必填，事件的处理函数
+ * @param {number} wait 可选，时间周期，默认500ms
+ * @param {object} options 可选，配置项，默认第一次不需要执行，最后一次需要执行
+ * @param {boolean} options.leading 第一次调用函数时是否需要执行
+ * @param {boolean} options.trailing 最后一次调用函数时是否需要执行
+ */
+export function useThrottle(
+  func,
+  wait = 500,
+  options = { leading: false, trailing: true }
+) {
+  // 定义一个ref对象，用于储存一个定时器
+  const timer = useRef();
+  // 定义一个ref对象，用于储存一个上次执行参数一方法的时间戳
+  const previous = useRef(0);
+  // 定义一个用于清除计时器的方法
+  const clearTimer = () => {
+    // 检查计时器是否存在，如果存在手动清除并将其值置为null以便于垃圾回收机制清空处理
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+  };
+  // 定义一个执行参数一的方法
+  const applyFunc = args => {
+    // 修改previous对象的值为当前时间戳，表示本次调用已执行，新的调用需要等待另一个时间周期结束
+    previous.current = now;
+    // 使用apply方式执行参数一方法并将参数传入
+    func.apply(this, args);
+    timer.current = null;
+  };
+  // 定义并返回一个闭包函数，该函数每次调用时通过比较第二步定义的时间戳来判断是否需要执行参数一方法
+  return function throttled(...args) {
+    // 获取当前时间
+    const now = Date.now();
+    // 通过检查previous对象和options.leading属性来判断是否将previous对象置为当前时间，
+    // 当previous对象被置为当前时间时代表着参数一方法会被储存至timer定时器对象中延迟处理
+    if (!previous.current && !options.leading) {
       previous.current = now;
     }
-  }, deps);
-
-  const cancel = () => {
-    setTime(0);
+    // 距离下次触发 func 还需要等待的时间差值
+    const remaining = wait - (now - previous.current);
+    // 清除计时器
+    clearTimer();
+    // 上一步计算出来的差值如果小于等于零则立即执行参数一中的方法
+    if (remaining <= 0) {
+      return applyFunc(args);
+    }
+    // 上一步计算出来的差值如果大于零则需要检查配置参数中是否设定了最后一次调用需要执行，如果需
+    // 要执行，定义一个计时器用于执行参数一方法，其等待时间为计算出来的差值
+    if (options.trailing) {
+      // 修改定时器
+      timer.current = setTimeout(applyFunc, remaining);
+      return false;
+    }
   };
-
-  return [cancel];
 }
 ```
+
+- 实现节流 hook 的算法与步骤
+
+  > 1.定义一个 Ref，用于储存一个定时器
 
 - 节流 hook 的调用
 
