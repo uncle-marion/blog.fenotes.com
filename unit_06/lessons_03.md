@@ -1,92 +1,261 @@
-> 企业框架实战\_第一部分\_TypeScript 入门
+> Marion 的 react 实战课程 > 第六部分 > promise 与 async/await
 
-### 类
+## promises
 
-传统方法中，JavaScript 通过构造函数实现类的概念，通过原型链来实现继承，但它仍然缺少一些高级语言中类的方法，比如抽象，比如修饰符等等。
+> 我们都知道, JavaScript 是一种异步编程语言, 在实际业务使用中, 对于一些不习惯使用回调函数来处理事件或数据的程序员来说, 回调地狱是一件很恐怖的事情。而 Promise 正是用于解除 JavaScript 回调地狱这种情况发生而新增的特性。从语法上说，Promise 是一个构造函数，我们在传入依赖的参数后，通过对它的实例对象的 then 方法和 catch 方法的监听而获取异步操作的消息。
 
-#### 类的访问修饰符
-
-学习什么是类之前，我们需先熟悉类的修饰符，TypeScript 中类的修饰符有三种：
-第一种是默认修饰符：public，意义指向是公用，用 public 声明的属性和方法在任何地方都可以被访问到。TypeScript 中默认的修饰符就是 public,无论你是否声明了它。
-
-第二种是完全私有修饰符：private，它是一个完全私有的，用它声明的属性和方法只能在声明它的类的内部使用，其它地方都不可访问。
-
-第三种是受保护的修饰符：protected，它介于 public 与 private 之间，仅在声明它的类和子类中允许访问。
+- 单个的 promise
 
 ```javascript
-
-// 抽象类
-abstract class Animal {
-  // 受保护的属性：子类可见
-  protected name: string;
-  // 私用属性：只有类内部可见
-  private age: number;
-  constructor(name: string, age?: number) {
-    this.name = name;
-    if (age) {
-      this.age = age;
-    }
+// promise 意思是承诺, 表示以后会去完成某件事情
+// promise方法必须使用new关键字和它的构造函数Promise方法来创建
+// 它的构造函数接受一个回调函数作为参数, 这个回调函数提供两个方法做为参数resolved(已定型), rejected(已失败)
+const promise = new Promise((resolved, rejected) => {
+  // promise方法有三个状态：pending, fulfilled, rejected
+  // 从新建起就是pending状态, 然后通过异步操作去改变它内部的状态, 而它内部的状态一旦被改变就无法再改变了, 这种情况被称之为resolved(已定型)
+  if (success) {
+    resolved(value); // fulfilled
+  } else {
+    rejected(error); // rejected
   }
-  // 抽象方法
-  abstract sayHello(msg: string): void
-}
-// Animal的子类
-class Cat extends Animal {
-  // 公用属性：所有的地方都可以访问
-  public sayHello(msg: string): void {
-    console.log(`Hello, ${this.name}! ${msg}`);
-  }
-}
-// 实例化一个Cat类
-let Tom = new Cat('Tom');
-Tom.sayHello('have you eaten?');
-
+});
+// promise方法一旦新建就立即执行且无法取消, 如果不设置回调函数Promise内部抛出的错误,不会反应到外部。
 ```
 
-#### 什么是类
+- 多个 promise
 
-虽然 JavaScript 中有类的概念，但是可能大多数 JavaScript 程序员并不是非常熟悉类。类，可以简单地解释成，类就是对象的模板，所有的对象都可以通过对类的实例化来生成。
+```javascript
+let p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("第一个请求成功");
+  }, 2000);
+});
 
-- 类（Class）：定义了一件事物的抽象特点，包含它的属性和方法
-- 对象（Object）：类的实例，通过 new 生成
-- 面向对象（OOP）的三大特性：封装、继承、多态
-- 封装（Encapsulation）：将对数据的操作细节隐藏起来，只暴露对外的接口。外界调用端不需要（也不可能）知道细节，就能通过对外提供的接口来访问该对象，同时也保证了外界无法任意更改对象内部的数据
-- 继承（Inheritance）：子类继承父类，子类除了拥有父类的所有特性外，还有一些更具体的特性
-- 多态（Polymorphism）：由继承而产生了相关的不同的类，对同一个方法可以有不同的响应。比如 Cat 和 Dog 都继承自 Animal，但是分别实现了自己的 eat 方法。此时针对某一个实例，我们无需了解它是 Cat 还是 Dog，就可以直接调用 eat 方法，程序会自动判断出来应该如何执行 eat
-- 存取器（getter & setter）：用以改变属性的读取和赋值行为
-- 修饰符（Modifiers）：修饰符是一些关键字，用于限定成员或类型的性质。比如 public 表示公有属性或方法
-- 抽象类（Abstract Class）：抽象类是供其他类继承的基类，抽象类不允许被实例化。抽象类中的抽象方法必须在子类中被实现
-- 接口（Interfaces）：不同类之间公有的属性或方法，可以抽象成一个接口。接口可以被类实现（implements）。一个类只能继承自另一个类，但是可以实现多个接口
+let p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("第二个请求成功");
+  });
+});
 
-#### 什么是抽象类
+let p3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject("第三个请求失败");
+  }, 5000);
+});
+// all 接受一个promise数组, 当所有promise返回后它才返回
+Promise.all([p1, p2])
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-抽象类，这是 TypeScript 中模仿其它高级语言增加的一个新概念，定义抽象类的意义在于：必须被子类继承，是半成品，用于衍生出子类，把子类中公共的部分提取出来，封装在顶部，易于维护或扩展。抽象类是提供给其他类继承的基类，抽象类本身不允许被实例化。抽象类中的抽象方法必须在子类中被实现。
-抽象类的关键字是 abstract。
+Promise.all([p1, p3, p2])
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
 
-#### 类与对象的区别
+- race
 
-类是对某一类事物的描述，是抽象的；而对象是一个实实在在的个体，是类的一个实例。比如：“动物”是一个类，而“猫”则是“动物”的一个实例。
+```javascript
+let p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("success");
+  }, 1000);
+});
 
-类的属性与方法是共享的，一个实例能访问它所属类的公共方法和属性；而对象中的方法与属性属于单个对象，除共享了所在类中的方法与属性外，不同对象还会有不同的方法与属性。
+let p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject("failed");
+  }, 500);
+});
 
-#### 类的构造函数
+// race接受一个promise数组, 这些数组哪个执行完毕就返回哪个结果, 后续完成的就直接抛弃了
+Promise.race([p1, p2])
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
 
-构造函数作为类的核心内容，是每个类实例化对象时 new 指令直接调用的方法，实际上 TypeScript 与 ES6 在这方面并没有差别，如果了解 ES6 的话我们都知道 class 只是一个语法糖，它的底层实现还是 function，类中的构造函数就是 ES5 的方法主体，它最终被赋给该方法原型上的 constructor 属性，而类中实现的一系列的修饰符和特性最后都会被解析为类自身或者原型上的属性和方法，用来配合主体方法实现对象实例的构造。
+- then
 
-#### 在类中定义属性与方法
+```javascript
+const p = new Promise(function (resolve, reject) {
+  resolve(1);
+})
+  .then(function (value) {
+    // 第一个then // 1
+    console.log(value);
+    return value * 2;
+  })
+  .then(function (value) {
+    // 第二个then // 2
+    console.log(value);
+  })
+  .then(function (value) {
+    // 第三个then // undefined
+    console.log(value);
+    return Promise.resolve("resolve");
+  })
+  .then(function (value) {
+    // 第四个then // resolve
+    console.log(value);
+    return Promise.reject("reject");
+  })
+  .then(
+    function (value) {
+      // 第五个then //reject:reject
+      console.log("resolve:" + value);
+    },
+    function (err) {
+      console.log("reject:" + err);
+    }
+  );
+```
 
-#### 类的静态属性
+#### Promise 小结
 
-关于静态属性与静态方法，这个是在 ES7 中被提出来的，TypeScript 实现了它们。我们可以使用 static 修饰符来声明它们，使得它们无须实例化就可以被调用，同时，实例化对象就再也无法访问到它们了：
+> 对象的状态不受外界影响。Promise 对象代表一个异步操作，有三种状态：  
+> pending（进行中)  
+> fulfilled（已成功）  
+> rejected（已失败）  
+> 只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。这也是 Promise 这个名字的由来，它的英语意思就是“承诺”，表示其他手段无法改变。  
+> 一旦状态改变，就不会再变，任何时候都可以得到这个结果。  
+> Promise 对象的状态改变，只有两种可能：从 pending 变为 fulfilled 和从 pending 变为 rejected。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果，这时就称为 resolved（已定型）。  
+> 如果改变已经发生了，你再对 Promise 对象添加回调函数，也会立即得到这个结果。这与事件（Event）完全不同，事件的特点是，如果你错过了它，再去监听，是得不到结果的。
 
-为什么要定义静态属性或方法呢？其实就像 const 一样，静态属性与方法仅在声明类时进行赋值，而后再也没有谁可以改变它，保持了它的纯洁性。无论何时调用它，给你的值都是固定的。
+## genertor（稍作了解，为以后学习 redux-saga 做准备）
 
-#### 类的只读属性
+> 虽然它的写法是在 function 前加了一个\*号，但它其实不是一个方法，它是一种数据类型。在 paython 中，它被称之为列表生成器。它主要的功能是用于生成一个未知长度的列表。genertor 很简单，但如果你不能理解它就会觉得很难，它其实就是一个可以多次返回的函数。如下所示：
 
-在 TypeScript 中，还实现了类的只读属性，类的只读属性只允许在被实例化时进行赋值，
+我们先拿一个普通函数举个例子：
 
-#### 类的继承
+```javascript
+function foo(x) {
+  return x + x;
+}
+var r = foo(1);
+```
 
-#### 类的类型声明
+如果在执行过程中，没有遇到 return，就返回一个 undefined 给调用者 r，如果有 return 则将 return 返回的内容给调用者 r，同时结束整个方法。
 
-类的类型声明与接口类似，将类本身的名字做为类型声明即可，但要注意的是，实例化对象声明的类型其内部所对应的属性与方法只能是被声明的这个类中的属性与方法。
+而 genertor 在函数中添加了一个新的返回命令（关键字）yield，它的功能是在每一次调用时都能返回一个值给调用者，直到遇见 return 或整个方法执行完毕。
+
+```javascript
+function* foo(x) {
+  yield x + 1;
+  yield x + 2;
+  yield x + 3;
+  return x + 4;
+}
+var r = foo(1); // 此时函数并没有执行，返回的只是一个指向其内部状态的指针对象，我们必须通过next方法来使指针移向下一个状态
+r.next(); // {value: 2, done: false}
+r.next(); // {value: 3, done: false}
+r.next(); // {value: 4, done: false}
+r.next(); // {value: 5, done: true}
+```
+
+是不是感觉这就像是一个个的闭包？只不过闭包是每次返回一个新的函数，而 genertor 每次返回的是一个对象，对象里有我们计算的值和当前的 genertor 的状态。
+
+比如，我们需要实现一个斐波那契数列的函数，可以这样写：
+
+```javascript
+function fib(max) {
+  let a = 0;
+  let b = 1;
+  let arr = [a, b];
+  while (arr.length < max) {
+    [a, b] = [b, a + b];
+    arr.push(b);
+  }
+  return arr;
+}
+fib(5);
+fib(10);
+```
+
+上面的函数因为函数方法只能返回一个值，所以我们最终获得的是一个数组，假如需要取出某一个阶段的值，只能使用遍历。而 generator 的特性则决定了它在程序中返回指定内容，我们可以获取指定的数据：
+
+```javascript
+function* fib(max) {
+  let a = 0;
+  let b = 1;
+  let l = 0;
+  while (l < max) {
+    yield a;
+    [a, b] = [b, a + b];
+    n++;
+  }
+  return;
+}
+fib(5);
+```
+
+#### async/await
+
+> async 和 swait, 作为 Genertor 函数的语法糖, 就是为了让我们更加方便地使用同步任务。Genertor 将异步的流程标记得非常简捷，可是在实际使用过程中却非常地不方便, 为了更进一步地解决异步操作带来的问题，所以在 ES7 版本里又推出了 async 与 await 这一对组合
+
+```javascript
+function getRandom() {
+  return new Promise((resolve, reject) => {
+    let sino = parseInt(Math.random() * 6 + 1);
+    setTimeout(() => {
+      resolve(sino);
+    }, 1000);
+  });
+}
+async function test() {
+  let n = await getRandom();
+  console.log(n);
+}
+test();
+```
+
+上面的函数中使用了 async 方法 test，在方法中定义了一个变量 n，而这个变量使用了 await 关键字，所以程序执行到这里的时候除非 getRandom 执行完毕，resolve 方法被调用，否则就会在这里一直等待。
+
+```javascript
+function getRandom(estimate) {
+  return new Promise((resolve, reject) => {
+    let sino = parseInt(Math.random() * 6 + 1);
+    setTimeout(() => {
+      if ((sino > 3 && estimate) || (sino <= 3 && !estimate)) {
+        resolve(sino);
+      } else {
+        reject(sino);
+      }
+    }, 1000);
+  });
+}
+async function test(estimate) {
+  try {
+    let n = await getRandom(estimate);
+    console.log("估算正确" + n);
+  } catch (error) {
+    console.log("估算错误" + error);
+  }
+}
+// 猜个大小
+test();
+```
+
+#### async/await 小结
+
+> async 函数本身返回一个 promise 对象，可以使用 then 方法添加回调函数。函数中的代码在执行过程中，如果遇到 await 关键字就会暂停，等待 await 关键字后的方法执行完成后再继续执行。
+
+async 与 generator 的区别：
+
+> 内置执行器。Generator 函数的执行必须依靠执行器，而 Aysnc 函数自带执行器，调用方式跟普通函数的调用一样
+
+> 更好的语义。async 和 await 相较于 \* 和 yield 更加语义化
+
+> 更广的适用性。yield 命令后面只能是 Thunk 函数或 Promise 对象，async 函数的 await 后面可以是 Promise 也可以是原始类型的值
+
+> 返回值是 Promise。async 函数返回的是 Promise 对象，比 Generator 函数返回的 Iterator 对象方便，可以直接使用 then() 方法进行调用

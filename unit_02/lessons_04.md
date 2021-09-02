@@ -1,174 +1,319 @@
-> 企业项目实战 > 第二部分 > React 基础回顾
+> Marion 的 react 实战课程 > 第二部分 > 路由管理
 
-### JSX 与虚拟 DOM
+## URL 的 hash
 
-#### 什么是 JSX
-
-> JSX 即 JavaScript XML —— 一种在 React 组件内部构建标签的类似于 XML 的语法, 其格式比较像是模版语言, 但事实上完全是在 JavaScript 内部实现的。所以它也被称之为一个 JavaScript 的语法糖, JSX 主要应用于 React 架构中, 它能让我们在 JS 中编写 XML 标记语言。这样使用 JavaScript 来构建组件以及组件之间关系的应用, 在代码层面显得更清晰。
+- URL 的 hash 也就是锚点(#), 本质上是改变 window.location 的 href 属性。我们可以直接赋值 location.hash 改变 url, 但是页面不发生刷新
 
 ```javascript
-return <div>这就是一段JSX代码</div>;
+const routerView1 = document.querySelector('.router-view');
+window.addEventListener('hashchange', () => {
+  switch (window.location.hash) {
+    case '#/home':
+      routerView1.innerHTML = '首页';
+      break;
+    case '#/about':
+      routerView1.innerHTML = '关于页';
+      break;
+    default:
+      routerView1.innerHTML = '';
+      break;
+  }
+});
 ```
 
-#### JSX 的渲染流程
+## history
 
-> 如同上面所说的, JSX 其实是一个对象, 它在被编译后, 就成为了一个函数调用, 其返回值为一个 JS 对象, 这个 JS 对象是一个抽象的 DOM 对象, 也就是我们常说的虚拟 DOM。这样说, 你们可能不是那么容易理解, 那么现在, 我们去 babel 看看 JSX 编译后的对象长啥样子的：
+- history 接口是 HTML5 新增的, 它有六种模式改变 URL 而不刷新页面
 
-[我们去 babel 看看编译后的 JSX](https://babeljs.io/repl#?browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=G4QwTgBApgzgxiCBeCAKAUBCAeAJgS2AgHsA7AYQBt84BrJAbwBcALfGAOjKptoF8IAPkxYcMAA4hSEOJRAwYAORABbKEgBECJhuGjRAFQDyAWRFZsAeglS9OSwWCCAlOiA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=true&fileSize=false&timeTravel=true&sourceType=module&lineWrap=true&presets=react&prettier=false&targets=&version=7.12.3&externalPlugins=)
+|          API | 作用               |
+| -----------: | :----------------- |
+| replaceState | 替换原来的路径     |
+|    pushState | 使用新的路径       |
+|     popState | 路径的回退         |
+|           go | 向前或向后改变路径 |
+|      forward | 向前改变路径       |
+|         back | 向后改变路径       |
 
-从上面的例子中, 我们可以看到, JSX 对象中使用了 React.createElement 这个方法, 那么, 我们再去官网看看官方是怎么解释这个方法的吧：
-
-[React.createElement 方法的官方解释](https://reactjs.bootcss.com/docs/react-api.html#createelement)
-
-#### 什么是虚拟 DOM
-
-> 参考上面 JSX 渲染流程中提到的, 虚拟 DOM 是相对于浏览器所渲染出来的真实 DOM 的, 在 React, Vue 等技术出现之前, 我们想要改变页面展示的内容只能通过遍历查询 DOM 树的方式来找到需要修改的 DOM, 然后修改其样式行为或者结构, 以达到更新视觉图层的目的。
-
-#### 什么是 DOM
-
-> DOM 是文档对象模型, 是为了操作文档而出现的 API, 它将整个页面规划成由节点层级构成的文档, 用于描述处理网页内容的方法和接口。  
-> 在前端领域提到了 DOM 就不得不说到 JavaScript 的另一个对象模型：BOM, BOM 是浏览器对象模型, 是为了操作浏览器而出现的 API, 确切地说, BOM 是对浏览器本身进行操作, 而 DOM 是对浏览器内的内容进行操作。JavaScript 的实现就是使用 ECMAScript 脚本来操控这两个 API 实现对用户界面的修改。
-
-#### 为什么要使用虚拟 DOM
-
-> 真实 DOM 操作其资源消耗相对来说是比较大的, 因为每次查询几乎都需要遍历整个 DOM 树, 如果建立一个与 DOM 对应的虚拟 DOM 对象, 以对象嵌套的方式来表示 DOM 树, 那么每次对 DOM 的修改就变成了对 JavaScript 对象的属性的修改, 这样一来就能通过查找/修改 JavaScript 对象的属性变化来操作整个 DOM 树和它其中的节点, 其消耗无疑是要小很多的。
-
-#### 为什么真实 DOM 操作的资源消耗大
-
-> 真要说起来, 其实并不是查询 DOM 树性能开销大, 虽然说对每一个 DOM 节点的操作几乎都要遍历整棵 DOM 树, 但其根本原因还是因为 DOM 的实现模块和 JavaScript 模块是分开的, 因为我们都知道, JavaScript 是由 ECMAScript 加上 DOM 对象模型和 BOM 对象模型组合而来的。我们每一次对节点的操作都需要在两个甚至三个模块之间通讯来完成, 而正是这些跨模块的通讯消耗了较多的资源；
-> 然后, 在我们每一次修改或添加新的 DOM 节点时都会重新生成整棵 DOM 树和 CSSOM 树(CSS 规则树), 然后合并 DOM 树与 CSSOM 树, 重新计算在页面如何绘制和渲染, 也就是我们常说的回流与重绘。这样就不可避免地造成了大量的 GPU 资源的消耗。
-
-#### React 的 Diff 算法机制
-
-> React 的 Diff 算法, 又被称之为 reconciliation(协调)。因为涉及到一些算法复杂度的问题, 比较深, 我们只能描述一些比较浅显的内容：对比虚拟 DOM 与真实 DOM 时, React 会比较两棵树的根节点, 当根节点为不同类型的元素时, React 会销毁掉原有的树并且建立起新的树, 组件实例将执行 componentWillUnmount 方法, 然后销毁与之前树有关的 state 并执行 componentDidMount 方法。如果根节点为相同类型的元素时, 则保留 DOM 节点, 仅比对及更新有改变的属性。然后重复这个步骤, 遍历并调整整棵树的结构。
-
-#### React16 与 React15 Diff 的区别(当前不重要, 了解即可, 后续可自己研究)
-
-> React16 以前的的 Reconciliation(官方称之为协调) 是 stack-reconciler(整齐调整)。采用递归形式工作的, 是同步的, 在生成虚拟 DOM 树与 diff 过程中是无法中断的。这样在组件层级过深时, 会造成 JavaScript 执行时间过长, 浏览器无法布局和绘制, 造成丢帧。  
-> React16 以后的 Reconciliation 是 fiber-reconciler。采用的异步可中断更新代替了 React15 的同步更新, React16 的 scheduler 调度器会告诉 Reconciliation, 浏览器是否有空闲时间执行 JavaScript 脚本。这样就不会影响浏览器的绘制和布局工作。不会丢帧。  
-> 所以 React16 以后的虚拟 DOM 节点对应变为 Fiber 节点, 虚拟 DOM 树对应变为了 Fiber 树。
-
-推荐阅读：https://zhuanlan.zhihu.com/p/266564150?utm_source=wechat_timeline
-
-#### react 的列表渲染使用 index 来作为 key 可以吗？
-
-- 可以, 但是会有一定的风险, 如果需要对列表进行重新排序或增加/删除操作时, 因为 React 会使用 key 来识别列表元素是否更新或复用, 如果 key 是一个下标, 那么修改顺序时会修改当前的 key, 导致非受控组件的 state (比如输入框)可能被就地复用而导致无法达成我们预期的变动。
-
-[参考官网](https://reactjs.bootcss.com/docs/reconciliation.html#recursing-on-children)
-
-#### 简单的模板实现
+## 什么是 React Router
 
 ```javascript
-let template = '我是{name}，年龄{age}，性别{sex}';
-let data = {
-  name: '小白',
-  age: 18,
-  sex: '男',
-};
-function render(template, data) {
-  // 通过正则查找对应的属性名，然后去data中取
-  return template.replace(/(\{(\w+)\})/g, (all, current, key) => {
-    return data[key];
-  });
-}
-render(template, data);
+npm i -S react-router
 ```
 
-name=小白&age=18&sex=男
+react-router 最主要的功能就是给我们提供的一些可以管理 URL 的组件，通过这些组件对 url 的监听然后根据这些变化来实现切换我们在 Routes 中定义的相关子组件来实现页面路由的映射、参数的解析和传递。
 
-#### 变量绑定
+- BrowserRouter 或 HashRouter 组件
 
-JSX 中的变量绑定, 之前我们说到过, JSX 归根倒底还是一个 JS 内部的语法实现, 这一对大括号里可以放置一些复杂表达式, 虽然我们不能在里面写一堆的 JS 代码, 但是写一些表达式已经足够了。
+> Router 中包含了对路径改变的监听, 并且会将相应的路径传递给子组件  
+> BrowserRouter 使用了 history 模式  
+> HasRouter 使用了 hash 模式
+
+- Link 组件和 NavLink 组件
+
+> 通常路径的跳转时是使用 Link, 最终会被渲染成 a 元素  
+> NavLink 是在 Link 基础之上增加了一些样式属性(后续学习)  
+> to 属性: link 组件中最重要的属性, 用于设置跳转到的路径
+
+- Route 组件 Route 组件用于路径的匹配
+
+> path 属性: 用户设置匹配到的路径  
+> component 属性: 设置匹配到的路径后, 渲染的组件  
+> exact 属性: 精准匹配, 只有精准匹配到完全一致的路径, 才会渲染对应的组件
 
 ```javascript
-<div>{this.state.name}</div>
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+render(
+  <Router>
+    // 路由的最小组件, 一个或多个Route组件, //
+    如果当前location.pathname匹配props.path规则 //
+    就渲染props.component中的内容, 否则渲染null
+    <Route path="/" component={App} />
+  </Router>,
+  // 获取容器组件
+  document.getElementById('app')
+);
 ```
 
-#### 条件渲染
+## BrowserRouter 的 API
 
-条件渲染, 如同我们的变量绑定一样, 只要用一对大括号包起来, 它的内部就可以实现一些简单的 JavaScript 与或甚至三元这种表达式, 都是 OK 的, 但是不能用 ifelse 这种复杂语句。
+BrowserRouter 中最重要的 API, 我们目前需要记住的就是 basename; 很多情况下，使用 react 框架创建项目时，运行 npm start 后，使用 http://localhost:3000/home 即可访问首页。但实际上，很多小公司是没有独立的前端服务器的，这时我们的项目就必须放到一个指定的项目中去，然后使用 nginx 来配置代理，比如：http://localhost:3000/project/home。这个时候我们会发现除了首页，其它页面都访问不了了，因为我们的路由全部指向的是"/", 但实际需要指向"/project"。
+
+- 解决这个问题就需要使用 basename, 为每个路由添加和 nginx 配置的项目名一样的根目录。本例中即为/project
 
 ```javascript
-// 普通的三元
-(
-  <div>
-    {isdone ? (
-      <span>下载完成</span>
-    ) : (
-      <span>下载中</span>
-    )}
-  </div>
-)
+import { BrowserRouter as Router } from 'react-router-dom';
+<Router
+  basename={'/project'} // 根路径，这个比较重要，
+  forceRefresh={bool} // 是否每次渲染都刷新整个页面，默认false，我们不管它
+  getUserConfirmation={func} // 切换路径是否需要确认，默认不需要，我们不管它
+  keyLength={number} // location.key的长度，key的作用是当我们点击同一个链接时是否每次都刷新页面，一样，我们也不动它
+>
+  <Route />
+</Router>;
+```
 
-// 下面这种与或运算符也是可行的
-(
-  <div>
-    {isdone && (
-      <span>下载完成</span>
-    )}
-    {isdone || (
-      <span>下载中</span>
-    )}
-  </div>
-)
+## 路由匹配
 
-// 如果代码量较多, 最好是使用函数调用表达式
+路由匹配是通过将当前的 location 的 pathname 与路由表中 Route 组件的 path 属性进行比较，如果这个组件的 path 与当前的 pathname 一致，则这个组件的 component 属性所指向的组件将会被渲染到页面，如果不匹配，则渲染 null，在没有使用 Switch 的情况下，会遍历整个路由表。要注意的是，当某个 Route 没有 path 时，它所对应的 component 将会一直被渲染。
 
-handlerDownStatus(isDone) {
-  if (isDone) {
+```javascript
+// 当location = {pathname: '/a'}
+<BrowserRouter basename="/admin">
+  <Route path={'/a'} component={A} /> // 匹配成功，渲染A组件
+  <Route path={'/b'} component={B} /> // 匹配失败，渲染null
+  <Route component={C} /> // 没有path,该组件在任何时候都会被渲染
+</BrowserRouter>
+```
+
+## React Router 中的 switch 关键字有什么用处
+
+它的主要作用是一个开关的作用：只要有一个 path 匹配上了对应的组件, 后续就不会再进行匹配了;
+
+```javascript
+// 当location = {pathname: '/a'}
+<BrowserRouter basename="/admin">
+  <Switch>
+    // 开关，表示只在以下的路由表中匹配一个结果
+    <Route path={'/a'} component={A} /> // 匹配成功，渲染A组件
+    <Route path={'/b'} component={B} /> // 匹配失败，渲染null
+    <Route component={C} /> // 没有path,该组件在任何时候都会被渲染
+  </Switch>
+</BrowserRouter>
+```
+
+## 重定向
+
+- Redirect 用于路由的重定向, 当这个组件出现后, 就会执行跳转对应的 to 路径中
+
+```javascript
+<Redirect to="/login" />
+```
+
+## 手动跳转 withRouter
+
+react-router 默认情况下必须是经过路由匹配渲染的组件才存在 this.props，才拥有路由参数，才能使用编程式导航的写法，执行 this.props.history.push('/home')跳转到对应路由的页面；
+
+然而不是所有组件都直接与路由相连（通过路由跳转到此组件）的，当这些组件需要路由参数时，我们可以使用 withRouter 就可以给此组件传入路由参数，此时就可以使用 this.props 来获取 history 对象
+
+方式一: 如果该组件是 **通过路由直接跳转过来** 的, 可以直接从 props 属性中获取 history, location, match
+方式二: App 组件中获取到 history 对象，需要使用 whitRouter**高阶组件**
+
+> App 组件必须包裹在 BrowserRouter 或 HashRouter 组件之内  
+> App 组件使用 withRouter 高阶组件包裹
+
+```javascript
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
+class WithRouterDemo extends Component {
+  render() {
+    console.log(this.props);
     return (
-      <span>下载完成</span>
+      <div>
+        <b> withRouterDemo页面</b>
+      </div>
     );
   }
+}
+export default withRouter(WithRouterDemo);
+```
+
+## 路由传参
+
+react-router 中参数的传递有三种方式：
+
+- search 传递参数；
+- 动态路由的方式；
+- Link 中 to 传入对象；
+
+search 传递参数这个我们就不详细说了，而 Link 中的传参因为 state 的不稳定，我们也不建议使用。所以，主要介绍一下动态路由传参这块：
+
+```javascript
+<Switch>
+  <Route exact={true} path="/home" component={Home} />
+  <Route path="/book/" component={BookList} />
+  <Route path="/book/add" component={Add} />
+  {/* 常规的写法 */}
+  <Route path="/book/detail/:id" component={Detail} />
+  {/* 指定路由 */}
+  <Route path="/book/:pageType(detail|edit)/:id?" component={Detail} />
+  {/* 多参数写法 */}
+  <Route path="/book/:pageType(detail|edit)/:id/:name" component={Detail} />
+  {/* 非必须写法 */}
+  <Route path="/book/:pageType(detail|edit)/:id/:name?" component={Detail} />
+  {/* 指定参数规则 */}
+  <Route
+    path="/book/:pageType(detail|edit)/:id(\\\d+)/:name?"
+    component={Detail}
+  />
+  <Route component={NotFound}></Route>
+</Switch>
+```
+
+## 嵌套路由的实现
+
+```javascript
+<Route
+  path="/"
+  render={() => (
+    <div>
+      <Route path="/" render={() => <div>外层</div>} />
+      <Route path="/in" render={() => <div>内层</div>} />
+      <Route path="/others" render={() => <div>其他</div>} />
+    </div>
+  )}
+/>
+```
+
+## 路由懒加载
+
+> - 什么是路由懒加载？  
+>   路由懒加载，可以理解为延迟加载或按需加载。就是说要到用的时候才会去加载某些路由指向的组件
+> - 为什么要使用路由懒加载？  
+>    大家都应该知道，我们目前所使用的 vue 和 react 框架所生成的网站是一个单页面应用(single page app)，只是通过路由在主容器内加载不同的模块或组件来渲染到我们看到的窗口内。这样的话就造成了我们的项目在第一次打开时，浏览器需要将整站所有的代码文件下载到客户端然后由 react route 或 vue route 进行解析，最后由浏览器进行渲染。小的网站倒是无所谓，但我们的一些后台管理应用动辙几十个模块上千个页面，这样就造成了无论用户想要访问哪个模块都需要将整站代码下载回来才能真正执行，这就造成了长时间的白屏和等待，甚至有时在网络不是很好情况下造成页面崩溃，严重影响了用户体验。  
+>   路由懒加载可以加快网站首屏代码的下载速度，避免用户在打开网站时因为首次下载代码量过大导致首屏等待时间过长。
+
+##### 使用 React 自带的路由懒加载工具：
+
+```javascript
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Switch } from 'react-router-dom';
+
+import RouteGuard from '@/utils/routeGuard';
+
+const Routes = [
+  {
+    path: '/',
+    component: lazy(() => import('@/pages/home/')),
+    auth: false,
+  },
+];
+
+export default function Router() {
   return (
-    <span>下载中</span>
+    // 注意这里，使用懒加载必须配置Suspense，否则路由无法正常访问
+    <Suspense fallback={<div>loading...</div>}>
+      <BrowserRouter>
+        <Switch>
+          <RouteGuard Routes={Routes} />
+        </Switch>
+      </BrowserRouter>
+    </Suspense>
   );
 }
-
-(
-  <div>
-    { this.handlerDownStatus() }
-  </div>
-)
-
 ```
 
-#### 列表渲染
+##### 使用第三方插件实现的路由懒加载：
+
+因为上面的 React 自带的路由懒加载工具只在 16.6 版本后才被支持，而我们在实际业务中可能会遇到更早版本的 react 版本，为了在这些版本的 react 中实现路由懒加载，我们可以使用第三方依赖：
 
 ```javascript
-state = {
-  list: [1, 2, 3],
-}(
-  <div>
-    {this.state.list.map(item => (
-      <span>{item}</span>
-    ))}
-  </div>
-);
-// 注意: map方法中, 一行能返回的, 不需要用大括号包起来, 只有一个参数的, 不需要小括号包起来
+npm i -S react-loadable
 ```
 
-#### 无嵌套一次返回多个元素
-
-在 JSX 语法中, 同一个作用域, 一次只能返回一个 React 元素, 但很多时候, 我们可能需要在同一个作用域里返回两个或多个平级的 React 元素, 但是又不想嵌套太深, 那么可以用下面的方法
+懒加载管理：utils/loadable.js
 
 ```javascript
-// <React.Fragment></React.Fragment>,  React.Fragment 是 react 推荐使用于下面这种状态的容器标签, 能有效返回而又不会在DOM中生成多余的标签。
-<tr>
+import React from 'react';
+import Loadable from 'react-loadable';
+
+//通用的过场组件
+const loadingComponent = () => {
+  return <div>loading...</div>;
+};
+
+//过场组件默认采用通用的，若传入了loading，则采用传入的过场组件
+export default (loader, loading = loadingComponent) => {
+  return Loadable({
+    loader,
+    loading,
+  });
+};
+```
+
+懒加载路由文件： router.js
+
+```javascript
+import React from 'react';
+import { BrowserRouter, Switch } from 'react-router-dom';
+
+import loadable from '@/utils/loadable';
+import RouteGuard from '@/utils/routeGuard';
+
+const Routes = [
   {
-    // 这里如果使用了html标签, 会导致返回的html格式失效, 所以我们需要一个用来定义片段的元素, 不生成 tag但又能符合 React JSX的规范
-  }
-  <React.Fragment>
-    <td>开始下载</td>
-    <td>下载完成</td>
-    <td>下载中</td>
-  </React.Fragment>
-</tr>
+    path: '/',
+    component: loadable(() => import('@/pages/home/')),
+    auth: false,
+  },
+];
 
-// 也可以使用Fragment的简版：<></>; 它们在语义和实现上是完全一致的, 所以, 我们更推荐使用空标签;
-// 不过, 还有一种情况, 就是当我们循环中的标签需要用到key的时候, 就必须使用 React.Fragment 了
+export default function Router() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <RouteGuard Routes={Routes} />
+      </Switch>
+    </BrowserRouter>
+  );
+}
 ```
 
-#### 小节结束
+## React Router 实现的一个简单描述
 
-本小节中需要死记的内容较多, 关于 JSX/DOM/虚拟 DOM 这些都是面试时问得比较多的问题, 然后关于其它的, 你们已经用了一个月了, 再多用 2 个月, 相信怎么都了解透彻了
+1. 引入并实例化 history
+2. 在顶层 Router 组件（我们可以把它理解为一个事件处理函数）的 constructor 生命周期里监听 history，将一个 location 存到当前的 state 中
+3. 使用我们之前学过的 Context(Provider)来包括内部的子组件,存入 history、location 与 match 等对象
+4. 使用 Context(Consumer)来包裹我们传入的 route 列表, 以便于我们在后续的组件中可以使用 history 等 Provider 传入的对象
+5. 调用一个名为 matchPath 的函数来判断我们的子组件中是否有匹配的 path, 如果有则渲染子组件
+
+- 当 history 发生变化时，Router 组件调用 setState 方法将 location 逐级向下传递；使用遍历的方式将 route 列表中的 path 属性匹配 Context 中的 location 来决定是否显示；如果有 Switch 标签的话，匹配到第一个可渲染的组件后退出遍历
+
+## react-router 与 react-router-dom 的区别
+
+> react-router: 实现了路由的核心功能  
+> react-router-dom: 是一个基于 react-router 开发的扩展插件，加入了我们在浏览器运行环境下可以使用的一些功能。比如：可以渲染一个 a 标签的 Link 组件，基于 H5 的 history API 实现的 BrowserRouter 组件，基于 location.hash 实现的 HashRouter;  
+> react-router-native: 基于 react-router 的扩展插件，加入了在 native 运行环境下的一些功能。
+
+- 因为 react-router-dom 会自己安装 react-router 依赖，所以，我们在正常的 web app 开发中，只需要安装 react-router-dom 就行了,在开发 react-native 时也只需要安装 react-router-native.

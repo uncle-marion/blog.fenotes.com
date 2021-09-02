@@ -1,53 +1,69 @@
+# Summary
+
 - [概述](README.md)
-
 - [学习大纲](schedule.md)
-
-- 第一部分 代码规范与项目创建
-  - [lessons_01. 必须养成的 Coding 习惯](unit_01/lessons_01.md)
-  - [lessons_02. ES 中常用的一些方法](unit_01/lessons_02.md)
-- 第二部分 React 基础
-  - [lessons_01. 为 React 补充的一些规范](unit_02/lessons_01.md)
-  - [lessons_02. 从新建一个项目开始](unit_02/lessons_02.md)
-  - [lessons_03. axios 与请求封装](unit_02/lessons_03.md)
-  - [lessons_04. JSX 与虚拟 DOM](unit_02/lessons_04.md)
-  - [lessons_05. React 的组件与 State](unit_02/lessons_05.md)
-  - [lessons_06. React 的 props 与组件通讯](unit_02/lessons_06.md)
-  - [lessons_07. React 的生命周期](unit_02/lessons_07.md)
-  - [lessons_08. React Router 与路由守卫](unit_02/lessons_08.md)
-  - [lessons_09. React 路由懒加载](unit_02/lessons_09.md)
-- 第三部分 React 进阶
-  - 第一单元 Redux
-    - [lessons_01. 状态管理工具 Redux](unit_03/lessons_01.md)
-    - [lessons_02. Redux 流程与实现](unit_03/lessons_02.md)
-    - [lessons_03. Redux ReactRedux](unit_03/lessons_03.md)
-    - [lessons_04. Redux ReduxThink](unit_03/lessons_04.md)
-    - [lessons_05. Redux ReduxSaga](unit_03/lessons_05.md)
-    - [lessons_06. Redux ReduxPromise](unit_03/lessons_06.md)
-    - [lessons_07. Redux 数据驱动全世界](unit_03/lessons_07.md)
-  - 第二单元 Antd
-    - [lessons_01. Antd 模态窗(Modal)](unit_03/lessons_01.md)
-    - [lessons_02. Antd 表单(From)](unit_03/lessons_02.md)
-    - [lessons_03. Antd 文件上传(Upload)](unit_03/lessons_03.md)
-    - [lessons_04. Antd Tree 树 ](unit_03/lessons_04.md)
-    - [lessons_05. Antd 数据分页 ](unit_03/lessons_05.md)
-- 第四部分 React 项目实战 项目架构与协作开发
-  - [lessons_01. 版本管理工具 GIT](unit_04/lessons_01.md)
-  - [lessons_02. 服务器配置与项目发布](unit_04/lessons_02.md)
-- 第五部分 React Hooks
-  - [lessons_01. react hooks ](unit_05/lessons_03.md)
-  - [lessons_02. 自定义 hook ](unit_05/lessons_04.md)
-  - [lessons_03. 函数式编程的一些小知识 ](unit_05/lessons_01.md)
-  - [lessons_04. 函数式编程的实例讲解 ](unit_05/lessons_02.md)
-- 第六部分 React 与 TypeScript
-  - [lessons_01. typeScript 基础知识 ](unit_06/lessons_01.md)
-  - [lessons_02. typeScript 函数重载 ](unit_06/lessons_02.md)
-  - [lessons_03. typeScript 类 ](unit_06/lessons_03.md)
-  - [lessons_04. typeScript 泛型 ](unit_06/lessons_04.md)
-  - [lessons_05. typeScript 装饰器 ](unit_06/lessons_05.md)
-- 第七部分 JavaScript进阶
-  - [lessons_01. JavaScript事件机制](unit_07/lessons_01.md)
-  - [lessons_01. JavaScript事件机制](unit_07/lessons_01.md)
-- 第七部分 nodejs 与 Egg2.x（了解即可）
-- 第八部分 websocket 与 RESTful API（了解即可）
-- 第九部分 把 Vue 和小程序拉出来遛遛
-- 第十部分 完整复习
+- 第一部分 React 项目从零开始
+  - [lessons_01. 开发环境配置](unit_01/lessons_01.md)
+  - [lessons_02. axios 封装](unit_01/lessons_02.md)
+  - [lessons_03. 防抖与节流](unit_01/lessons_03.md)
+  - [lessons_04. moment 与日期格式化](unit_01/lessons_04.md)
+  - [lessons_05. 用户数据管理](unit_01/lessons_05.md)
+  - [lessons_06. JSX 与虚拟 DOM](unit_01/lessons_06.md)
+  - [lessons_07. DIFF 与 FIBER](unit_01/lessons_07.md)
+- 第二部分 React 基础回顾
+  - [lessons_01. 组件与 state](unit_02/lessons_01.md)
+  - [lessons_02. 组件通信与 context](unit_02/lessons_02.md)
+  - [lessons_03. 生命周期与组件优化](unit_02/lessons_03.md)
+  - [lessons_04. 路由管理](unit_02/lessons_04.md)
+  - [lessons_05. 路由守卫](unit_02/lessons_05.md)
+  - [lessons_06. 嵌套路由与权限管理](unit_02/lessons_06.md)
+  - [lessons_07. 高阶组件](unit_02/lessons_07.md)
+  - [lessons_08. 传送门及其它](unit_02/lessons_08.md)
+- 第三部分 React 状态管理
+  - [lessons_01. 什么是 Redux](unit_03/lessons_01.md)
+  - [lessons_02. react-redux](unit_03/lessons_02.md)
+  - [lessons_03. redux 开发工具与 store 配置](unit_03/lessons_03.md)
+  - [lessons_04. redux 中间件](unit_03/lessons_04.md)
+  - [lessons_05. redux 规范](unit_03/lessons_05.md)
+  - [lessons_06. redux persist](unit_03/lessons_06.md)
+- 第四部分 React 项目实战-第三方组件库
+  - [lessons_01. Antd Modal](unit_04/lessons_01.md)
+  - [lessons_02. Antd Form](unit_04/lessons_02.md)
+  - [lessons_03. Antd Table + Pagination](unit_04/lessons_03.md)
+  - [lessons_04. Antd Upload](unit_04/lessons_04.md)
+  - [lessons_05. Antd 其它](unit_04/lessons_05.md)
+- 第五部分 环境与版本管理
+  - [lessons_01. 开发环境配置](unit_05/lessons_01.md)
+  - [lessons_02. git 配置与版本管理](unit_05/lessons_02.md)
+  - [lessons_03. webpack 入门](unit_05/lessons_03.md)
+  - [lessons_04. webpack 配置与项目优化](unit_05/lessons_04.md)
+  - [lessons_05. 项目流程与发布相关](unit_05/lessons_05.md)
+- 第六部分 ECMAScript 基础
+  - [lessons_01. ES6 常用方法](unit_06/lessons_01.md)
+  - [lessons_02. promise 与 async/await](unit_06/lessons_03.md)
+  - [lessons_03. 函数式编程的一些小知识](unit_06/lessons_02.md)
+  - [lessons_04. Set/Map](unit_06/lessons_04.md)
+  - [lessons_05. Reflect/Proxy](unit_06/lessons_05.md)
+  - [lessons_06. ES 笔试题实现](unit_06/lessons_06.md)
+- 第七部分 React Hooks
+  - [lessons_01. 常用 hook](unit_07/lessons_01.md)
+  - [lessons_02. 其它 hook](unit_07/lessons_02.md)
+  - [lessons_07. 自定义 hooks](unit_07/lessons_03.md)
+- 第八部分 React 状态管理
+  - [lessons_01. redux 的全局状态管理](unit_08/lessons_01.md)
+  - [lessons_02. redux saga](unit_08/lessons_02.md)
+  - [lessons_03. dva 框架](unit_08/lessons_03.md)
+  - [lessons_04. umi 的使用](unit_08/lessons_04.md)
+  - [lessons_05. mobx](unit_08/lessons_05.md)
+- 第九部分 TypeScript
+  - [lessons_01. TypeScript 基础过一过](unit_09/lessons_01.md)
+  - [lessons_02. TypeScript 与类组件](unit_09/lessons_02.md)
+  - [lessons_03. TypeScript 与函数组件](unit_09/lessons_03.md)
+- 第十部分 一些不常见的面试问题
+  - [lessons_01. websocket](unit_10/lessons_01.md)
+  - [lessons_02. 跨域问题](unit_10/lessons_02.md)
+  - [lessons_03. 什么是 ssr](unit_10/lessons_03.md)
+  - [lessons_04. mock 的配置与使用](unit_10/lessons_04.md)
+- 第十一部分 把 Vue 和小程序拉出来遛遛
+- 第十二部分 flutter 与 RN
+- 第十三部分 完整复习

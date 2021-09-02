@@ -1,301 +1,354 @@
-> 企业项目实战 > JavaScript 进阶 > JavaScript 的事件机制
+> Marion 的 react 实战课程 > 第七部分 > 常见 hook
 
-### 面试题
+# React 的新特性 Hook
 
-#### 为什么 JavaScript 是单线程的
+### 什么是 Hook? 为什么要使用 Hook?
 
-> JavaScript 语言的最大特点就是单线程，也就是说，同一个时间只能做一件事。这样设计的方案主要源于其语言特性，因为 JavaScript 是浏览器脚本语言，它可以操纵 DOM ，可以渲染动画，可以与用户进行互动，如果是多线程的话，执行顺序无法预知，而且操作以哪个线程为准也是个难题。所以，为了避免复杂性，从一诞生，JavaScript 就是单线程，这已经成了这门语言的核心特征，将来也不会改变。
-> 在 HTML5 时代，浏览器为了充分发挥 CPU 性能优势，允许 JavaScript 创建多个线程，但是即使能额外创建线程，这些子线程仍然是受到主线程控制，而且不得操作 DOM，类似于开辟一个线程来运算复杂性任务，运算好了通知主线程运算完毕，结果给你，这类似于异步的处理方式，所以本质上并没有改变 JavaScript 单线程的本质。
+首先我们要理解**什么是 Hook**。Hook，中文意义是“钩子”的意思。在 React 中，Hook 是一个特殊的函数，它可以监视系统或进程中的各种状态，让我们在函数组件中也可以使用状态以及实现类似于 componentDidMount 与 componetDidUpdatet 等生命周期一样的方法；
 
-#### 如果 JavaScript 是单线程的，为什么它可以执行多线程操作（异步操作）
+**为什么要使用 Hook?** 一是因为类组件中仍然存在大量的 this 指向造成的困惑，使用内联函数又会造成过度地创建句柄；另一个原因是类组件中的生命周期函数本身的缺陷，造成我们在编写业务时需要将相干逻辑分散到不同的生命周期，同时，在同一个生命周期函数中又存在大量不相干逻辑，这让我们读代码时理解业务逻辑变得困难；然后最大的问题是，在组件之间复用状态逻辑变得越来越困难，特别在一些复杂的逻辑组件和高阶组件中，复用性变得越来越差。而 Hook 的优势恰恰在于它是基于函数组件开发的，完全没有 this 问题；每一个副作用只管理自己的业务逻辑同时自定义的 Hook 更加方便复用状态逻辑；然后自定义的 Hook 可以让我们非常方便地复用状态逻辑。
 
-> JS 是单线程的，只有一个主线程
-> 函数内的代码从上到下顺序执行，遇到被调用的函数先进入被调用函数执行，待完成后继续执行
-> 遇到异步事件，浏览器另开一个线程，主线程继续执行，待结果返回后，执行回调函数
+### React Hook 的使用规则
 
-因为 JS 这个语言是运行在宿主环境中，比如 浏览器环境，nodeJs 环境; 在浏览器中，浏览器负责提供这个额外的线程; 在 Node 中，Node.js 借助 libuv 来作为抽象封装层， 从而屏蔽不同操作系统的差异，Node 可以借助 libuv 来实现多线程。而这个异步线程又分为 微任务 和 宏任务，我们就用两天的时间来研究 JS 的异步原理以及其事件循环机制。
+- 只在最顶层使用 Hook: 不允许在循环、条件判断或嵌套函数中调用 Hook，要确保总是在你的 React 函数的最顶层调用它们
+- 只在自己的依赖更新时才执行 effect:
+- .1 使用 useEffect 完成副作用操作，赋值给 useEffect 的函数会在组件渲染到屏幕之后执行；
+- .2 不要忘记函数依赖，需要把 useEffect 内部引用到的方式，声明为当前 effect 的依赖；
+- 理解每一次的 rendering
 
-#### 函数调用栈
+### React Hook 有哪些特性
 
-函数调用栈，从名字可以看出来，它是一个栈，栈的特性就是先进后出，传统语言中还有一个堆的概念，堆的概念是先进先出。
+#### useState
 
-<img src="../assets/stack.png">
-
-上图就是一个简单的调用栈，在调用栈中，前一个函数在执行的时候，下面的函数全部需要等待前一个任务执行完毕，才能执行。
-
-但是，有很多任务需要很长时间才能完成，如果一直都在等待的话，调用栈的效率极其低下，这时，JavaScript 语言设计者意识到，这些任务主线程根本不需要等待，只要将这些任务挂起，先运算后面的任务，等到执行完毕了，再回头将此任务进行下去，于是就有了 任务队列 的概念。
-
-#### 任务队列
-
-所有任务可以分成两种，一种是 同步任务（synchronous），另一种是 异步任务（asynchronous） 。
-
-同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务。
-
-异步任务指的是，不进入主线程、而进入"任务队列"（task queue）的任务，只有 "任务队列"通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。
-
-所以，当在执行过程中遇到一些类似于 setTimeout 等异步操作的时候，会交给浏览器的其他模块进行处理，当到达 setTimeout 指定的延时执行的时间之后，回调函数会放入到任务队列之中。
-
-当然，一般不同的异步任务的回调函数会放入不同的任务队列之中。等到调用栈中所有任务执行完毕之后，接着去执行任务队列之中的回调函数。
-
-用一张图来表示就是：
-
-<img src="../assets/stack1.png">
-
-上面的图中，调用栈先进行顺序调用，一旦发现异步操作的时候就会交给浏览器内核的其他模块进行处理，对于 Chrome 浏览器来说，这个模块就是 webcore 模块，上面提到的异步 API，webcore 分别提供了 DOM Binding、network、timer 模块进行处理。等到这些模块处理完这些操作的时候将回调函数放入任务队列中，之后等栈中的任务执行完之后再去执行任务队列之中的回调函数。
-
-我们先来看一个有意思的现象，我运行一段代码，大家觉得输出的顺序是什么：
+我们可以把 useState 理解为类组件中的 this.setState。useState 是允许我们在 React 函数组件中添加状态的 Hook。
 
 ```javascript
-setTimeout(() => {
-  console.log('setTimeout');
-}, 22);
-for (let i = 0; i++ < 2; ) {
-  i === 1 && console.log('1');
-}
-setTimeout(() => {
-  console.log('set2');
-}, 20);
-for (let i = 0; i++ < 100000000; ) {
-  i === 99999999 && console.log('2');
+// 常用的写法，我们是用es6的方法将useState返回的数组解构了
+const [inputValue, setInputValue] = useState("请输入");
+```
+
+useState 方法接受一个默认值作为参数，返回一个数组：数组的第一个成员是我们刚刚传入的默认值，第二个成员是一个用于改变我们定义的默认值的匿名函数，我们可以把第二个成员当成我们在 class 组件中的 this.setState()，只不过这里这个匿名函数只能改变当前状态的值。
+
+##### 隋性的 useState
+
+与 setState 一样，如果初始 state 需要通过复杂计算获得，则可以传入一个函数，在函数中计算并返回初始的 state，当然，此函数只在初始渲染时被调用
+
+```javascript
+const TestInput = (props) => {
+  // useState在首次渲染时使用useState中传入的函数来初始化inputValue, 二次渲染时则直接读取inputValue这个变量的值
+  const [inputValue, setInputValue] = useState(() => props.value || "请输入");
+  return (
+    <div>
+      <input
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      {inputValue}
+    </div>
+  );
+};
+```
+
+##### state 的普通更新
+
+##### 函数式更新
+
+与 this.setState 类似，如果新的 state 需要通过使用先前的 state 计算得出，那么可以将一个被称之为 updater 的函数传递给 setState。这个函数将接收当前的 state，然后返回一个更新后的值
+
+```javascript
+function TestCount({ initialCount }) {
+  const [count, setCount] = useState(initialCount);
+  return (
+    <>
+      数量: {count}
+      <button onClick={() => setCount(initialCount)}>重置</button>
+      <button onClick={() => setCount((prevCount) => prevCount + 1)}>+</button>
+      <button onClick={() => setCount((prevCount) => prevCount - 1)}>-</button>
+    </>
+  );
 }
 ```
 
-ok 我们现在拿这个代码执行过程来解析一下
+##### 对象更新
 
-第一步，文件入栈：
-
-<img src="../assets/stack2.png">
-
-第二步，执行文件，读取第一段代码入栈，所以，这里将 setTimeout 入栈：
-
-<img src="../assets/stack3.png">
-
-第三步，调用栈发现 setTimeout 是一个 webapis 的 API(上面说的，异步 API 的一种)，于是把它丢给了浏览器的 timer 模块进行处理了，调用栈则继续处理下一段代码：
-
-<img src="../assets/stack4.png">
-
-第四步，log 任务没有涉及其它代码段，所以它会立即执行，在控制台打印文字。然后调用栈再次处理下一段代码，所以，setTimeout(20)入栈：
-
-<img src="../assets/stack5.png">
-
-第五步，参考第三步，setTimeout 被判定为异步 API，交由 timer 模块进行处理，调用栈继续处理下一段代码：
-
-<img src="../assets/stack6.png">
-
-第六步，与第四步一样，log 任务被立即执行，在控制台打印文字。然后，main.js 执行完成，被弹出调用栈。因调用栈已被清空，所以转换关注点到异步 API，当异步 API 被执行完成后会把回调函数放入任务队列：
-
-<img src="../assets/stack7.png">
-
-第七步，任务队列在接收到回调函数后，通知调用栈，还有待处理的任务，然后将刚第一个加入队列中的回调函数加入到调用栈中，然后调用栈立即执行这个 log 任务：
-
-<img src="../assets/stack8.png">
-
-第八步，任务队列接收到另一个回调函数，将新的回调函数加入调用栈后被执行，然后调用栈再次被清空，等待执行其它任务。
-
-<img src="../assets/stack9.png">
-
-##### 小结 上面的流程解释了浏览器遇到 setTimeout 之后究竟如何执行的，其实总结下来就是以下几点：
-
-> 调用栈顺序调用任务  
-> 当调用栈发现异步任务时，将异步任务交给其他模块处理，自己继续进行下面的调用  
-> 异步执行完毕，异步模块将任务推入任务队列，并通知调用栈  
-> 调用栈在执行完当前任务后，将执行任务队列里的任务  
-> 调用栈执行完任务队列里的任务之后，继续执行其他任务
-
-上面这一整个流程就叫做 事件循环（Event Loop）。
-
-小结练习，一个常见的面试题：
+需要注意的是，与 class 组件中的 setState 方法不同，useState 是全量替换，它不会像 this.setState 那样进行浅拷贝来自动合并更新对象。我们需要用函数式的 setState 结合展开运算符来达到合并更新对象的效果
 
 ```javascript
-for (var i = 0; i < 10; i++) {
-  setTimeout(() => {
-    console.log(i);
-  }, 1000);
+const defaultObj = {
+  a: 1,
+  b: 2,
+};
+function TestObject() {
+  const [obj, setObj] = useState(() => {
+    return {
+      ...defaultObj,
+      c: 3,
+    };
+  });
+
+  return (
+    <>
+      obj.a: {obj.a}
+      obj.b: {obj.b}
+      obj.c: {obj.c}
+      <button
+        onClick={() =>
+          setObj({
+            ...obj,
+            c: 5,
+          })
+        }
+      >
+        改写
+      </button>
+    </>
+  );
 }
-console.log(i);
 ```
 
-执行解析：
+##### 建议使用方式
 
-> 首先由于 var 的变量提升，i 在全局作用域都有效  
-> 再次，代码遇到 setTimeout 之后，将该函数交给其他模块处理，自己继续执行 console.log(i) ，由于变量提升，i 已经循环 10 次，此时 i 的值为 10 ，即，输出 10  
-> 之后，异步模块处理好函数之后，将回调推入任务队列，并通知调用栈  
-> 1 秒之后，调用栈顺序执行回调函数，由于此时 i 已经变成 10 ，即输出 10 次 10
-
-另一个练习：
+上面的更新对象的方式写法十分不方便而且极易出现 bug，更合理的方式应该是将组件中相关的内容放在不同的 state 里面，这样就可以避免更新某个状态时需要手动维护其它状态。
+如果一定要维护上面那种复杂状态的话，我们稍后会学习 useReducer，这个 api 在管理复杂状态时要比 useState 好用
 
 ```javascript
-setTimeout(() => {
-  console.log(4);
-}, 0);
-new Promise(resolve => {
-  console.log(1);
-  for (var i = 0; i < 10000000; i++) {
-    i === 9999999 && resolve();
+// 不好的写法
+const [containInfo, setContainInfo] = useState({
+  left: 0,
+  top: 0,
+  width: 0,
+  height: 0,
+});
+const handleContainerResize = ({ width, height }) =>
+  setContainInfo({ ...containInfo, width, height });
+const handleContainerMove = ({ left, top }) =>
+  setContainInfo({ ...containInfo, left, top });
+// 好的写法
+const [pos, setPos] = useState({ left: 0, top: 0 });
+const [size, setSize] = useState({ width: 0, height: 0 });
+const handleContainerResize = ({ width, height }) => setSize({ width, height });
+const handleContainerMove = ({ left, top }) => setPos({ left, top });
+```
+
+##### setState 没有回调函数
+
+无论 useState 还是 this.setState，它们都是异步调用的，也就是说每次组件调用完成后我们都没办法拿到最新的 state 值。为了解决这个问题，class 组件允许我们在 this.setState 中加入一个回调函数来实时获取最新的 state 值：
+
+```javascript
+this.setState(newState, (state) => {
+  // 这个函数接收到的参数就是最新的state
+});
+```
+
+但是函数组件没有提供这样一个可以拿到最新的 state 的回调函数。所以 hook 在我们接下来要学习的另一个 API: useEffect 中提供了实时获取 state 的方法：
+
+#### useEffect
+
+useEffect，这个词中文官网或者说一些中文翻译网站，将它译为副作用。为了更好地理解副作用，我们需要重温一下什么是纯函数。
+
+##### 纯函数
+
+> 当一个函数的返回结果只依赖于它的参数，并且没有副作用，我们就可以将这个函数称之为一个纯函数。
+>
+> 1. 函数的返回结果只依赖于它的参数
+> 2. 函数的执行过程里面没有副作用
+
+```javascript
+const arr = [1, 2, 3, 4, 5];
+// 纯的函数
+function pureFun(arr, start, end) {
+  return arr.slice(start, end);
+}
+// 非纯函数
+function fun(arr, start, end) {
+  return arr.splice(start, end);
+}
+pureFun(arr, 0, 2); // 无论调用多少次，都是[1,2]
+fun(arr, 1, 3); // 第一次是[1,2],第二次是[3,4],第三次是[5],然后是[],它甚至还强行改变了外部的arr
+```
+
+##### 副作用
+
+通过上面的两个函数，我们可以得知，所谓的副作用就是指一个函数做了和本身运算返回值无关的事情，比如：修改了全局变量、修改了传入的参数、甚至是 console.log()，所以 ajax 与获取 dom 的操作都算是副作用的。
+
+而在函数组件中，它的副作用指的是修改了组件中的 state，或者调用了某个外部方法又或者获取一段 ajax 数据等等。
+
+##### 怎样使用 useEffect
+
+```javascript
+useEffect(effect, dependencies);
+```
+
+useEffect 的第一个参数 effect 是需要执行的副作用函数，它可以是我们定义的任何函数，我们在这个函数里操作一些浏览器的 API 或者与外部环境进行交互。这个函数在每次组件渲染完成后被调用。例如
+
+```javascript
+const TestInput = (props) => {
+  const [inputValue, setInputValue] = useState(() => props.value || "请输入");
+  useEffect(() => {
+    console.log("组件已经渲染完成，副作用被执行");
+    // setInputValue('!!!!不可以用这种方式来更新组件状态!!!!')
+  });
+  console.log("开始渲染组件");
+  return (
+    <div>
+      <input
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      {inputValue}
+    </div>
+  );
+};
+```
+
+上面的副作用函数我们已经使用过很长时间了，就不再说太多。。但要注意的是，在没有提供第二个依赖参数之前，我们不能在副作用中尝试修改组件状态！
+
+##### 通过 useEffect 来获取最新的 state
+
+刚才已经说到了 useEffect 的第二个参数，useEffect 允许我们通过 dependencies 来限制当前这个副作用函数应该在什么时间被执行：只有在 dependencies 数组里面的元素发生变化时才会执行。因此我们可以通过控制一些状态的变化来判断是否执行这个副作用
+
+```javascript
+const TestInput = (props) => {
+  const [inputValue, setInputValue] = useState(() => props.value || "请输入");
+  useEffect(() => {
+    console.log("组件已经渲染完成，副作用被执行", inputValue);
+  }, [inputValue]);
+  console.log("开始渲染组件");
+  return (
+    <div>
+      <input
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      {inputValue}
+    </div>
+  );
+};
+```
+
+##### useEffect 带来的一些问题
+
+在我们之前的课程里，经常会发现，有一些稍复杂的组件逻辑中，副作用的依赖项经常会提示警告，比如下面这段代码：
+
+<img src="../assets/effectWarn.jpg" />
+
+```javascript
+useEffect(() => {
+  const arr = [];
+  for (let i = 0; i < 10; i++) {
+    arr.push(pageNo + i);
   }
-  console.log(2);
-}).then(() => {
-  console.log(5);
-});
-console.log(3);
+  loading = false;
+  setList([...list, ...arr]);
+  // 下面这行的意思是，不允许eslint检查下一行代码是否符合hooks的依赖规则
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [pageNo]);
 ```
 
-#### 宏任务与微任务
+#### useLayoutEffect
 
-上一个练习的输出结果是 1,2,3,5,4，因为这涉及到任务队列的内部，宏任务和微任务。
-
-##### 什么是宏任务和微任务
-
-任务队列又分为 macro-task（宏任务） 与 micro-task（微任务） ，在最新标准中，它们被分别称为 task 与 jobs 。
-
-**macro-task（宏任务）** 大概包括：script(整体代码), setTimeout, setInterval, setImmediate（NodeJs）, I/O, UI rendering。
-**micro-task（微任务）** 大概包括: process.nextTick（NodeJs）, Promise, MutationObserver(html5 新特性)
-
-来自不同任务源的任务会进入到不同的任务队列。其中 setTimeout 与 setInterval 是同源的。
-事实上，事件循环决定了代码的执行顺序，从全局上下文进入函数调用栈开始，直到调用栈清空，然后执行所有的 micro-task（微任务），当所有的 micro-task（微任务）执行完毕之后，再执行 macro-task（宏任务），其中一个 macro-task（宏任务）的任务队列执行完毕（例如 setTimeout 队列），再次执行所有的 micro-task（微任务），一直循环直至执行完毕。
-
-然后，我们在这里使用新的流程图来解析上面的代码：
-
-第一步：文件入栈，然后 setTimeout 入栈，被转入宏任务队列中，再然后 Promise 被压入栈中
-
-<img src="../assets/stack10.png">
-
-第二步：调用栈中执行 Promise 实例，然后它接受的参数 resolve 方法，是在 new 的时候被执行，因此不会进入任何其他的队列，而是直接在当前任务直接执行了，而后续的.then 则会被分发到 micro-task 的 Promise 队列中去：
-
-<img src="../assets/stack11.png">
-<img src="../assets/stack12.png">
-
-第三步：调用栈继续执行宏任务 main.js，输出 3 并弹出调用栈，main.js 执行完毕弹出调用栈，调用栈被清空
-
-<img src="../assets/stack13.png">
-<img src="../assets/stack14.png">
-
-第四步：这时，macro-task(宏任务)中的 script 队列执行完毕，事件循环开始执行所有的 micro-task(微任务)
-
-<img src="../assets/stack15.png">
-
-第五步：输出 5 后，调用栈发现所有的 micro-task(微任务) 都已经执行完毕，于是转换到 macro-task(宏任务)中调用 setTimeout 队列
-
-<img src="../assets/stack16.png">
-
-第六步：macro-task(宏任务) setTimeout 队列执行完毕，调用栈再次接入微任务进行查找是否有未执行的微任务，发现没有就继续宏任务执行下一个队列，再次发现宏任务也没有队列执行，调用结束。
-
-##### 总结：
-
-1 不同的任务会放进不同的任务队列之中。
-2 先执行 macro-task，等到函数调用栈清空之后再执行所有在队列之中的 micro-task。
-3 等到所有 micro-task 执行完之后再从 macro-task 中的一个任务队列开始执行，就这样一直循环。
-4 宏任务和微任务的队列执行顺序排列如下：
-5 macro-task（宏任务）：script(整体代码), setTimeout, setInterval, setImmediate（NodeJs）, I/O, UI rendering。
-6 micro-task（微任务）: process.nextTick（NodeJs）, Promise, MutationObserver(html5 新特性)
-
-总结练习：
+useLayoutEffect 的使用场景并不是很多，但在一些需要在渲染之后对一些大的模块做调整，会影响到页面的整体布局时，它会在 Dom 变更之后同步调用 effect:
 
 ```javascript
-<script>
-  setTimeout(() => {
-    console.log(4)
-  }, 0);
-  new Promise((resolve) => {
-    console.log(1);
-    for (var i = 0; i < 10000000; i++) {
-      i === 9999999 && resolve();
-    }
-    console.log(2);
-  }).then(() => {
-    console.log(5);
+import React, { useEffect, useLayoutEffect, useRef } from "react";
+import "./style.less";
+
+const TestLayoutEffect = () => {
+  const moveDiv = useRef();
+  // 渲染完成后将div往右移动600像素
+  useEffect(() => {
+    moveDiv.current.style = "margin-left: 600px";
+  }, []);
+  return (
+    <div className="layout">
+      <div ref={moveDiv} className="square">
+        square
+      </div>
+    </div>
+  );
+};
+export default TestLayoutEffect;
+```
+
+通过上面的 demo 我们可以看到，使用 effect 来调整模块位置总是会伴随着闪屏，而使用 layoutEffect 就没有了这个问题，因为它会阻塞浏览器的绘制，将自己的工作插入在 Dom 更新完之后渲染之前。我们可以看到，使用 layoutEffect 时，无论怎么刷新页面，几乎都是看不见任何页面变化的。
+
+#### useRef
+
+useRef 的功能与 class 组件 中的 ref 功能基本类似，但 hooks 还赋予了它全新的用法：
+https://react.docschina.org/docs/hooks-reference.html#useref
+需要注意的是这里：**useRef 会在每次渲染时返回同一个 ref 对象**，我们可以利用这个特性来方便地保存一些变量。
+
+- 基本用法：获取子组件或者 Dom 节点的句柄
+  > 句柄的名词解释：
+  > 句柄的英文是 handle。在英文中，有操作、处理、控制之类的意义。作为一个名词时，是指某个中间媒介，通过这个中间媒介可控制、操作某样东西。以我们前端的理解来说，就是一个 ID，可以通过这个 ID 来访问 Dom 节点对象。
+
+```javascript
+import React, { useState, useEffect, useRef } from "react";
+export default TestInput = (props) => {
+  const [inputValue, setInputValue] = useState("");
+  const inputEl = useRef(null);
+  useEffect(() => {
+    // `current` 指向已挂载到 DOM 上的文本输入元素
+    inputEl.current.focus();
   });
-  console.log(3);
-</script>
-<script>
-  console.log(6)
-  new Promise((resolve) => {
-    resolve()
-  }).then(() => {
-    console.log(7);
-  });
-</script>
+  return (
+    <div>
+      <input
+        ref={inputEl}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />{" "}
+      {inputValue}
+      <p>{props.visible}</p>
+    </div>
+  );
+};
 ```
 
-解析：
+如上面的例子，首先我们通过 useRef 创建一个变量 inputEl，页面渲染时将获取到的 input 真实 DOM 存储到 inputEl.current 中，页面渲染完成后执行 useEffect，利用真实 DOM 让 input 输入框获取焦点。
 
-第一步：第一个整体任务 script1 进入宏任务队列
-
-第二步：script1 进行调用，将 setTimeout 分发至宏任务的 setTimeout 队列，实例化 promise 方法并打印第一行 log(1)，再打印 log2，将 then 方法分发至微
-任务的 promise 队列。最后打印 log(3)并弹出调用栈
-
-第三步：script1 执行完毕，调用栈清空后，直接调取所有微任务，打印 log(5)
-
-第四步：script1 被弹出后继续将第二个整体任务 script2 压入任务队列
-
-第五步：script2 被调用，打印 log(6)，实例化 promise 方法并将 then 方法分发至微任务的 promise 队列。然后弹出 script2
-
-第六步：script2 被弹出调用栈清空后，再次调取所有微任务，打印 log(7)
-
-第七步：现在所有微任务被执行完毕，于是调用栈切换到宏任务检查，发现还有一个 setTimeout 任务没有执行，于是打印 log(4)
-
-第八步：执行完所有宏任务后又再次接入微任务，发现没有了微任务后，调用结束。
-
-总结练习 2
+- 渲染周期之间共享数据的存储
 
 ```javascript
-setImmediate(() => {
-  console.log(1);
-}, 0);
-setTimeout(() => {
-  console.log(2);
-}, 0);
-new Promise(resolve => {
-  console.log(3);
-  resolve();
-  console.log(4);
-}).then(() => {
-  console.log(5);
-});
-console.log(6);
-process.nextTick(() => {
-  console.log(7);
-});
-console.log(8);
-```
+function Timer() {
+  const intervalRef = useRef();
 
-总结练习 3
-
-```javascript
-setTimeout(() => {
-  console.log('to1');
-  new Promise(resolve => {
-    console.log('to1_p');
-    setTimeout(() => {
-      console.log('to1_p_to');
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      // ...
     });
-    resolve();
-  }).then(() => {
-    console.log('to1_then');
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   });
-});
-
-new Promise(resolve => {
-  console.log('p1');
-  resolve();
-}).then(() => {
-  console.log('then1');
-});
-
-setTimeout(() => {
-  console.log('to2');
-  new Promise(resolve => {
-    console.log('to2_p');
-    resolve();
-  }).then(() => {
-    console.log('to2_then');
-  });
-});
-
-new Promise(resolve => {
-  console.log('p2');
-  resolve();
-}).then(() => {
-  console.log('then2');
-});
+}
 ```
+
+useRef() Hook 不仅仅可以用于储存 Dom 节点，还可以用来储存任意的属性。useRef 返回的 ref 对象是一个 current 属性可变且可以容纳任意值的通用容器，类似于一个 class 的实例属性。像上面这段代码一样，我们可以把一个定时器 ID 存入到 useRef 中，这样这个定时器 ID 不仅仅在 useEffect 中可以拿到，而且在整个组件函数的任意位置都可以获取到。
+
+- 利用 useRef 获取上一轮的 props 或 state
+
+```javascript
+function Counter() {
+  const [count, setCount] = useState(0);
+  const prevCountRef = useRef();
+  useEffect(() => {
+    prevCountRef.current = count;
+  });
+  const prevCount = prevCountRef.current;
+
+  return (
+    <>
+      <h1>
+        新的：{count}; 旧的：{prevCount}
+      </h1>
+      <button onClick={() => setCount((count) => count + 1)}>加个数</button>
+    </>
+  );
+}
+```
+
+在上面的例子中我们可以看到，首先利用页面渲染拿到了 count 的值为 0，然后此时的 prevCount 刚刚创建，所以它的值是个 undefined，当页面渲染完成后进入副作用 useEffect 中，进行赋值操作。这个时候 count 的值就保存到了 current 中了。
+
+> 当然，这个时候页面并不会重新渲染，因为我们的 prevCount 并不是通过 setState 方法写入的，所以 react 认为这个变量的变化并不需要渲染到页面中。
+> 当点击按钮后，因为 count 的变化导致 react 接受到了渲染 DOM 的命令，于是页面开始重新渲染，所以这个时候 prevCount 的值变化为 0，并在本次渲染完成后因为副作用 useEffect 中的重新赋值为 1。

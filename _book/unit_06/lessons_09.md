@@ -1,340 +1,301 @@
-> 企业框架实战\_第一部分\_TypeScript 入门
+> 企业项目实战 > JavaScript 进阶 > JavaScript 的事件机制
 
-#### 泛型 <font color=red>Generics</font>
+### 面试题
 
-泛型（Generics）是指在定义函数、接口或类的时候，对它们的参数不预先指定具体的类型，而在使用的时候再指定类型的一种特性。
+#### 为什么 JavaScript 是单线程的
 
-在 TypeScript 中，泛型的实现使我们能够创建可重用的组件，一个组件可以支持多种类型的数据，为代码添加额外的抽象层和可重用性。这种组件不只能被一种类型使用，而是能被多种类型复用。类似于参数的作用，泛型是一种用以增强类（classes）、类型（types）和接口（interfaces）能力的非常可靠的手段。这样，我们开发者，就可以轻松地将那些可复用的代码组件，适用于各种输入。这里，大家可能以为用 any 也能达到这个需求，但我们之前说过，TypeScript 中不建议使用 any 类型，原因比较多，类型的丢失导致静态检查失效是主要原因。但其中还有一个原因，就是调试时缺乏完整的信息。而我们选择 VS Code 作为开发工具的一个最大的理由，就是它带来的基于这些信息的类型侦测。
+> JavaScript 语言的最大特点就是单线程，也就是说，同一个时间只能做一件事。这样设计的方案主要源于其语言特性，因为 JavaScript 是浏览器脚本语言，它可以操纵 DOM ，可以渲染动画，可以与用户进行互动，如果是多线程的话，执行顺序无法预知，而且操作以哪个线程为准也是个难题。所以，为了避免复杂性，从一诞生，JavaScript 就是单线程，这已经成了这门语言的核心特征，将来也不会改变。
+> 在 HTML5 时代，浏览器为了充分发挥 CPU 性能优势，允许 JavaScript 创建多个线程，但是即使能额外创建线程，这些子线程仍然是受到主线程控制，而且不得操作 DOM，类似于开辟一个线程来运算复杂性任务，运算好了通知主线程运算完毕，结果给你，这类似于异步的处理方式，所以本质上并没有改变 JavaScript 单线程的本质。
 
-#### 泛型的实现
+#### 如果 JavaScript 是单线程的，为什么它可以执行多线程操作（异步操作）
 
-假如我们需要一个函数，他的作用是我们传给它什么，它就返回给我们什么。先不讨论这个函数有什么用处，我们只考虑实现：
+> JS 是单线程的，只有一个主线程
+> 函数内的代码从上到下顺序执行，遇到被调用的函数先进入被调用函数执行，待完成后继续执行
+> 遇到异步事件，浏览器另开一个线程，主线程继续执行，待结果返回后，执行回调函数
+
+因为 JS 这个语言是运行在宿主环境中，比如 浏览器环境，nodeJs 环境; 在浏览器中，浏览器负责提供这个额外的线程; 在 Node 中，Node.js 借助 libuv 来作为抽象封装层， 从而屏蔽不同操作系统的差异，Node 可以借助 libuv 来实现多线程。而这个异步线程又分为 微任务 和 宏任务，我们就用两天的时间来研究 JS 的异步原理以及其事件循环机制。
+
+#### 函数调用栈
+
+函数调用栈，从名字可以看出来，它是一个栈，栈的特性就是先进后出，传统语言中还有一个堆的概念，堆的概念是先进先出。
+
+<img src="../assets/stack.png">
+
+上图就是一个简单的调用栈，在调用栈中，前一个函数在执行的时候，下面的函数全部需要等待前一个任务执行完毕，才能执行。
+
+但是，有很多任务需要很长时间才能完成，如果一直都在等待的话，调用栈的效率极其低下，这时，JavaScript 语言设计者意识到，这些任务主线程根本不需要等待，只要将这些任务挂起，先运算后面的任务，等到执行完毕了，再回头将此任务进行下去，于是就有了 任务队列 的概念。
+
+#### 任务队列
+
+所有任务可以分成两种，一种是 同步任务（synchronous），另一种是 异步任务（asynchronous） 。
+
+同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务。
+
+异步任务指的是，不进入主线程、而进入"任务队列"（task queue）的任务，只有 "任务队列"通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。
+
+所以，当在执行过程中遇到一些类似于 setTimeout 等异步操作的时候，会交给浏览器的其他模块进行处理，当到达 setTimeout 指定的延时执行的时间之后，回调函数会放入到任务队列之中。
+
+当然，一般不同的异步任务的回调函数会放入不同的任务队列之中。等到调用栈中所有任务执行完毕之后，接着去执行任务队列之中的回调函数。
+
+用一张图来表示就是：
+
+<img src="../assets/stack1.png">
+
+上面的图中，调用栈先进行顺序调用，一旦发现异步操作的时候就会交给浏览器内核的其他模块进行处理，对于 Chrome 浏览器来说，这个模块就是 webcore 模块，上面提到的异步 API，webcore 分别提供了 DOM Binding、network、timer 模块进行处理。等到这些模块处理完这些操作的时候将回调函数放入任务队列中，之后等栈中的任务执行完之后再去执行任务队列之中的回调函数。
+
+我们先来看一个有意思的现象，我运行一段代码，大家觉得输出的顺序是什么：
 
 ```javascript
-function identity(arg: number): number {
-  return arg;
+setTimeout(() => {
+  console.log('setTimeout');
+}, 22);
+for (let i = 0; i++ < 2; ) {
+  i === 1 && console.log('1');
+}
+setTimeout(() => {
+  console.log('set2');
+}, 20);
+for (let i = 0; i++ < 100000000; ) {
+  i === 99999999 && console.log('2');
 }
 ```
 
-如上所示，我们实现给一个 number 返回 number 的方法，但我们还要写更多的同样代码来实现 string,boolean 等等，这就造成了代码大量的冗余，也不好看，体现不出我们的逼格。
+ok 我们现在拿这个代码执行过程来解析一下
 
-那么，我们是不是可以使用 any 呢？像下面的例子一样，我们可实现给什么就返回什么。
+第一步，文件入栈：
+
+<img src="../assets/stack2.png">
+
+第二步，执行文件，读取第一段代码入栈，所以，这里将 setTimeout 入栈：
+
+<img src="../assets/stack3.png">
+
+第三步，调用栈发现 setTimeout 是一个 webapis 的 API(上面说的，异步 API 的一种)，于是把它丢给了浏览器的 timer 模块进行处理了，调用栈则继续处理下一段代码：
+
+<img src="../assets/stack4.png">
+
+第四步，log 任务没有涉及其它代码段，所以它会立即执行，在控制台打印文字。然后调用栈再次处理下一段代码，所以，setTimeout(20)入栈：
+
+<img src="../assets/stack5.png">
+
+第五步，参考第三步，setTimeout 被判定为异步 API，交由 timer 模块进行处理，调用栈继续处理下一段代码：
+
+<img src="../assets/stack6.png">
+
+第六步，与第四步一样，log 任务被立即执行，在控制台打印文字。然后，main.js 执行完成，被弹出调用栈。因调用栈已被清空，所以转换关注点到异步 API，当异步 API 被执行完成后会把回调函数放入任务队列：
+
+<img src="../assets/stack7.png">
+
+第七步，任务队列在接收到回调函数后，通知调用栈，还有待处理的任务，然后将刚第一个加入队列中的回调函数加入到调用栈中，然后调用栈立即执行这个 log 任务：
+
+<img src="../assets/stack8.png">
+
+第八步，任务队列接收到另一个回调函数，将新的回调函数加入调用栈后被执行，然后调用栈再次被清空，等待执行其它任务。
+
+<img src="../assets/stack9.png">
+
+##### 小结 上面的流程解释了浏览器遇到 setTimeout 之后究竟如何执行的，其实总结下来就是以下几点：
+
+> 调用栈顺序调用任务  
+> 当调用栈发现异步任务时，将异步任务交给其他模块处理，自己继续进行下面的调用  
+> 异步执行完毕，异步模块将任务推入任务队列，并通知调用栈  
+> 调用栈在执行完当前任务后，将执行任务队列里的任务  
+> 调用栈执行完任务队列里的任务之后，继续执行其他任务
+
+上面这一整个流程就叫做 事件循环（Event Loop）。
+
+小结练习，一个常见的面试题：
 
 ```javascript
-function identity(arg: any): any {
-  return arg;
+for (var i = 0; i < 10; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 1000);
 }
-
-console.log(identity(4).length);
+console.log(i);
 ```
 
-这时候问题就来了，any 逃避了类型检查，调用者在调用这个函数的时候傻傻地传了一个数字类型的参数，然后又去调用这个返回的值的 length 属性，会出现什么情况呢？
+执行解析：
 
-官网文档中给出了一个解决方案<T>；我们先简单地认为这个'<' + T + '>'，就代表我们今天要理解的泛型，<T>帮助我们捕获调用者传入的类型（比如：number），之后我们就可以使用这个类型。然后我们再次使用了 <T> 当做返回值类型。现在我们可以知道参数类型与返回值类型是相同的了。这允许我们跟踪函数里使用的类型的信息。
+> 首先由于 var 的变量提升，i 在全局作用域都有效  
+> 再次，代码遇到 setTimeout 之后，将该函数交给其他模块处理，自己继续执行 console.log(i) ，由于变量提升，i 已经循环 10 次，此时 i 的值为 10 ，即，输出 10  
+> 之后，异步模块处理好函数之后，将回调推入任务队列，并通知调用栈  
+> 1 秒之后，调用栈顺序执行回调函数，由于此时 i 已经变成 10 ，即输出 10 次 10
 
-```javascript
-// 这个泛型的定义是，我传给你什么你就返回给我什么
-function identity<T>(arg: T): T {
-  return arg;
-}
-```
-
-#### 为什么要用泛型
-
-假如，我们需要实现一个采集类，这个采集类里存储着一个集合。有方法向该集合里添加东西，也有方法通过索引获取集合里的东西。像这样:
+另一个练习：
 
 ```javascript
-class Collection {
-  private objs: string[];
-  constructor() {
-    this.objs = [];
+setTimeout(() => {
+  console.log(4);
+}, 0);
+new Promise(resolve => {
+  console.log(1);
+  for (var i = 0; i < 10000000; i++) {
+    i === 9999999 && resolve();
   }
-  add(someObj: string) {
-    this.objs.push(someObj);
-  }
-  get(index: number): string {
-    return this.objs[index];
-  }
-}
-let collection = new Collection();
-collection.add("hello");
-collection.add("world");
-console.log(collection.get(0).length);
+  console.log(2);
+}).then(() => {
+  console.log(5);
+});
+console.log(3);
 ```
 
-我们可以很容易地看明白，这个数组是一个什么样的数组啊？对，它被显式定义为一个 string 类型的集合，很明显，我们是不能在其中使用 number 的。如果想要处理 number 的话，可以创建一个接受 number 而不是 string 的集合？也许这是一个不错的选择，但有一个很大的缺点——代码重复。代码重复，最终会导致编写和调试代码的时间增多，并且降低内存的使用效率。
+#### 宏任务与微任务
 
-另一个选择，是使用 any 类型代替 string 类型定义刚才的类，像下面这样：
+上一个练习的输出结果是 1,2,3,5,4，因为这涉及到任务队列的内部，宏任务和微任务。
 
-```javascript
-class Collection {
-  private objs: any[];
-  constructor() {
-    this.objs = [];
-  }
-  add(someObj: any) {
-    this.objs.push(someObj);
-  }
-  get(index: number): any {
-    return this.objs[index];
-  }
-}
-let collection = new Collection();
-collection.add("hello");
-collection.add("world");
-console.log(collection.get(0).length);
-```
+##### 什么是宏任务和微任务
 
-字符串"hello"有五个字符，运行 TypeScript 代码，你可以在调试模式下看到它。
+任务队列又分为 macro-task（宏任务） 与 micro-task（微任务） ，在最新标准中，它们被分别称为 task 与 jobs 。
 
-注意看，当我们的鼠标悬停在 length 属性上时，VS Code 的类型侦测没有提供任何信息，因为它不知道你选择使用的确切类型。当你像下面这样，把其中一个添加的元素修改为其他类型时，比如 number，这种不能被类型侦测到的情况会体现得更加明显：
+**macro-task（宏任务）** 大概包括：script(整体代码), setTimeout, setInterval, setImmediate（NodeJs）, I/O, UI rendering。
+**micro-task（微任务）** 大概包括: process.nextTick（NodeJs）, Promise, MutationObserver(html5 新特性)
 
-```javascript
-class Collection {
-  private objs: any[];
-  constructor() {
-    this.objs = [];
-  }
-  add(someObj: any) {
-    this.objs.push(someObj);
-  }
-  get(index: number): any {
-    return this.objs[index];
-  }
-}
-let collections_a = new Collection();
-let collections_b = new Collection();
-collections_b.add("world");
-console.log(collections_b.get(0).length);
-collections_a.add(1);
-console.log(collections_a.get(0).length);
-```
+来自不同任务源的任务会进入到不同的任务队列。其中 setTimeout 与 setInterval 是同源的。
+事实上，事件循环决定了代码的执行顺序，从全局上下文进入函数调用栈开始，直到调用栈清空，然后执行所有的 micro-task（微任务），当所有的 micro-task（微任务）执行完毕之后，再执行 macro-task（宏任务），其中一个 macro-task（宏任务）的任务队列执行完毕（例如 setTimeout 队列），再次执行所有的 micro-task（微任务），一直循环直至执行完毕。
 
-运行调试工具，我们只打印出了一个 undefined 的结果，但为什么是 undefined，我们不是很清楚是不是？这个时候，我们就可以用泛型来解决这个问题：
+然后，我们在这里使用新的流程图来解析上面的代码：
 
-```javascript
-class Collection<T> {
-  private objs: T[];
-  constructor() {
-    this.objs = [];
-  }
-  add(someObj: T) {
-    this.objs.push(someObj);
-  }
-  get(index: number): T {
-    return this.objs[index];
-  }
-}
-// 要求调用我们这个类的时候必须传入一个类型声明
-let collections_a = new Collection<string>();
-let collections_b = new Collection<number>();
-collections_a.add("world");
-console.log(collections_a.get(0).length);
-console.log(collections_a.get(0).toFixed(2));
-// 属性“toFixed”在类型“string”上不存在。你是否指的是“fixed”?ts(2551)
-// lib.es2015.core.d.ts(472, 5): 在此处声明了 "fixed"。
-collections_b.add(1);
-console.log(collections_b.get(0).length);
-// 类型“number”上不存在属性“length”。ts(2339)
-console.log(collections_b.get(0).toFixed(2));
-```
+第一步：文件入栈，然后 setTimeout 入栈，被转入宏任务队列中，再然后 Promise 被压入栈中
 
-一使用这个泛型，我们就发现，数字型元素在获取其返回值的长度属性的时候就正常报错了。
+<img src="../assets/stack10.png">
 
-#### 泛型变量（跳过不讲）
+第二步：调用栈中执行 Promise 实例，然后它接受的参数 resolve 方法，是在 new 的时候被执行，因此不会进入任何其他的队列，而是直接在当前任务直接执行了，而后续的.then 则会被分发到 micro-task 的 Promise 队列中去：
 
-使用泛型创建像 identity 这样的泛型函数时，编译器要求你在函数体必须正确的使用这个通用的类型。 换句话说，你必须把这些参数当做是任意或所有类型。
+<img src="../assets/stack11.png">
+<img src="../assets/stack12.png">
 
-那我们仍然用代码来说话，还是刚才官网的那个例子：
+第三步：调用栈继续执行宏任务 main.js，输出 3 并弹出调用栈，main.js 执行完毕弹出调用栈，调用栈被清空
+
+<img src="../assets/stack13.png">
+<img src="../assets/stack14.png">
+
+第四步：这时，macro-task(宏任务)中的 script 队列执行完毕，事件循环开始执行所有的 micro-task(微任务)
+
+<img src="../assets/stack15.png">
+
+第五步：输出 5 后，调用栈发现所有的 micro-task(微任务) 都已经执行完毕，于是转换到 macro-task(宏任务)中调用 setTimeout 队列
+
+<img src="../assets/stack16.png">
+
+第六步：macro-task(宏任务) setTimeout 队列执行完毕，调用栈再次接入微任务进行查找是否有未执行的微任务，发现没有就继续宏任务执行下一个队列，再次发现宏任务也没有队列执行，调用结束。
+
+##### 总结：
+
+1 不同的任务会放进不同的任务队列之中。
+2 先执行 macro-task，等到函数调用栈清空之后再执行所有在队列之中的 micro-task。
+3 等到所有 micro-task 执行完之后再从 macro-task 中的一个任务队列开始执行，就这样一直循环。
+4 宏任务和微任务的队列执行顺序排列如下：
+5 macro-task（宏任务）：script(整体代码), setTimeout, setInterval, setImmediate（NodeJs）, I/O, UI rendering。
+6 micro-task（微任务）: process.nextTick（NodeJs）, Promise, MutationObserver(html5 新特性)
+
+总结练习：
 
 ```javascript
-function identity<T>(arg: T): T {
-  return arg;
-}
-```
-
-如果我们想在 identity 这个泛型函数中同时打印出 arg 的长度时，怎么办？你也许会想这样：
-
-```javascript
-function loggingIdentity<T>(arg: T): T {
-  console.log(arg.length);
-  return arg;
-}
-```
-
-但你发现它会报错，因为这个一个任意类型的变量，tsc 不确认它是否有 length 这个属性。官网在这个时候好像也没办法圆过去了，索性直接让我们将这个函数从接受一个任意类型的变量变成了只接受一个数组类型的变量，试图让我们理解，<T>就是所谓的泛型变量。
-
-```javascript
-function loggingIdentity<T>(arg: Array<T>): Array<T> {
-  console.log(arg.length);
-  return arg;
-}
-```
-
-#### 泛型函数的类型声明
-
-泛型函数的类型与非泛型函数的类型没什么不同，只是有一个类型参数在最前面，像函数声明一样：
-
-```javascript
-function identity<T>(arg: T): T {
-  return arg;
-}
-let myIdentity: <T>(arg: T) => T = identity;
-// 我们也可以使用不同的泛型参数名，只要在数量上和使用方式上能对应上就可以。
-let youIdentity: <U>(arg: U) => U = identity;
-```
-
-#### 泛型接口
-
-我们也可以通过接口来声明一个泛型函数的模样
-
-```javascript
-interface IdentityMethod {
-  <T>(arg: T): T;
-}
-
-let myIdentity: IdentityMethod = function identity(arg) {
-  return arg;
-};
-
-let IdCode = myIdentity(345);
-let name = myIdentity('Tom');
-
-console.log(name.toString());
-console.log(IdCode.toFixed(2));
-```
-
-#### 泛型类
-
-泛型类在刚才讲解为什么要学习泛型时已经完整地捋过一遍了，我们这里就不再赘述了，如果还有哪位同学觉得我这边没太讲明白，可以在自习的时候单独找我。
-
-```javascript
-class Collection<T> {
-  private objs: T[];
-  constructor() {
-    this.objs = [];
-  }
-  add(someObj: T) {
-    this.objs.push(someObj);
-  }
-  get(index: number): T {
-    return this.objs[index];
-  }
-}
-// 要求调用我们这个类的时候必须传入一个类型声明
-let collections_a = new Collection<string>();
-let collections_b = new Collection<number>();
-collections_a.add("world");
-console.log(collections_a.get(0).length);
-console.log(collections_a.get(0).toFixed(2));
-// 属性“toFixed”在类型“string”上不存在。你是否指的是“fixed”?ts(2551)
-// lib.es2015.core.d.ts(472, 5): 在此处声明了 "fixed"。
-collections_b.add(1);
-console.log(collections_b.get(0).length);
-// 类型“number”上不存在属性“length”。ts(2339)
-console.log(collections_b.get(0).toFixed(2));
-```
-
-#### 泛型约束
-
-数组的约束
-有时，我们可能希望对每个类型变量接受的类型或数量进行限制，这个时候，我们就需要用到泛型约束，比如，要在我们刚才一直在用的 identity 函数中先打印参数的长度。在不做约束的情况下，编译器会报一个错误：
-
-```javascript
-function identity<T>(arg: T): T {
-  console.log(arg.length);
-  return arg;
-}
-// 类型“T”上不存在属性“length”
-```
-
-因为在这种情况下，编译器确实不知道这个 T 类型是否有.length 属性，特别是在任何类型都可以分配给 T 的情况下，编译器会提取所有类型共有的属性和方法来当成是当前这个 T 类型的属性与方法。
-
-这个时候我们就需要将类型变量扩展到一个包含所需要属性的接口。
-
-```javascript
-interface Length {
-  length: number;
-}
-
-function identity<T extends Length>(arg: T): T {
-  console.log(arg.length);
-  return arg;
-}
-identity(3);
-// 类型“number”的参数不能赋给类型“Length”的参数。
-```
-
-在尖括号内使用 extends 关键字加上我们要扩展的类型来约束这个 T。这段代码在本质上，是在告诉编译器，我们仅支持能获取 length 属性的类型。
-
-当调用者使用不支持.length 类型的参数时，编译器会通知调用者，这个参数不能赋给类型 Length 的参数。
-
-另外还有一种方式可以解决.length 的属性问题，那就是将泛型参数定义为一个显式的数组：
-
-```javascript
-function identity<T>(arg: T[]): T[] {
-  console.log(arg.length);
-  return arg;
-}
-//or
-function identity<T>(arg: Array<T>): T {
-  console.log(arg.length);
-  return arg;
-}
-```
-
-以上两种方法都可行，这样我们就可以让编译器知道函数的 arg 和返回类型都是数组类型。
-
-对象的约束
-了解了使用 length 对数组类型的泛型约束，我们再来学习一个对于对象的泛型约束： keyof，keyof 可以很方便地帮我们检查出传入的对象中是否有同时传入的属性名称：
-
-```javascript
-function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
-  return obj[key];
-}
-
-getProperty({a: 1, b: 2}, 'i');
-// 类型“"i"”的参数不能赋给类型“"a" | "b"”的参数。x
-```
-
-第一个参数是我们获取值的对象，第二个参数是该值的属性。返回类型描述了与 T[K]的这种关系。这个泛型帮我们确认了某一个属性在对象中是否存在，这样运行时就会减少很多错误。
-
-我们的泛型在这里所做的是确保对象的属性的存在，这样运行时就不会发生错误。这是一个类型安全的解决方案，而不是简单地调用 let value = obj[key];之类的东西。
-
-判断两个对象是否有继承关系
-我们还可以使用另一种方法来判断对象中是否存在指定的属性：
-
-```javascript
-function mergerObj<T extends U, U>(target: T, source: U): T {
-  for (let key in source) {
-    target[key] = (<T>source)[key];
-  }
-  return target;
-}
-let x = {a: 1, b: 2, c: 3, d: 4};
-mergerObj(x, {a: 4, f: 2});
-```
-
-类的约束
-我还可以约束泛型函数只接受一个由指定类构建的对象：
-
-```javascript
-class Programmer {
-    // automatic constructor parameter assignment
-    constructor(public fname: string,  public lname: string) {
+<script>
+  setTimeout(() => {
+    console.log(4)
+  }, 0);
+  new Promise((resolve) => {
+    console.log(1);
+    for (var i = 0; i < 10000000; i++) {
+      i === 9999999 && resolve();
     }
-}
-
-function logProgrammer<T extends Programmer>(prog: T): void {
-    console.log(`${ prog.fname} ${prog.lname}` );
-}
-// 自动构造函数参数赋值，无需使用this.args = args就可以自动赋值。
-const programmer = new Programmer("Ross", "Bulat");
-logProgrammer(programmer); // > Ross Bulat
+    console.log(2);
+  }).then(() => {
+    console.log(5);
+  });
+  console.log(3);
+</script>
+<script>
+  console.log(6)
+  new Promise((resolve) => {
+    resolve()
+  }).then(() => {
+    console.log(7);
+  });
+</script>
 ```
 
-注意:这里的构造函数使用自动构造函数参数赋值，这是 TS 的一个特性，它直接从构造函数参数赋值类属性。
+解析：
 
-#### 在什么时候用泛型
+第一步：第一个整体任务 script1 进入宏任务队列
 
-可能在项目的早期，你没有一个保证使用泛型的组件。但是随着项目的增长，组件的功能经常会扩展。这种增加的可扩展性最终很可能遵循上述两个标准，在这种情况下，引入泛型将是比仅仅为了满足一系列数据类型而复制组件更干净的选择。
+第二步：script1 进行调用，将 setTimeout 分发至宏任务的 setTimeout 队列，实例化 promise 方法并打印第一行 log(1)，再打印 log2，将 then 方法分发至微
+任务的 promise 队列。最后打印 log(3)并弹出调用栈
+
+第三步：script1 执行完毕，调用栈清空后，直接调取所有微任务，打印 log(5)
+
+第四步：script1 被弹出后继续将第二个整体任务 script2 压入任务队列
+
+第五步：script2 被调用，打印 log(6)，实例化 promise 方法并将 then 方法分发至微任务的 promise 队列。然后弹出 script2
+
+第六步：script2 被弹出调用栈清空后，再次调取所有微任务，打印 log(7)
+
+第七步：现在所有微任务被执行完毕，于是调用栈切换到宏任务检查，发现还有一个 setTimeout 任务没有执行，于是打印 log(4)
+
+第八步：执行完所有宏任务后又再次接入微任务，发现没有了微任务后，调用结束。
+
+总结练习 2
+
+```javascript
+setImmediate(() => {
+  console.log(1);
+}, 0);
+setTimeout(() => {
+  console.log(2);
+}, 0);
+new Promise(resolve => {
+  console.log(3);
+  resolve();
+  console.log(4);
+}).then(() => {
+  console.log(5);
+});
+console.log(6);
+process.nextTick(() => {
+  console.log(7);
+});
+console.log(8);
+```
+
+总结练习 3
+
+```javascript
+setTimeout(() => {
+  console.log('to1');
+  new Promise(resolve => {
+    console.log('to1_p');
+    setTimeout(() => {
+      console.log('to1_p_to');
+    });
+    resolve();
+  }).then(() => {
+    console.log('to1_then');
+  });
+});
+
+new Promise(resolve => {
+  console.log('p1');
+  resolve();
+}).then(() => {
+  console.log('then1');
+});
+
+setTimeout(() => {
+  console.log('to2');
+  new Promise(resolve => {
+    console.log('to2_p');
+    resolve();
+  }).then(() => {
+    console.log('to2_then');
+  });
+});
+
+new Promise(resolve => {
+  console.log('p2');
+  resolve();
+}).then(() => {
+  console.log('then2');
+});
+```

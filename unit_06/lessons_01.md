@@ -1,889 +1,724 @@
-> 企业框架实战\_第一部分\_TypeScript 入门
+> Marion 的 react 实战课程 > 第六部分 > ES6 常用方法
 
-- ## TypeScript 是什么？
+#### 什么是 ES6
 
-TypeScript 是一种由微软开发的<font color=red>开源、跨平台的编程语言</font>。它是 **<font color=red>JavaScript 的<u>类型的超集</u></font>**，主要提供了对**<font color=red>强类型系统</font>**的支持，它最终会被编译工具<font color=red>编译成指定版本的 JavaScript 代码</font>，经过编译出来的 JavaScript 代码可以<font color=red>运行在任何浏览器</font>上。同样的，TypeScript 编译工具 tsc 也可以运行在任何服务器和任何系统上。
+> ES6, 全称 ECMAScript 6.0, 是 JavaScript 的一个版本标准, 真正的 ES6 仅指 ECMAScript2015, 但实际上在目前的大多的网络文章中, ES6 泛指自 ECMA2015 到最新的 ECMAScript2020 中的所有新增标准及这些标准提供的一些新方法实现。
 
-TypeScript 当前的最新版本号为 4.0，我们这期的教材也基本都是根据 TypeScript 官网所提供的文档收集整理，如果以后你们的工作中有使用 TypeScript 语言开发项目的，请注意是否有新的更方便易用的特性被加入进来，以便于更好地使用这门语言来开发项目。
+#### 为什么要使用 ES6
 
-- ## 为什么要学习 TypeScript?
+> ES5 已经不能满足目前前端越来越复杂、庞大的现状, 甚至我们可以说它已经过时了。而 ES6 是对 ES5 的增强和升级, 增加了很多新标准和支持新标准的方法。当前主流的浏览器都已经全面支持 ES6 且行业内大多数前端框架都已经全面使用 ES6 标准来实现。一些非传统前端产品如微信小程序、uni-app 等都是基于 ES6 的语法。我们学习使用 ES6 是因为 ES6 提供了更多更方便更实用且更有效率的方法, 避免了每个人因为自己的习惯去开发不同的工具包。
 
-说到为什么要学习 TypeScript，我们从前端的现状看，从 JavaScript 目前的发展和应用趋势来看，它的发展实在是太快了，你可以用它进行<font color=red> web 开发、wap 开发、桌面应用开发以及后端开发，甚至目前已经渐成趋势的 VR、WebGL 及物联网的应用开发</font>等等，它的标准从 2015 年开始每年都会更新，目前已经更新到 2020 版本。
+### ES6 的关键特性
 
-那么，大家思考一下，这么频繁地更新版本，会对项目开发有什么影响吗？
+#### const & let
 
-提示：有人喜欢 es5,有人喜欢 es6,有人想尝鲜 es2019 等，这么多不同版本的语法在同一个程序中运行，会造成什么样的问题？
+- const 常量声明
 
-即便是以每年一次更新的这种速度，JavaScript 仍然与 java 、C# 这些成熟的高级语言有一些距离，比如类型系统。
+> 用于定义常量, 什么时候声明常量？声明该变量所在的**作用域**内永远不会被重新赋值的变量, 必须使用 const 定义。
 
-我们都知道，<font color=red>JavaScript 是一个弱类型、动态类型的脚本语言</font>，再加上其版本迭代太快的原因，团队成员在使用 JavaScript 开发项目时很容易随意发挥，而<font color=red>不受规范约束</font>。比如很多人在对两个变量做比较时，仍然喜欢用“==”而不是约束更强大的“===”；仍然喜欢用“!0”或“!1”这种方式来表示布尔值；仍然喜欢“1 + ‘’” 或 “'1' \* 1”用这些非显式方法来对变量做类型转换。这些做法在 JavaScript 中是允许的，但包藏着极大的风险，谁也不知道哪一天会不会有其它人传过来的参数类型不正确，而导致他的程序抛出错误的结果甚至无法正常运行。而 TypeScript 的静态类型检查，就可以帮我们强制要求调用者传给我们的参数类型是绝对正确的，以避免不确定的类型转换所带来的风险。
+- let 变量声明
 
-当然，有的团队可以针对这些版本的 JavaScript 做出使用规范，引入一些代码质量检测插件，比如<font color=red>eslint</font>。但整理这些内容，需要花费不少的时间，然后在团队推广和使用制定的规范时又要花一段时间。
+> 用于定义变量, 什么时候声明变量？声明该变量所在的**作用域**内有重新为变量赋值的可能, 可以使用 let 定义。
 
-俗话说，铁打的营盘流水的兵。当前的企业人才高速流动，我们不能每次增加新成员的时候就让他去学习本企业的开发规范，这浪费时间也影响效率。
+- 什么是变量提升
 
-我们在上面提到了，TypeScript 提供了对强类型系统的支持。所以，与其花这些时间进行整理，还不如在 TypeScript 的基础上，结合 TypeScript 的特点做一套标准即可用来应对 JavaScript 版本不断的更新迭代以及动态类型的随意转换。
-
-### <font color=red>1. 静态类型</font>
-
-- ##### JavaScript 当前存在的弱点
-  刚才我们说到了，JavaScript 是一个弱类型、动态类型的脚本语言，那么，TypeScript 的第一个也是最主要的一个特点就是强类型加静态类型检查。
-
-关于强类型、弱类型、动态类型、静态类型，这些都不是必须了解的内容，为了不影响大家的学习时间，这里我们就不多说了，你们可以在下课后去百度了解一下。
-
-为什么要说最主要的一个特点是静态类型呢？这就要说到 JavaScript 了，做为一种弱类型的解释型脚本语言，其简单紧凑的的设计已经不太适合当前日渐复杂的开发工作了，我们急需一种语言来解决团队合作中的由于**<font color=red>不正确类型导致错误而产生的风险</font>**，以及**<font color=red>各种 JavaScript 版本混杂造成错误的风险</font>**。
-
-试想一下，你花了大半天甚至一整天的时间，搞出来一个自认为完美的函数或是功能插件。 快下班时，一个同事拿去调用了一下，程序崩溃了。 你查了一下原因：啊，原来是参数的类型传错了，赶紧补文档补注释说明一下。过一会，另一个同事拿去调用了一下，程序还是崩溃了。你查了一下原因：啊，参数类型没错，但是参数对象里面的值的类型传错了，你崩溃了。于是你只能放弃准点下班的想法，写上一堆判断和转换，以求让自己的程序更“健壮”。 这个例子可能有些极端，但不可否认的是，这种情况在早些年的时候我们经常会遇到。然后，我们再来举个不极端的例子：
+> JavaScript 代码的执行分为两个阶段：  
+>  第一个阶段会将当前文件预读一遍, 同时在当前执行环境中注册所有的变量声明和函数声明, 可以理解为都解析了一遍。但要注意的是, 这里注册的仅仅只是声明, 赋值操作仍在原有的位置上;  
+>  第二个阶段会从上到下依次执行代码, 如果是赋值就给变量赋值, 如果是方法就执行方法, 方法中遇到了变量就回去内存中查找, 如果变量已赋值, 则返回值, 如果未赋值则返回 undefined;  
+>  注意：虽然 const 与 let 也会被预处理, 但没有变量提升, 在哪定义就在哪里使用;  
+>  变量声明会被提升到其当前作用域的最上面而不是整个程序的最上面;  
+>  变量提升的优先级：函数声明 > 变量声明 > 参数赋值。
 
 ```javascript
-let cat = 'merlin';
-let age = 3;
-function increaseAge(age) {
-  return age + 1;
+var a = 1;
+function test() {
+  console.log(a, "a1"); // undefined
+  var a = 2; // a被预读后存在了内存里, 当函数被调用时, a变量已存在, 所以a1位置时可以读取到变量
+  console.log(a, "a2"); // 2, a已经被赋值
+  function test1(a) {
+    console.log(a, "a3"); // 5, 接收到的参数为提升上来的a赋值
+    var a = 3; // a被预读后提升至当前作用域的最上方
+    a = 4;
+    console.log(a, "a4"); // 4
+  }
+  // 指定时间后执行传入的参数方法, 该参数方法是一个用后即销毁的闭包, 内部环境中如有使用外部变量的, 以调用时为准
+  setTimeout(function () {
+    console.log(a, "a5"); // 7
+    test1(a);
+  }, 500);
+  var a = 5;
+  test1(a);
+  setTimeout(
+    function (a) {
+      console.log(a, "a6"); // 6
+    },
+    0,
+    6
+  );
+  var a = 7;
 }
-increaseAge(cat); // 'merlin1'
+test();
 ```
 
-上面这段代码，在 JavaScript 中是可以正常执行并返回结果的，但是，这个结果根本就不是我们所期望的结果不是吗？
+- 什么是暂时性死区
 
-- ##### TypeScript 的解决方案
-  TypeScript 把高级语言的**<font color=red>强类型</font>**这个最主要的特征引入 JavaScript，避免了我们在编写 JavaScript 代码时因为**<font color=red>数据类型的动态转换</font>**而造成的意想不到的错误，减少了我们排查问题的困难性。它为 JavaScript 上了一把高级语言<font color=red>强类型</font>的锁，来避免这类问题的产生。
-
-##### 简单修改上面的示例：
+> 暂时性死区这个概念仅存在于 let 与 const 命令。ES6 明确规定, 如果在当前作用域中存在以 let 或 const 命令声明的变量, 那么, 在声明它之前, 这个变量都是不可用的。  
+> 暂时性死区概念主要是为了解决变量提升问题, 防止在变量声明前就使用这个变量, 从而导致意外的行为与操作。
 
 ```javascript
-let cat: string = 'merlin';
-let age: number = 3;
-function increaseAge(age: number) {
-  return age + 1;
+a = 2; // 这里是死区, 初始化之前不能使用a。
+console.log(a);
+let a;
+```
+
+#### 模板字符串
+
+> 为什么要使用模板字符串而不是使用“+”运算符来拼接字符串？字符串拼接是所有程序设计语言都需要的操作。当拼接结果较长时, 如何保证效率就成为一个很重要的问题。早些年的时候在阅读《javascript 高级程序设计》中, 有一段关于字符串特点的描述记得很深刻。原文应该是这样说的：ECMAScript 中的字符串是不可变的, 也就是说, 字符串一旦创建, 他们的值就不能改变。要改变某个变量的保存的的字符串, 首先要销毁原来的字符串, 然后再用另外一个包含新值的字符串填充该变量。
+
+```javascript
+let lang = "java";
+lang = lang + "Script";
+```
+
+> 上面这段代码看起来很简单, 但实际上操作稍有些复杂, 解析器首先会创建一个新字符串, 然后在这个字符串中填充“Java”和“Script”, 然后销毁原来的字符串“Java”和“Script”, 因为这两个字符串已经没用了。  
+> 所以, 在早期没有模板字符串以前, 我们进行一些较复杂字符串拼接都是使用的数组 push, 然后再使用 join 方法来进行拼接。这种方式的好处是因为数组本身是一个引用类型, 所有的成员都只占用其本身所占用的资源, 直到被 join 方法调用时, 才会一次展开后以指定的符号连接成一个新的字符串, 它们不存在多次建立和销毁这种情况。  
+> 而模板字符串则是换了个方式, 它生成了一串完整的字符串, 在这个字符串中去查询所有以'${'开头, 以'}'结尾的代码片段, 匹配到后将内部的表达式进行运算取值后重新填充回原处。在字符串比较短时这种作法可能没有多大优势, 但在对长字符串做处理时就会大大优化处理速度与内存的占用率。
+
+#### 对象和数组解构
+
+参考代码规范的解构部分 ./lessons_01.md
+
+#### 数组的遍历 for...of
+
+在可以使用它来实现遍历的情况下, 我们建议不要使用 for 循环, 在小型的数据遍历场景中, 它的效率及资源占用相对于其它的遍历来说是最少的; 当然，对于超大型的遍历来说, 还是 for 循环比较好用。只是一般情况下，我们极少会接触到超大型的遍历，所以，为了保持代码的一致性，我们更希望使用 for...of。
+**在已知数组长度的情况下, 不要使用 forEach, forEach 是用于处理未知长度的数组的, 它的效率及资源占用相对都是非常高的。**
+
+#### ES6 的数组新增常用方法
+
+1. map(callback) 映射数组:
+
+> 通过遍历的方式, 将原数组中每一个元素通过传入的回调函数处理后返回的值创建并返回一个新数组, map 方法不会对空数组进行检测, map 方法不会改变原数组
+
+> 使用场景： map 是我们最常用到的一个数组方法, 没有之一。无论是在页面中的列表渲染还是对数组中的元素做一些计算, 都要用到它;
+
+```javascript
+/**
+ * mapCallback
+ * map方法用于对每一个数组元素做处理的回调函数
+ * @param {any} value 当前索引的元素
+ * @param {number} index 当前索引
+ * @param {Array} array 原数组
+ * @return {any} 计算完成后的数组成员, 可以是任意内容
+ * map方法不会对空数组进行检测, map方法不会改变原始数组
+ **/
+function mapCallback(value, index, array) {
+  console.log("mapCallback方法的参数", value, index, array);
+  return value * value;
 }
-increaseAge(cat);
-// 类型“number”的参数不能赋给类型为“string”的属性。
+const arr = [1, 2, 3];
+// 简单的map
+const newArr = arr.map(mapCallback);
+//[2,4,6]
+// 注：当方法内仅一行代码时, 可以省略掉花括号与return,
+// map方法中内容仅一行代码且该代码是表达式时默认返回该表达式
+// 什么是表达式？ 表达式就是ECMAScript里的一个短句, ECMAScript解释器可以将其计算出一个结果
 ```
 
-(
-windows 下使用 vscode 的终端运行 tsc 可能会遇到问题：
+2. filter(callback) 过滤数组: 通过遍历的方式, 将数组中的每一个元素通过回调函数进行筛选后返回的值创建并返回一个新数组, filter 方法不会改变原数组
 
-1. 以管理员身份运行 vscode;
-2. 执行：get-ExecutionPolicy，显示 Restricted，表示状态是禁止的;
-3. 执行：set-ExecutionPolicy RemoteSigned;
-   )
-   也许你觉得这段代码跟 JavaScript 的内容差不多，但在你尝试编译代码时，TypeScript 会抛出一个错误，提示你 increaseAge 函数的参数必须是数字类型。这就大大降低了我们开发过程中因为**<font color=red>动态类型转换而产生的潜在的风险</font>**与排查错误的困难性。
-
-这就是 TypeScript 的魅力所在，可以提前帮我们发现代码出现错误的风险。  
-这个时候我们再回到之前的场景：
-
-你花了一整天的时间，搞出来一个自认为完美的函数或是功能插件。快下班时，一个同事拿去调用了一下，编辑代码时 vscode 报错了，这时他一看，哦，参数类型传错了，顺手改一下，重新编译就行。你发现你根本不需要维护大量的注释和文档。于是乎你接下来的工作无非就是等着到下班点，hoho..下班了..收拾东西，回家。
-
-### <font color=red>2. 方便阅读</font>
-
-TypeScript 的类型系统实际上也是一个非常实用的文档，大部分的函数通过查看类型的定义就可以知道如何使用，并且在 vscode 里面去编写 TypeScript 时，vscode 会根据你当前的上下文，把你能用的类、变量、方法和关键字都提示出来，一目了然。不仅如此，TypeScript 的特性还增强了 vscode 的功能，包括代码补全、接口提示和点击跳转等等
-
-如下图，我们可以很清晰的通过 index.d.ts 这个文件了解到 cors 这个函数的参数类型：
-<img src="../static/images/interface_documents.png" />
-
-以及 TypeScript 的代码提示
-<img src="../static/images/function_tips.png" />
-
-### <font color=red>3. 按需输出</font>
-
-前面提及到 JavaScript 发展迅速，这一点，估计 JavaScript 的创始人 Brendan Eich 也没有想到 JavaScript 能发展到今天的地步，JavaScript 的版本现在几乎每年都会有更新，如果要写出兼容性的脚本，对于每位开发者是一个相当大的挑战。而 TypeScript 却很好的解决了这个问题，你可以**<font color=red>按需输出</font>**你所需要的脚本，比如 ECMAScript 3、ECMAScript 5、ECMAScript 6。
-
-### <font color=red>4. 新版 JS 的支持</font>
-
-另外，除了主流前端框架集成的问题，还有一个重要的原因，也是跟 JavaScript 更新太快有关，因为它的更新太快，导致浏览器没办法紧跟它的脚步，往往要拖上大半年甚至多年才能支持最新的特性，但这个时候又有新的特性被布了。而 TypeScript 紧跟 JavaScript 的发展，比如 ES7 、ES8、ES9，以及最新的 ES2020 相关语言的新特性都支持，比浏览器支持的速度更快。这就意味着你能用最新的语言特性，编写出质量更高的 JavaScript 程序。
-
-### <font color=red>5. 社区活跃</font>
-
-Angular 2.0 版本就开始集成 TypeScript，用于解决版本兼容性和弱语言的特点，从而与 TypeScript 互相推动了各自的发展。继 Angular 之后，React 、Vue 也相继加入了 TypeScript 的阵营，而在去年，也就是 2019 年，大量的第三方插件都开始提供 TypeScript 类型定义文件。这也就意味着，TypeScript 的生态环境正在蓬勃发展，迅速完善。
-
-### 缺陷
-
-虽然上面说了很多好处，但是 TypeScript 也会有一些缺陷，比如初期代码编辑时增加了较多的工作量，另外，可能还是会有一些冷门的插件或框架不支持 TypeScript。所以，<font color=red>在用一些冷门框架或者做一些小项目的时候，还是谨慎点，别使用 TypeScript 了，因为 TypeScript 没有问题，框架本身也没有问题，可是，框架+TypeScript 会有很多问题！</font>
-
-### 1. 安装 TypeScript
-
-有两种主要的方式来获取 TypeScript 工具：
-
-- 使用 Visual Studio*（正常来说，前端开发人员很少会使用类似于 Visual Studio 这种大型的 IDE，所以，这里就暂时不说了）*
-- 做为前端开发人员，我比较推荐大家使用 vscode 这款编辑器。通过 npm（Node.js 包管理器安装）
+使用场景：相比起 map 来说, filter 的适用场景少很多, 主要用来对页面中的商品等信息做筛选处理
 
 ```javascript
-npm install -g typescript
+/**
+ * filterCallback
+ * filter方法用于对每一个数组元素做处理的回调函数
+ * @param {any} value 当前索引的元素
+ * @param {number} index 当前索引
+ * @return {boolean} 如果返回值为true则将该元素加入到新数组中
+ * filter方法不会改变原数组
+ */
+function filterCallback(value, index) {
+  console.log("filterCallback方法的参数：", value, index);
+  return value > 2;
+}
+const arr = [1, 2, 3];
+// 简单的filter
+const newArr = arr.filter(filterCallback);
+// [3]
 ```
 
-### 2. 配置 typescript.json 文件
+3. reduce(callback, initialValue) 累加器: 遍历数组的所有项, 将数组中从左至右的的每个元素与上一次经过回调函数处理后的值进行计算, 最终将其合并成一个值
 
-### 3. 编写第一个 TypeScript 程序
+reduce 是一个极常用到的方法, 我们不仅可以用它来对数字进行一元计算, 还可以用它实现比如数组去重、数组转对象等一系列复杂功能
 
-在你的编辑器，将下面的代码输入到 sayHello.ts 文件里：
+使用场景：多用于计算订单金额以及在一些特殊场景将对象转换成数组或将数组转换成对象
 
 ```javascript
-function sayHello(person) {
-  return 'Hello, ' + person;
+/**
+ * reduceCallback
+ * reduce方法用于处理遍历的函数
+ * @param {any} previousValue 上一次调用回调返回的值, 初始化时是reduce接收到的第二个参数initialValue
+ * @param {any} currentValue 数组中当前被处理的元素
+ * @param {number} index 当前索引
+ */
+function reduceCallback(previousValue, currentValue, index) {
+  console.log("reduceCallback方法的参数", previousValue, currentValue, index);
+  return previousValue + currentValue;
+}
+const arr = [1, 2, 3];
+/**
+ * reduce方法
+ * @param {function} callback 回调函数, 该函数中返回的内容会被当成下一次遍历时的第一个参数
+ * @param {any} initialValue 初始值, 该参数是一个可选参数, 会被当成首次遍历时的回调函数的第一个参数
+ */
+const accumulated = arr.reduce(reduceCallback, 0);
+// 6
+```
+
+reduce 是一个很有思想的方法, 它的回调函数第一个参数并不是固定的, 当我们调用 reduce 方法时传入初始化值的时候, 它是这个传入的参数, 如果没有传入初始化参数, 它就是数组的第一个元素, 而当回调被执行过一遍以后, 它又成了上次执行回调函数时返回的值。根据它的这个特点, 我们可以实现一些复杂的功能
+
+```javascript
+const str = "4687231567182461978234";
+/**
+ * 将上面的字符串去重后排序
+ */
+const newStr = str
+  .split("")
+  .reduce((prev, next) => {
+    return prev.includes(next) ? prev : prev.concat(next);
+  }, [])
+  .sort()
+  .join("");
+// '123456789'
+/**
+ * 将指定的数组转换成对象
+ */
+const newObj = newStr.split("").reduce((prev, next, index) => {
+  prev[next] = index;
+  return prev;
+}, {});
+// {1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 7: 6, 8: 7, 9: 8}
+```
+
+4. includes() 判断数中是否包含给定的值
+
+```javascript
+const arr = [1, 2, 3];
+arr.includes(2);
+// true
+arr.includes(6);
+// false
+```
+
+5. find() 找到第一个符合条件的数组成员
+
+```javascript
+const arr = [1, 2, 3];
+arr.find(2);
+// 2
+```
+
+find 方法也接受一个回调函数作为参数, 以实现对复杂数 c 组成员的检索
+
+```javascript
+const arr = [
+  { a: 1, b: 2 },
+  { a: 3, b: 5 },
+];
+/**
+ * findCallback
+ * find方法用于对每一个数组元素做处理的回调函数
+ * @param {any} value 当前索引的元素
+ * @param {number} index 当前索引
+ * @param {Array} array 原数组
+ * find方法不会改变原数组
+ **/
+function findCallback(item, index, array) {
+  return item.a === 3;
+}
+arr.find(findCallback);
+```
+
+6. findIndex() 找到的第一个符合条件的数组成员的索引值, 其用法与 find 一致
+
+7. fill() 以指定的值填充数组, 不怎么用, 确切地说是一直没用过
+
+```javascript
+const arr = new Array(5);
+arr.fill(5);
+// [5, 5, 5, 5, 5]
+```
+
+8. arr.every(callback) 依据判断条件, 数组的元素是否全满足, 若满足则返回 ture
+
+```javascript
+const arr = [1, 2, 3];
+/**
+ * everyCallback
+ * @param {any} value 当前索引的元素
+ * @param {number} index 当前索引
+ * @return {boolean} 如果返回值为true跳过, 如果返回值为false则结束遍历
+ */
+function everyCallback(value, index) {
+  return value > 3;
 }
 
-let user = 'Menlin';
-
-console.log(sayHello(user));
+const greater = arr.every(everyCallback);
+// false
 ```
 
-刚才的例子中我们使用了.ts 扩展名，但是这段代码仅仅是 JavaScript 而已。 你可以直接从现有的 JavaScript 应用里复制或粘贴一段已有的代码，相信这可以很好的诠释 TypeScript 的兼容性。
-
-### 4. 编译代码
-
-接下来，我们在命令行上，运行 TypeScript 编译器：
-
-```
-tsc sayHello.ts
-```
-
-这时候会生成一个编译好的文件 sayHello.js，它包含了和我们刚才输入的 JavsScript 代码。
-
-### 4. 类型注释
-
-**<font color=red>TypeScript 中的类型注释是记录功能或变量的预期约定的方法。</font>**
-
-现在我们将这段代码改写成一段真正的 TypeScript 代码，很简单，加上类型注释就好。例如，在这里我们打算使用单个字符串参数来调用 sayHello 函数。
+9. arr.some() 依据判断条件, 数组的元素是否有一个满足, 若有一个满足则返回 ture
 
 ```javascript
-function sayHello(person: string) {
-  return 'Hello, ' + person;
+const arr = [1, 2, 3];
+/**
+ * someCallback
+ * @param {any} value 当前索引的元素
+ * @param {number} index 当前索引
+ * @return {boolean} 如果返回值为false跳过, 如果返回值为true则结束遍历
+ */
+function someCallback(value, index) {
+  return value > 3;
 }
 
-let user = 'Menlin';
-
-console.log(sayHello(user));
+const greater = arr.some(someCallback);
+// false
 ```
 
-然后，运行 TypeScript 编译器重新编译：
+#### ES6 的对象新增常用方法
 
-```
-tsc sayHello.ts
-```
+1. Object.is 比较对象
 
-可以看到，经过编译后的 js 代码与之前几乎一致，并没有象我们想象中的那样，有什么检查的代码被插入进来，因为 **<font color=red>TypeScript 只会进行静态检查，如果发现有错误，在编译的时候就会报错。</font>** 你们现在可以尝试来将一个数组作为参数传给 sayHello 试试：
+> 我们在需要对两个对象进行比较时，一般都会使用“===”，偶尔偷懒的时候或者会使用“==”，但在一些特殊情况下，我们从这两个操作符中并不能获得满意的结果
 
 ```javascript
-function sayHello(person: string) {
-  return 'Hello, ' + person;
++0 === -0; // 它们的绝对值是一样的，所以它们相等
+NaN === NaN; // 它们是两个不同的对象，所以它们不相等
+
+// 使用Object.is
+Object.is(+0, -0); // false
+Object.is(NaN, NaN); // true
+```
+
+2. Object.assign 合并对象
+
+> 这是一个常用方法，主要用于对象的合并，将源对象的所有可枚举属性复制到目标对象上。
+
+```javascript
+const obj = { a: 1 };
+const obj1 = { b: 2 };
+const obj2 = { c: 3 };
+Object.assign(obj, obj1, obj2);
+```
+
+> Object.assign 拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（[[enumerable]]: false）。  
+> **注意点：**  
+> （1）Object.assign 方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。  
+> （2）Object.assign 可以用来处理数组，但是会把数组视为对象。  
+> （3）Object.assign 只能进行值的复制，如果要复制的值是一个取值函数，那么将求值后再复制。
+
+可枚举属性和不可枚举属性
+Object.assign 处理数组但会把数组视为对象
+**常见用途**
+
+> 为对象添加属性或方法  
+> 克隆对象  
+> 合并多个对象
+
+- Object.keys()与 Object.values()
+
+> Object.keys 返回一个数组，包括对象自身的（不含继承的）所有可枚举属性（不含 Symbol 属性）的键名; Object.values 则返回属性的值。
+
+- Object.entries()与 Object.fromEntries()
+
+```javascript
+const obj = {
+  a: 1,
+  b: 2,
+  c: 3,
+};
+const arr = Object.entries(obj);
+const obj1 = Object.fromEntries(arr);
+```
+
+- get 与 set
+
+> get 与 set 主要用于解决一些我们在定义某些对象中的属性时，该属性的来源数据仍未确定，需要等待数据确定后才能获取，如下：
+
+```javascript
+const obj = {
+  a: 1,
+  // c的值依赖a和b, 但b在此时仍未定义
+  get c() {
+    return this.a + this.b;
+  },
+};
+// 某一个特定时刻，我们对obj.b做了定义，这时向c取值就成了可能
+obj.b = 2;
+// obj.c的取值操作会被get方法拦截，然后按照我们定义的方式，将指定的数据进行运算后返回
+console.log(obj.c);
+// 3
+```
+
+> 如同上面的代码，我们在最初定义对象的时候，obj.c 所依赖的属性 obj.b 尚未定义，这个时候无论是将 c 定义成一个方法还是定义成一个赋值函数都不太合适，get 方法相对来说就比较合适了，我们在这里定义，但并未真正地调用，所以，内部的 this.b 并不会引起报错。直到 obj.b 被定义后的未来，我们需要使用 obj.c 属性时，可以使用直接获取的方式来调用 get 方法
+
+#### Spread / Rest 操作符
+
+> 展开/剩余, 这两个操作符, 其实是同一个写法 > ..., 区别只是用在哪里, 展开操作符一般用于属性的批量赋值或者参数的传递, 而剩余操作符一般用于参数的接收
+
+```javascript
+// 展开操作符的用法
+// 复制/合并数组
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1];
+const arr3 = [3, 4, 5];
+const arr4 = [...arr1, ...arr2, ...arr3];
+// 复制/合并对象
+const obj1 = { a: 1, b: 2 };
+const obj2 = { ...obj1 };
+const obj3 = { c: 3, d: 4 };
+const obj4 = { ...obj2, ...obj3, ...{ a: 5 } };
+// 使用展开操作符合并对象时, 如果已经存在某个key, 则将其覆盖为后续的具有相同key的值, 可以视为assign方法的快捷版
+// 传递参数
+function fn1(a, b, c) {
+  console.log(a, b, c);
 }
+const arr5 = [1, 2, 3];
+fn1(...arr5);
+// 解构赋值
+const arr6 = [4, 5, 6];
+const [aa, ...other] = arr6;
 
-let user = 'Menlin';
-let arr = [1, 2, 3];
+const obj6 = { a: 1, b: 2, c: 3 };
+const { c, ...other } = obj6;
 
-console.log(sayHello(arr));
-// Argument of type 'number[]' is not assignable to parameter of type 'string'.
+// 剩余参数的用法
+function fn2({ a, ...other }) {
+  console.log(a, other);
+}
+fn2({ a: 1, b: 2, c: 3 });
 ```
 
-重新编译时，TypeScript 就会提示你错误：
+#### 类
 
-```
-error TS2345: Argument of type 'number[]' is not assignable to parameter of type 'string'.
-```
-
-但是，TypeScript 仍然会生成一个 js 文件；  
-同样的，我们尝试删除 sayHello 调用的所有参数。TypeScript 也会告诉你使用了意外数量的参数调用了此函数。  
-在这两种情况下，TypeScript 都可以**<font color=red>基于代码的结构和所提供的类型注释提供静态分析</font>**。
-
-所以，我们知道了，**<font color=red>TypeScript 编译的时候即使报错了，还是会生成编译结果</font>**，我们仍然可以使用这个编译之后的文件。  
-但是在这种情况下，<font color=red>TypeScript 将会警告你代码可能不会按预期运行</font>。
-
-好了，现在一切准备就绪，我们可以开始学习一些 TypeScript 的基础知识了！
-
-## TypeScript 变量定义及数据类型
-
-变量的定义:变量名:类型声明 = 值
-
-一般来说，TypeScript 中的类型分为两种：原始类型（Bisic types）和对象类型（Object types）。分别与 JavaScript 中的原始类型与引用类型相对应。
-另外一种类型分类则是顶部类型、底部类型与中间类型，这种分类法通过父子类型的方式来分类，比较少用到，大家稍作了解即可，感兴趣的也可以下课后搜索相关文档来更深入地了解。
-
-### TypeScript 原始类型
-
-本节课主要介绍 TypeScript 中的原始数据类型。其中包含了 ES5 中一直在使用的类型：布尔值、数值、字符串值、null、undefined 以及 ES6 的新增类型 Symbol 与 ES2020 中的新增类型 BigInt，另外还有 TypeScript 新增的类型 void。
-这其中，null 与 undefined 本身的用途不是很大，但它们却是所有类型的子类型，包括我们下一课将要讲到的 object 类型、any 类型与 unknown 类型。除 never 外，TypeScript 中所有的类型都可以被赋值为 null 与 undefined;
-
-#### 布尔型 <font color=red>boolean</font>
-
-最基本的数据类型是简单的 true / false 值，TypeScript 使用 <font color=red>boolean</font> 来定义布尔值的类型。
+> JavaScript 是一个面向对象的语言, 面向对象语言的特点就是可以将某些对象的属性与方法抽象后共享给新的对象, 而类就是这个抽象方法的具体实现。
 
 ```javascript
-let isBoolean: boolean = false;
-let isDone: boolean = Boolean(false);
+// 定义了一个名字为Person的类
+// class 的本质仍然是一个构造函数, 只是ES5中构造函数的一个语法糖
+// 让我们在编写对象原型时写法更清晰, 看起来与其它传统面向对象语言更相似
+class Person {
+  // constructor是一个构造方法, 用来接收参数
+  // constructor是类的默认方法, 创建类的实例化对象时被调用
+  // constructor如果没有显式定义, 会隐式生成一个constructor方法。所以即使你没有添加构造函数, 构造函数也是存在的
+  constructor(name, age) {
+    // this代表的是实例对象
+    // 这里被定义的属性被称之为实例属性
+    this.name = name;
+    this.age = age;
+  }
+  // 这是实例方法的写法, 不需要加上function
+  say() {
+    return "我的名字叫" + this.name + "今年" + this.age + "岁了";
+  }
+  // 静态属性的声明
+  static nickName = "你猜";
+  // 静态方法的声明
+  static printNickName() {
+    console.log(Person.nickName);
+  }
+}
+var obj = new Person("laotie", 88);
+console.log(obj.say()); //我的名字叫laotie今年88岁了
 ```
 
-- 要注意，使用 new 关键字调用构造函数 Boolean 创造的对象不是布尔值：在 TypeScript 中，<font color=red>boolean</font> 是<font color=red>原始类型</font>，而 <font color=red>Boolean</font> 是 JavaScript 中的<font color=red>构造函数</font>，使用 new 关键字返回的是一个 Boolean 对象。其他原始类型也一样（除了 null 和 undefined），这里就不再赘述了。大家可以试试使用 new 关键字来创建一些对象看是否报错。
+#### 函数声明与箭头函数
+
+函数是我们需要学习的一个重点, 70%的面试官会问到与函数相关的问题, 95%的笔试题中会有与函数相关的问题。或者现在这个数据不是很准确了, 但仍然可以看出来这个方法的重要性。
+
+- 关于函数的 this
+
+> 调用位置：调用位置就是函数在代码中被调用的位置(不是声明位置)
 
 ```javascript
-let isBoolean: boolean = new Boolean(1);
-// 不能将类型“Boolean”分配给类型“boolean”。
-// “boolean”表示为原始类型，但“Boolean”表示内置对象。“boolean” 不等于 “Boolean”。
+// 在这里声明
+function fn() {
+  console.log(this, "fn");
+}
+// 在这里调用, 当前的调用位置是window, 所以, fn里的this指向就是window
+fn();
 ```
 
-#### 数字型 <font color=red>number</font>
-
-与 JavaScript 中一样，TypeScript 中的所有数字都是浮点值。这些浮点数获取类型 number。
+> 某些时候, 我们可能无法一眼看出来函数的真正调用位置, 这里就需要分析 **调用栈** 了, 所谓的调用栈, 就是为了达到当前执行位置所调用的所有函数。也被称之为环境栈。
 
 ```javascript
-let decimalNumber: number = 6; // 10进制
-let hexNumber: number = 0xf00d; // 16进制
-let binaryNumber: number = 0b1010; // 2进制 JavaScript5 中引入
-let octalNumber: number = 0o744; // 8进制 JavaScript5 中引入
-let notANumber: number = NaN; // 无效数字
-let infinityNumber: number = Infinity; // 无穷大的数字
-// 注意：2进制和8进制的数字会被编译成为十进制数字。
+function fn() {
+  // 当前的调用栈是 fn
+  // 对应的调用位置是全局作用域window
+  console.log(this, "fn");
+  fn1(); // fn1的调用位置
+}
+function fn1() {
+  // 当前的调用栈是 fn -> fn1
+  // 对应的调用位置是fn, fn的调用位置是window, 所以这里的this也指向window
+  console.log(this, "fn1");
+  fn2(); // fn2的调用位置
+}
+function fn2() {
+  // 当前的调用栈是 fn -> fn1 -> fn2
+  // 对应的调用位置是fn - fn1, fn的调用位置是window, 所以这里的this也指向window
+  console.log(this, "fn2");
+}
+fn(); // fn的调用位置
 ```
 
-#### 字符串型 <font color=red>string</font>
-
-使用 JavaScript 为网页和服务器创建程序的另一个基本部分是使用文本数据。与其他语言一样，我们使用类型 string 来引用这些文本数据类型。与 JavaScript 一样，TypeScript 也使用双引号（"）或单引号（'）包围字符串数据。
+> 默认绑定：默认绑定即独立的函数调用, 当其他规则无法应用时的默认规则, 如
 
 ```javascript
-let cat: string = 'merlin';
-cat = 'trump';
+function fn() {
+  // 这里打印window.str
+  console.log(this.str, "fn");
+}
+var str = "abc";
+fn(); // 调用位置对应的是window, 所以fn的this指向window
 ```
 
-还可以使用模板字符串，该模板字符串可以跨越多行并具有嵌入式表达式。这些字符串由反引号/反引号（`）字符包围，并且嵌入式表达式的形式为${ expr }。
+> 隐式绑定：当函数有上下文对象时, 隐式绑定会将函数中的 this 指向到这个上下文对象。
 
 ```javascript
-let fullName: string = `merlin`;
-let age: number = 3;
-let sentence: string = `Hello, my name is ${fullName}.
-
-I'll be ${age + 1} years old next month.`;
+function fn() {
+  // 这里打印obj.str
+  console.log(this.str, "fn");
+}
+var str = "abc";
+var obj = {
+  str: "xyz",
+  fn: fn,
+};
+obj.fn(); // 这里的上下文对应的调用位置是obj, 所以fn的this指向obj
 ```
 
-这等同于下面这段代码：
+> 对象的属性引用链只有上一层或者说最后一层会在调用位置起作用, 因为作用域链对于 this 的寻找只会到当前的活动对象或变量对象中, 不会到更上一层
 
 ```javascript
-let sentence: string =
-  'Hello, my name is ' +
-  fullName +
-  '.\n\n' +
-  "I'll be " +
-  (age + 1) +
-  ' years old next month.';
+function fn() {
+  // 这里打印obj.str
+  console.log(this.str, "fn");
+}
+var str = "abc";
+const obj = {
+  str: "xyz",
+  fn: fn, // fn的绑定环境在obj这里
+};
+const obj1 = {
+  str: "123",
+  obj: obj,
+};
+obj1.obj.fn(); // 调用位置对应的是obj, 所以fn的this仍然指向obj
 ```
 
-#### <font color=red>null</font> 与 <font color=red>undefined</font>
-
-TypeScript 里，undefined 和 null 两者各自有自己的类型分别叫做 undefined 和 null。 和 void 相似，它们的本身的类型用处不是很大：
+> 显式绑定：能一眼看出来它的 this 指向的, 比如 call 或 apply
 
 ```javascript
-// 它们只能赋值自己本身，不接受其它
-let u: undefined = undefined;
-let n: null = null;
+function fn() {
+  console.log(this.str, "fn");
+}
+var obj = {
+  str: "abc",
+};
+function fn1() {
+  fn.call(obj); // 显式绑定this到obj, 所以fn中的this指向到obj
+}
+fn1();
+fn1.call(window);
 ```
 
-与 void 的区别是，undefined 和 null 是所有类型的子类型。举个例子： undefined 类型的变量，可以赋值给 number 类型的变量：
+> 由于显式绑定是一种非常常用的方式, 所以 es5 中还有一种硬绑定的方式 bind
 
 ```javascript
-let num: number = undefined; // 这样不会报错
-
-// 这样也OK
-let u: undefined;
-let num: number = u;
-
-// 不OK
-let u: void;
-let num: number = u;
+function fn() {
+  console.log(this.str, "fn");
+}
+var obj = {
+  str: "abc",
+};
+var fn1 = fn.bind(obj); // 通过bind的方式强制将fn方法与obj对象绑定到一起后返回一个新的函数
+fn1();
 ```
 
-#### 任意大的整数 <font color=red>bigint</font>
-
-表示大于 2^53-1 的整数，可以写为 Number.MAX_SAFE_INTEGER。这原本是 Javascript 中可以用 Number 表示的最大数字。为了可以如果超过了这个界限，需要用 bigint 来表示，bigint 可以表示任意大的整数。
+> 通过 new 方式来绑定 this
 
 ```javascript
-let theBiggestInt: bigint = 9007199254740991n;
-let alsoHuge = BigInt(9007199254740991);
-let hugeString = BigInt('9007199254740991');
-// 上面三个表达式，使用的是同一个数字“9007199254740991”，方式不同但含义相同，所以它们的结果是完全一致的，你可以使用任一方式来表达
+function fn(str) {
+  this.str = str;
+}
+var obj = new fn("abc");
+obj.str;
+// 这里的new操作可以这样来理解
+{
+  // 创建一个对象obj
+  var obj = new Object();
+  // 将新对象obj的内存地址指向到fn函数的原型对象
+  obj.__proto__ = fn.prototype;
+  // 利用函数的call方法, 将原本指向window的绑定对象指向了obj。这样一来，我们向函数中再传递实参时，对象的属性就被挂载到了obj上
+  var result = fn.call(obj, "abc");
+  // 如果函数没有返回其它对象，那么就返回对象obj
+  return result === "object" ? result : obj;
+}
 ```
 
-由于在 Number 与 BigInt 之间进行转换会损失精度，因而建议仅在值可能大于 2^53-1 时使用 BigInt 类型，并且不在两种类型之间进行相互转换。
-
-#### 唯一 <font color=red>symbol</font>
-
-Symbol 是一种在 ES6 中新添加的数据类型，本质上是一种唯一标识符，可用作对象的唯一属性名，这样其他人就不会改写或覆盖你设置的属性值。symbol 类型的值是通过 Symbol 构造函数创建的。
-
-- <font color=red>Symbols 是不可改变且唯一的</font>。
+> this 绑定的优先级：
 
 ```javascript
-let sym: symbol = Symbol('key');
-let other: symbol = Symbol('key');
-console.log(sym === other); // false，symbol是不可改变且唯一的
+// 显式与隐式的比较
+function fn() {
+  console.log(this.str);
+}
+var obj = {
+  str: "abc",
+  fn: fn,
+};
+var obj1 = {
+  str: "xyz",
+  fn: fn,
+};
+obj.fn(); // abc, 隐式绑定, 通过上下文确定this环境指向obj
+obj1.fn(); // xyz, 隐式绑定, 通过上下文确定this环境指向obj1
+obj.fn.call(obj1); // 显式绑定, this指向obj1
+obj1.fn.call(obj); // 显式绑定, this指向obj
+// 可以看到，显式绑定的优先级要高于隐式绑定
+```
 
+```javascript
+// new操作符的比较
+function fn(str) {
+  this.str = str;
+}
+var obj = {
+  fn: fn,
+};
+// 先通过new操作符绑定一个对象
+var obj1 = new obj.fn("123");
+var obj2 = {};
+// 看看能否通过显式绑定来修改new操作符的指向
+obj1.fn.call(obj2, "xyz");
+// 看看是否能通过隐式绑定来修改前面两个的this指向
+obj.fn("abc");
+console.log(obj.str, "obj"); // 隐式绑定
+console.log(obj1.str, "obj1"); // 显式绑定
+console.log(obj2.str, "obj2"); // new 操作符绑定
+// 可以看到，通过new操作符绑定的优先级要高于显式绑定
+```
+
+- 总结：
+
+  > 首先判断函数是否是在通过 new 操作符实例化对象中调用？如果是则指向这个实例化对象；  
+  > 如果不是实例化对象则判断是否显式绑定，如果是则指向显式绑定的对象；  
+  > 如果仍然不是，那么判断是否有上下文，如果有上下文则指向上下文对象；  
+  > 上面的条件都不符合，使用默认绑定，指向 window。
+
+- 箭头函数的 this
+  > 箭头函数完全颠覆了函数声明的四种标准规则，而是在定义时函数时就保存了当前的作用域链，然后顺着当前的作用域链去寻找 this。也就是说，箭头函数的 this 在定义时就已经与对象绑定，而不是在调用时根据调用环境来决定 this 的指向。
+  > 简单来说，箭头函数体内的 this 对象就是定义时所在的对象，而不是调用时所在的对象。
+
+```javascript
+// 隐式绑定
+const fn = () => {
+  console.log(this.str, "fn");
+};
+var str = "abc";
+var obj = {
+  str: "xyz",
+  fn: fn,
+};
+obj.fn();
+
+function fn() {
+  const fn1 = () => {
+    console.log(this, "fn1");
+  };
+  return {
+    fn1,
+    fn2: () => {
+      console.log(this, "fn2");
+    },
+  };
+}
+var str = "abc";
+var obj = {
+  str: "xyz",
+};
+var obj1 = {
+  str: "123",
+};
+var fn3 = fn.call(obj);
+var obj3 = fn3.fn1.call(obj1);
+var obj4 = fn3.fn2.call(obj1);
+```
+
+> 总结：  
+> 箭头函数的 this 绑定看的是 this 所在的函数定义在哪个对象下，绑定到哪个对象则 this 就指向哪个对象  
+> 函数声明在一般情况下 this 的绑定是默认绑定，如果有 new 绑定则 new 绑定优先级最高，其次是显式绑定，然后再是隐式绑定。如果有对象嵌套的情况，则 this 绑定到最近的一层对象上。
+
+- 箭头函数的简捷性
+
+> 如果只有一个参数, 可以省略圆括号, 如果没有参数或有多个参数则必须保留圆括号;  
+> 如果只有一行代码, 可以省略花括号;  
+> 如果返回的内容是一个表达式, 可以省略 return, 需要注意的是, 如果返回的是一个对象字面量表达式, 则需要以圆括号包围起来, 避免与函数体的{ ... }起冲突;
+
+- 箭头函数比起传统的函数声明或函数表达式少了些什么？
+
+> 没有绑定 this, 它的 this 是词法作用域, 所以在它的内部使用 this 关键字将指向上一层作用域;
+
+```javascript
 let obj = {
-  [sym]: 'menlin',
-  [other]: 3,
-};
-const keys = Object.keys(obj); // 获取当前对象的所有可枚举属性
-const attrs = Object.getOwnPropertyNames(obj); // 获取当前对象的所有实例属性名，无论它是否可枚举
-const objString = JSON.stringify(obj); // 将当前对象转换成字符串类型
-
-console.log(keys, attrs, objString);
-// [], [], {}, 什么都找不到，通过symbol值创建的属性脱离了原型链
-
-const symbols = Object.getOwnPropertySymbols(obj); // 检索对象中的 Symbol 属性
-```
-
-注意，在使用 symbol 做为唯一属性名时，只能使用 Object.getOwnPropertySymbols()来获取当前对象的所有 symbol 属性，然后使用 for 循环来取出对应的属性值。
-Object.getOwnPropertySymbols()可以返回对象自有的 Symbol 属性，原型链上的属性不会被获取。返回值是存储自有 Symbol 属性的数组。
-
-#### 空值 <font color=red>void</font>
-
-Java 或者 C# 等语言中，如果方法没有返回值，那么此方法的返回值类型就是 Void 类型。而 JavaScript 中没有空值（Void）的概念，为了更加趋近于经典面向对象语言，TypeScript 新增了 void 类型用来表示没有任何返回值的函数。
-
-```javascript
-function warnUser(): void {
-  console.log('This is my warning message');
-}
-```
-
-需要注意的是，void 类型的变量是有限制的，只能是 null 和 undefined，赋予其它任何值都会报错：
-
-```javascript
-let isVoid: void = null; // ok
-let eventHandler: void = undefined; // ok
-let handledUserInfo: void = false; // 不能将类型“boolean”分配给类型“void”
-```
-
-#### 类型推论
-
-什么是类型推论：以下代码虽然没有指定类型，但是会在编译的时候报错：
-
-```javascript
-let catName = 'merlin';
-catName = 7;
-// 不能将类型“number”分配给类型“string”
-```
-
-TypeScript 会在没有明确的指定类型的时候推测出一个类型，这就是类型推论。所以，这个例子它事实上等价于：
-
-```javascript
-let catName: string = 'merlin';
-catName = 7;
-// 不能将类型“number”分配给类型“string”
-```
-
-需要注意的是：如果定义的时候没有赋值，不管之后有没有赋值，都会被推断成 any 类型而完全不被类型检查：
-
-```javascript
-let catName;
-catName = 7;
-catName = 'merlin';
-```
-
-事实上，它等价于：
-
-```javascript
-let catName: any;
-catName = 7;
-catName = 'merlin';
-```
-
-#### 联合类型
-
-联合类型（Union Types）表示取值可以为多种类型中的一种：
-
-```javascript
-function getLength(str: string | number) {
-  if (typeof str === 'string') {
-    return str.length;
-  }
-}
-```
-
-当 TypeScript 不确定一个联合类型的变量到底是哪个类型的时候，我们只能访问此联合类型的所有类型里共有的属性或方法：
-
-## TypeScript 中的其它常见类型
-
-#### 任意值 <font color=red>any</font>
-
-什么是任意值类型?
-在为什么要学习 TypeScript 中我们知道了，**<font color=red>在 TypeScript 中，一个被声明了类型的变量，在使用过程中是不允许改变类型的</font>**：
-
-```javascript
-let catName: string = 'menlin';
-catName = 6;
-// 不能将类型“number”分配给类型“string”
-```
-
-但是，在实际的开发工作中，我们有的时候可能需要描述编辑应用程序时不知道的变量类型。这些值可能来自动态内容（比如，来自用户输入），或者从 API 中获取到的值。在这些情况下，我们希望能够提供一种类型，该类型告诉编译器和将来的维护人员，此变量可以是任何类型。于是就有了 any 类型，<font color=red>any 类型可以在使用过程中被赋值为任意类型</font>。
-
-```javascript
-let myFavoriteNumber: any = 'six';
-myFavoriteNumber = 6;
-// no problem
-```
-
-因为我们认为 any 这个类型是所有可用类型，于是，在任意值上访问任何属性都是允许的，甚至可以直接调用一些方法：
-
-```javascript
-let catName: any = 'Tom';
-console.log(catName.myName);
-console.log(catName.myName.firstName);
-// 可以调用它的方法，编译器并不会报错。
-catName.setName('Jerry');
-// 甚至可以链式调用
-catName.setName('Jerry').sayHello();
-catName.setName.setFirstName('Cat');
-```
-
-**<font color=red>声明一个变量为任意值之后，对它的任何操作，返回的内容的类型都是任意值</font>**。
-切记：any 类型是一个 TypeScript 中的逃生舱，所以它完全脱离了 TypeScript 的类型检查，回到了 JavaScript 的弱类型方式。当出现我们第一课时所描述的那种比较极端的情况时，又会出现一堆的错误。所以，\*\*<font color=red>any 类型要慎用</font>，在最初的尝试或者测试可以暂时定义成 any 类型，一旦可以确定时一定要赋予类型。
-
-#### 未知 <font color=red>unknown</font>
-
-因为 any 类型的被滥用，TypeScript 3.0 时引入了 unknown 类型，unknown 类型是 any 类型的安全版本。每当你想使用 any 时，应该先试着用 unknown。在 any 允许我们做任何事的地方，unknown 则会需要我们先做一些对于类型的操作，如执行 typeof 检查，比较检查或类型断言等更高级的类型防护措施，将其范围缩小到更具体的范围后才能使用：
-
-```javascript
-function getLength(catName: unknown) {
-  if (typeof catName === 'string') {
-    return `hello, ${catName}!`;
-  }
-  return catName.length;
-}
-getLength('Tom');
-```
-
-#### \* 注意：unkown 与 any 看起来似乎是一样的，但其它有很大不同，any 是匹配所有类型，而 unknow 是匹配指定类型。
-
-#### never 永不
-
-### 对象类型<font color=red>object type</font>
-
-与 JavaScript 中定义的引用类型一样，TypeScript 中的所有非原始类型被统称为对象类型。TypeScript 中的对象类型包含了数组、元组、枚举、接口等。
-
-#### 数组 <font color=red>Array</font>
-
-在 TypeScript 中，数组类型有多种定义方式，比较灵活。
-
-- ##### <font color=red>「类型 + 方括号」表示法</font>
-  最简单的方法是使用「类型 + 方括号」来表示数组：
-
-```javascript
-let fibonacci: number[] = [1, 1, 2, 3, 5];
-```
-
-这种方式生成的数组中不允许出现其他的类型：
-
-```javascript
-let fibonacci: number[] = [1, '1', 2, 3, 5];
-// 不能将类型“string”分配给类型“number”。
-```
-
-即便是数组的一些方法在调用时也会对参数进行类型限制：
-
-```javascript
-let fibonacci: number[] = [1, 1, 2, 3, 5];
-fibonacci.push('8');
-// 不能将类型“string”分配给类型“number”。
-```
-
-- #### <font color=red>数组泛型</font>
-  我们也可以使用数组泛型（Array Generic） Array<elemType> 来表示数组：
-
-```javascript
-let fibonacci: Array<number> = [1, 1, 2, 3, 5];
-```
-
-- 关于泛型，这里只是简单地举个例子，大家知道有这样一个方式声明数组就行，稍后的课程会对泛型做一些比较详细的讲解。
-
-* #### <font color=red>用接口</font>
-  接口也可以用来描述数组：
-
-```javascript
-interface NumberArray {
-  [index: number]: number;
-}
-let fibonacci: NumberArray = [1, 1, 2, 3, 5];
-```
-
-- 关于接口，这里也只是简单地举个例子，后面会有课程会对接口做一些比较详细的讲解。  
-  NumberArray 表示：只要索引的类型是数字时，那么值的类型必须是数字。虽然接口也可以用来描述数组，但是我们一般不建议这么做，因为这种方式比前两种方式复杂多了。
-
-#### 元组 <font color=red>Tuple</font>
-
-元组可以看作是数组的拓展，一种更严格的数组类型，它表示已知元素数量和类型的数组。确切地说，是已知数组中每一个位置上的元素的类型，来看例子：元组类型允许您用固定数量的元素表示数组，这些元素的类型是已知的，但不必相同。例如，您可能希望将值表示为一对 a string 和 number：
-
-```javascript
-// Declare a tuple type
-let tuple: [string, number];
-tuple = ['hello', 10]; // OK
-tuple = [10, 'hello']; // Error
-```
-
-当访问具有已知索引的元素时，将检索正确的类型：
-
-```javascript
-console.log(tuple[0].substring(1));
-console.log(tuple[1].substring(1));
-// Property 'substring' does not exist on type 'number'.
-```
-
-访问一组已知索引之外的元素失败，并显示以下错误：
-
-```javascript
-tuple[3] = 'world';
-// Tuple type '[string, number]' of length '2' has no element at index '3'.
-
-console.log(tuple[5].toString());
-// Object is possibly 'undefined'.
-// Tuple type '[string, number]' of length '2' has no element at index '5'.
-```
-
-在 2.6 及之前版本中，这种超出规定个数的元素称作越界元素，越界元素的类型只要是定义的类型中的一种即可。比如我们定义的类型有两种：string 和 number，越界的元素是 string 类型，属于联合类型，所以没问题。在 2.6 之后的版本，去掉了这个越界元素是联合类型的子类型即可的条件，要求元组赋值必须类型和个数都对应。
-
-## 对象类型(续) <font color=red>object type</font>
-
-### 枚举 <font color=red>Enum</font>
-
-枚举类型是 TypeScript 对 JavaScript 标准数据类型的一个**补充**。像 C# 等其它语言一样，使用枚举类型可以**为一组无意义的数值赋予友好的名字**。
-
-举个例子，15 年，神州专车，派单模块。代码中大量的无意义状态码导致无法正常阅读理解。
-
-枚举的实现格式比较简单，通过 enum 关键字调用 TypeScript Enum 构造函数来生成一个指定名称的新枚举，如下所示：
-
-```javascript
-enum 枚举名称 { 枚举成员 = 成员的值, }
-```
-
-TypeScript 中枚举的每个成员都属于它们所在枚举集合的一个对象，也就是说它们的数据类型名称就是枚举集合的名称，使用枚举也很简单：通过枚举的名字访问它的类型和通过枚举的属性来访问它的成员
-。例如下面这段代码：
-
-```javascript
-enum Direction {
-  Up = 1,
-  Right,
-  Down,
-  Left
-}
-function getDirectionName(code: Direction): string {
-  return Direction[code];
-}
-getDirectionName(1); // 'Up'
-getDirectionName(Direction.Down); // 'Down'
-```
-
-通过代码我们可以知道，我们可以采用枚举名.成员名的方式来获取成员的值，也可以通过反向映射，用成员的值来获取成员的名称(仅数字型枚举  成员可以生成反向映射，这个我们稍后就会讲到)。
-而枚举的名字本身也可以做为变量或参数的类型使用。需要注意的是，当它做为类型名使用时，代表着这个变量或者参数只能是该枚举中的成员；
-
-#### 枚举的分类
-
-按照枚举成员的类型，枚举可分为两个大类：数字型枚举与字符串枚举；
-
-但也有例外的时候，当枚举中既有数字又有字符串时，我们将这种枚举称之为异构枚举。一般来说，除了表示你知道异构枚举这个概念，正常的项目开发中，我们不建议你使用异构枚举。
-
-在实际的开发工作中，我们最常使用的就是数字型枚举，用这种方式为一串无意义的无序的状态 ID 赋予一个有一定语义的名称：所以，接下来，我们主要详细说一说数字枚举这个概念：
-
-#### 数字型枚举
-
-刚才有说到，当定义的枚举成员是数字时，这个枚举就被称之为数字型枚举。如下所示：
-
-```javascript
-enum Direction {
-  Up,
-  Down,
-  Left,
-  Right,
-}
-let down: Direction = Direction.Down; // 1
-```
-
-而数字型枚举仍然可以分为两类：带有初始化表达式与不带初始化表达式，刚才的这个例子是不带初始化表达式的。
-枚举的构造函数在没有检测到初始化表达式后，默认以数字 0 开始为元素编号，其后的成员会从 0 开始自动增加。详细来说，Up 的值为 0，Down 为 1，Left 为 2，Right 为 3；但你也可以手动的指定成员的数值。例如，我们将上面的例子改成从 1 开始编号：
-
-```javascript
-enum Direction {
-  Up = 1,
-  Down,
-  Left,
-  Right,
-}
-let down: Direction = Direction.Down; // 2
-```
-
-这个例子中的 Up = 1 就是枚举中的初始化表达式。
-一般来说，我们不在乎成员的值的时候，这种自增长的行为是很好用的，可以省略很多事情。但如果项目要求所有的成员需要与文档或 API 中返回数据一致的时候，也可以全部都采用手动赋值：
-
-```javascript
-enum Color {
-  Up = 1,
-  Down = 3,
-  Left = 4,
-  Right = 2,
-}
-let down: Direction = Direction.Down; // 3
-```
-
-但要注意的是，初始化表达式仅支持数字，如果是字符串则会因为无法进行自增而导致编译时报错：
-
-```javascript
-enum Direction {
-  Up = '1',
-  Down,
-  Left,
-  Right,
-}
-// 枚举成员必须具有初始化表达式
-```
-
-或者使用其它常量作为成员的初始化表达式都是不允许的：
-
-```javascript
-const direction = 1;
-enum Direction {
-  Up = direction,
-  Down,
-  Left,
-  Right,
-}
-// 枚举成员必须具有初始化表达式
-```
-
-#### 反向映射
-
-数字型枚举在经过编译后会生成反向映射表(lookup table)，即除了生成对应的键值对集合外，还会生成值键对的集合。
-
-```javascript
-var Direction;
-(function (Direction) {
-  Direction[(Direction['Up'] = 1)] = 'Up';
-  Direction[(Direction['Down'] = 2)] = 'Down';
-  Direction[(Direction['Left'] = 3)] = 'Left';
-  Direction[(Direction['Right'] = 4)] = 'Right';
-})(Direction || (Direction = {}));
-
-console.log(Direction.Up, Direction[2]); // 1, ’Down’
-```
-
-要注意的是，除了数字型枚举，字符串型的枚举成员因为其值的不确定性，导致容易被覆盖，所以无法生成反向映射表。
-
-#### 枚举的多次声明
-
-一个枚举可以通过多次声明来进行成员补充。有很多时候，我们在定义枚举时可能得到的成员还不完善，比如从 API 中获取某些状态码，可能第一次声明时我们只能拿到最基本的状态码，经过一次状态提交后才能拿到当前状态下更多的子状态码，不断迭代，直到拿到最底层的状态码。但在这过程中间，我们不可避免地要使用当时已经拿到的状态码，这个时候，我们可以使用枚举的多次声明：
-
-```javascript
-enum dispatch {
-  didNot = 0000,  // 未派单
-  dispathcIng = 1000, // 派单中
-  received = 2000, // 已接单
-}
-// ...
-enum dispatch {
-  depart = 2100, // 已出发
-  arrive = 2200, // 已到达服务地点
-  serverStart = 2300 // 已开始服务
-}
-```
-
-要注意的，多次声明时，不允许重复声明同一个枚举成员。
-
-#### 常量枚举
-
-常量枚举其实就是在 enum 关键字之前使用 const 修饰符，它的最大特点就是在编译阶段就被从代码中移除。我们可以编译一段包含枚举的代码来看看：
-
-```javascript
-const enum Direction {
-  Up,
-  Down,
-  Left,
-  Right
-}
-console.log(Direction); // Error
-// "const" 枚举仅可在属性、索引访问表达式、导入声明的右侧、导出分配或类型查询中使用。
-console.log(Direction.Down); // 1
-let direction = [Direction.Up, Direction.Down, Direction.Left, Direction.Right];
-```
-
-之所这样做，是因为常量枚举不允许包含计算成员，所以，常量枚举的成员在使用的地方会被内联进代码中。
-
-常量枚举的用途也不是很多，但当我们不需要一个完整的对象而仅需要这个对象的值的时候，就可以使用常量枚举了，这样，就可以避免在编译时生成多余的代码和引用。
-要注意的是：因为在编译时代码就已经被移除，所以，常量枚举是没有反向映射的。
-
-#### 外部枚举
-
-外部枚举（Ambient Enums）是使用 declare enum 定义的枚举类型
-
-declare 这个关键字一般出现在声明文件中，用于向 ts 声明一个你确认存在的对象，但它可能在编译时找不到，只有运行时才能找到。例如：
-
-```javascript
-declare const global: object;
-```
-
-```javascript
-
-declare enum Directions {
-    Up,
-    Down,
-    Left,
-    Right
-}
-
-let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
-```
-
-如上所述使用外部枚举时，表示当前环境中已经存在了该枚举对象，但这个对象可能存在于其它任意的地方，只是你能向 tx 确认它一定是已经声明的。
-
-## 对象类型(续) <font color=red>object type</font>
-
-### 接口 <font color=red>Interfaces</font>
-
-#### 什么是接口
-
-在 TypeScript 中，我们使用接口（Interfaces）来对对象内部的值做统一的类型声明。
-
-在其它的面向对象语言中，接口（Interfaces）是一个很重要的概念，它是对行为的抽象，而具体如何行动需要由类（classes）去实现（implement）。而 TypeScript 中的接口是一个非常灵活的概念，除了可用于对类的一部分行为进行抽象以外，也常用于对「对象的形状（Shape）」进行描述。什么是对象的形状呢？简单举个例子：
-
-```javascript
-interface Person {
-  name: string;
-  age: number;
-}
-
-let tom: Person = {
-  name: 'Tom',
-  age: 25,
-};
-```
-
-刚才的例子中，我们定义了一个接口 Person，接着定义了一个变量 tom，它的类型是 Person。这样，我们就约束了 tom 的形状必须和接口 Person 一致。
-
-接口名一般首字母大写。
-
-要注意的是，定义的变量比接口少了一些属性是不允许的，多余的属性也是不允许的。**赋值的时候，变量的形状必须与接口的形状一致！**
-
-#### 可选属性
-
-上面说到了，一旦给变量指定接口形状后，就必须与这个接口一致，我们将这些属性称之为必填属性。那有的时候我们的确需要一些可选属性，怎么解决呢？
-
-大家应该都学过正则，还记得正则中有一个符号代表着可以包含零个或一个匹配内容的吗？
-
-```javascript
-interface Person {
-  name: string;
-  age?: number;
-}
-
-let tom: Person = {
-  name: 'Tom',
-  age: 25,
-};
-```
-
-#### 其它属性
-
-有了可选属性以后，我们还需要知道怎么定义一个任意属性。正常来说，调用者传入的属性会比我们函数中需要的属性多得多，如果，没有任意属性的话，我们就需要在接口中对调用者可能传入的所有属性进行类型声明，这无疑是一件非常痛苦的事情。所以，就有了任意属性的定义，如下所示：
-
-```javascript
-interface Person {
-  name: string;
-  age?: number;
-  [propName: string]: string;
-}
-
-let tom: Person = {
-  name: 'Tom',
-  gender: 'male',
-};
-```
-
-需要注意的是，一旦定义了任意属性，那么确定属性和可选属性的类型都必须是它的类型的子集：
-
-```javascript
-interface Person {
-  name: string;
-  age?: number;
-  [propName: string]: string | number;
-}
-
-let tom: Person = {
-  name: 'Tom',
-  gender: 'male',
-};
-```
-
-正常的情况下，我们对于其它属性都默认为 any 类型。
-
-#### 只读属性
-
-有时候我们希望对象中的一些字段只能在创建的时候被赋值，那么可以用 readonly 定义只读属性：
-
-#### 接口的继承
-
-#### 类型断言
-
-类型断言（Type Assertion）可以用来手动指定一个值的类型。
-
-在 tsx 语法（React 的 jsx 语法的 ts 版）中必须使用前者，即 值 as 类型。
-
-形如 <Foo> 的语法在 tsx 中表示的是一个 ReactNode，在 ts 中除了表示类型断言之外，也可能是表示一个泛型。
-
-故建议大家在使用类型断言时，统一使用 值 as 类型 这样的语法
-
-类型断言主要用于缩小类型范围，之前学过的联合类型，unknown 等都可以使用类型断言。之前提到过，当 TypeScript 不确定一个联合类型的变量到底是哪个类型的时候，我们只能访问此联合类型的所有类型中共有的属性或方法：
-
-```javascript
-interface Cat {
-  name: string;
-  run(): void;
-}
-interface Fish {
-  name: string;
-  swim(): void;
-}
-
-function getName(animal: Cat | Fish) {
-  return animal.name;
-}
-```
-
-但很多时候，我们确实需要在还不确定类型的时候就访问其中一个类型特有的属性或方法，比如：
-
-```javascript
-interface Cat {
-  name: string;
-  run(): void;
-}
-interface Fish {
-  name: string;
-  swim(): void;
-}
-
-function isFish(animal: Cat | Fish) {
-  if (typeof animal.swim === 'function') {
-    return true;
-  }
-  return false;
-}
-// 类型“Cat | Fish”上不存在属性“swim”。
-// 类型“Cat”上不存在属性“swim”
-```
-
-这个时候我们就可以使用类型断言，将 animal 断言成 fish:
-
-```javascript
-interface Cat {
-    name: string;
-    run(): void;
-}
-interface Fish {
-    name: string;
-    swim(): void;
-}
-
-function isFish(animal: Cat | Fish) {
-    if (typeof (animal as Fish).swim === 'function') {
-        return true;
+  msg: "hello",
+  fn1: function (name) {
+    console.log(this.msg, "fn1"); // this指向obj
+    function fn2() {
+      console.log(this.msg, "fn2"); // this指向window
+      return `${this.msg}, ${name}`;
     }
-    return false;
-}
+    return fn2();
+  },
+};
+obj.fn1("tom");
+// undefined, tom
+
+// 箭头函数的写法
+let obj = {
+  msg: "hello",
+  fn1: function (name) {
+    console.log(this.msg, "fn1"); // this指向obj
+    fn2 = () => {
+      console.log(this, "fn2"); // this指向obj
+      return `${this.msg}, ${name}`;
+    };
+    return fn2();
+  },
+};
+obj.fn1("tom");
+// 所以, 我们再也不需要使用that/self来保存当前this指向了
 ```
 
-需要注意的是，类型断言只能够「欺骗」TypeScript 编译器，无法避免运行时的错误，反而滥用类型断言可能会导致运行时错误。
+> 因为它无法对 this 进行绑定, 所以如果使用 call 或者 apply 方法调用时, 它们的第一个参数会被忽略;
 
-联合类型可以被断言为其中一个类型
-父类可以被断言为子类
-任何类型都可以被断言为 any
-any 可以被断言为任何类型
+```javascript
+let obj = {
+  msg: "hello",
+  fn1: function (name) {
+    console.log(this.msg, "fn1"); // this指向obj
+    fn2 = () => {
+      console.log(this, "fn2"); // this指向obj
+      return `${this.msg}, ${name}`;
+    };
+    return fn2.call({ msg: "hallo" });
+  },
+};
+obj.fn1("tom");
+// hello, tom
+// this指针没有偏移到新对象
+```
+
+> 没有绑定 arguments 对象, 所以我们只能使用剩余参数（Rest, ...）;  
+> 没有自己的 super; 没有自己的 constructor; 也没有自己的 prototype, 所以它不能使用 new 关键字, 它只是更适合用于我们声明的函数表达式而不是函数声明;

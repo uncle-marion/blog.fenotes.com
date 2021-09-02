@@ -1,2 +1,2 @@
-# lessons_13. Redux 与ReduxSaga
+# lessons_05. redux 规范
 

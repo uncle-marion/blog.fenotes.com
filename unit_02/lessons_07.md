@@ -1,233 +1,366 @@
-> 企业项目实战 > 第二部分 > React 基础回顾
+> Marion 的 react 实战课程 > 第二部分 > 高阶组件
 
-### React 的生命周期
+# 高阶组件
 
-#### 关于生命周期的一些时间节点(简单了解即可)
+官方说：高阶组件（HOC）是 React 中用于复用组件逻辑的一种高级技巧。HOC 自身不是 React API 的一部分，它是一种基于 React 的组合特性而形成的设计模式。
+官方又说：高阶组件是参数为组件，返回值为新组件的函数。
 
-- 2018 年 3 月, 16.3 版本更新, 对生命周期函数做出了比较大的调整, 出现了两个新的生命周期函数 getDerivedStateFromProps 与 getSnapshotBeforeUpdate, 并声明将逐渐废弃 componentWillMount、componentWillReceiveProps、componentWillUpdate
+## 理解高阶组件之前，我们需要先理解什么是高阶函数
 
-- 2018 年 5 月, 16.4 版本更新, 再次修正并确认了新的生命周期；
+什么是高阶组件？这个其实是复用了函数式编程中的高阶函数的概念，高阶函数是对其他函数进行操作的函数，操作可以是将它们作为参数，或者是返回它们。简单来说，高阶函数是一个接收函数作为参数或将函数作为输出返回的函数。其实我们很早就接触到了高阶函数，但是并没有人告诉我们这就是一个高阶函数，比如 map、filter、reduce 等等；
 
-- 2019 年 2 月, hooks 出现, 部分比较前卫的小公司新开项目, 都直接上了 hooks, 但大公司因为旧的项目太多, 所以还在类组件上折腾着, 只有少数比较前卫的团队开始使用 hooks;
+#### 示例 1：
 
-react 更新日志, 感兴趣的同学可以课后去看一看, 了解一下就行, 不用花太多时间, 主要是你们工作以后, 需要关注这块以了解最近的更新有了哪些新特性或者有哪些特性被宣布被废弃, 这些都是很重要的, 关系着你在写项目时可以使用哪些方法不能使用哪些方法, 比如生命周期, 现在还有很多大公司因为早期的项目中 16.4 以前的代码太多, 无法使用最新的 react 版本。
-
-https://github.com/facebook/react/blob/master/CHANGELOG.md
-
-#### 什么是生命周期
-
-这个问题已经问得比较滥了, 其实生命周期（Life Cycle）的概念应用很广泛, 特别是在政治、经济、环境、技术、社会等诸多领域经常出现, 其基本涵义可以通俗地理解为“从摇篮到坟墓”（Cradle-to-Grave）的整个过程。而对于 React 来讲, 应该称之为组件的生命周期, 这样可以从字面理解, 就是一个组件从加载到更新再到卸载的整个流程。
-
-#### React 组件生命周期函数有哪些
-
-#### 16.3 以前的生命周期
-
-参考下面的图: 早期的生命周期函数比较多, 分以下 4 个阶段: 创建阶段、实例化阶段、更新阶段、卸载阶段
-
-<img src="../assets/react_lifecycle_old.png" />
-
-- ##### 创建阶段
-
-> getDefaultProps<font color=red>(16.4 后废弃)</font>
-
-这个阶段只会触发一个 getDefaultProps 方法, 该方法返回一个对象并缓存起来。然后与父组件指定的 props 对象合并, 最后赋值给 this.props 作为该组件的默认属性。
-
-- ##### 实例化阶段
-
-该阶段主要发生在实例化组件类的时候, 也就是该组件类被调用的时候触发。这个阶段会触发一系列的流程, 按执行顺序如下:
-
-> getInitialState<font color=red>(16.4 后废弃)</font>: 初始化组件的 state 的值。其返回值会赋值给组件的 this.state 属性。  
-> componentWillMount<font color=red>(16.4 后废弃)</font>: 这里可以根据业务逻辑来对 this.state 进行一些相应的操作。  
-> render: 根据 this.state 的值, 生成页面需要的虚拟 DOM 结构, 并返回该结构。  
-> componentDidMount: 在 render 完成后触发, 这个时候已经可以通过 ReactDOM.findDOMNode(this) 来获取当前组件的节点, 然后就可以像 Web 开发中那样操作里面的 DOM 元素了。
-
-- ##### 更新阶段
-
-这主要发生在用户操作之后或者父组件有更新的时候, 此时会根据用户的操作行为进行相应的页面结构的调整。这个阶段也会触发一系列的流程, 按执行顺序如下:
-
-> componentWillReceiveProps<font color=red>(16.4 后废弃)</font>: 当组件接收到新的 props 时, 会触发这个函数。在这个函数中, 通常可以调用 this.setState 方法来完成对 this.state 的修改。  
-> shouldComponentUpdate: 该方法用来拦截新的 props 或 state, 然后根据事先设定好的判断逻辑, 做出最后要不要更新组件的决定。  
-> componentWillUpdate<font color=red>(16.4 后废弃)</font>: 当上面的方法拦截返回 true 的时候, 就可以在该方法中做一些更新之前的操作。  
-> render: 根据一系列的 diff 算法, 生成需要更新的虚拟 DOM 数据。（在 render 中只允许进行数据和模板的组合, 不允许对 state 进行修改, 一是维护代码可读性, 最关键的是避免因为修改属性而造成的死循环）  
-> componentDidUpdate: 该方法在组件的更新已经同步到真实 DOM 后触发, 我们常在该方法中做一些 DOM 操作。
-
-- ##### 卸载阶段
-
-> componentWillUnmount
-
-当组件需要从 DOM 中移除的时候, 我们通常会做一些取消事件绑定、移除虚拟 DOM 中对应的组件数据结构、销毁一些无效的定时器等工作。这些事情都可以在这个方法中处理
+假设我们有一个数字数组，我们想要创建一个新数组，其中包含第一个数组中每个值的两倍。 让我们看看如何使用和不使用高阶函数来解决问题。
 
 ```javascript
-class Test extends Readt.component {
-  /* 1.创建阶段 */
-  //在创建类的时候被调用
-  getDefaultProps: function() {
-    console.log("getDefaultProps");
-    return {};
-  },
-
-  /* 2.实例化阶段 */
-  //获取this.state的默认值
-  getInitialState: function() {
-    console.log("getInitialState");
-    return {name: "hangge.com"};
-  },
-  //组件将要加载, 在render之前调用此方法
-  componentWillMount: function() {
-    //业务逻辑的处理都应该放在这里, 比如对state的操作等
-    console.log("componentWillMount");
-  },
-  //渲染并返回一个虚拟DOM
-  render: function() {
-    console.log("render");
-    return (
-            <div>欢迎访问: {this.state.name}</div>
-    );
-  },
-  //组件完成加载, 在render之后调用此方法
-  componentDidMount: function() {
-    //在该方法中, ReactJS会使用render方法返回的虚拟DOM对象来创建真实的DOM结构
-    console.log("componentDidMount");
-    var node = ReactDOM.findDOMNode(this);
-    console.log(node);
-  },
-
-  /* 3.更新阶段 */
-  //该方法发生在this.props被修改或父组件调用setProps()方法之后
-  componentWillReceiveProps: function() {
-    console.log("componentWillRecieveProps");
-  },
-  //是否需要更新
-  shouldComponentUpdate: function() {
-    console.log("shouldComponentUpdate");
-    return true;
-  },
-  //将要更新
-  componentWillUpdate: function() {
-    console.log("componentWillUpdate");
-  },
-  //更新完毕
-  componentDidUpdate: function() {
-    console.log("componentDidUpdate");
-  },
-
-  /* 4.销毁阶段 */
-  //销毁时会被调用
-  componentWillUnmount: function() {
-    console.log("componentWillUnmount");
-  },
+const arr1 = [1, 2, 3];
+const arr2 = [];
+for (let i = 0, l = arr1.length; i < l; i++) {
+  arr2.push(arr1[i] * arr1[i]);
 }
 ```
 
-注意: 如果你是 3~4 年的工作经验的话, 也就是说到你毕业, 应该是 2021 年年初, 往前回溯 4 年, 应该是 2017 年左右, 那么相对来说早期的生命周期不需要记太多, 面试官如果问起, 可以说很长时间没有用到了, 基本忘记了, 因为你使用的时间太短, 记不住是允许的。如果你的简历是在 2016 年就开始工作的话, 需要记下来一部分, 至少要把后面标红的这些记下来。
-
-但是接下来的 16.3 以后的生命周期需要记一下, 因为时间点比较近, 对比国内的生产环境, 应该还有很多公司在用着。哪怕是你说你 hooks 出现以后就直接没再使用生命周期也不可能全忘记的。
-
-- #### 16.3 以后的生命周期
-
-React 16.3 时, 对生命周期函数做出了比较大的调整, 出现了两个新的生命周期函数 getDerivedStateFromProps 与 getSnapshotBeforeUpdate, 并声明将因为安全问题，即将废弃 componentWillMount、componentWillReceiveProps、componentWillUpdate 这三个生命周期
-
-参考下图, 新的生命周期被精简为三个阶段: 挂载阶段、更新阶段以及卸载阶段
-
-<img src="../assets/react_lifecycle_new.png" />
-
-从图中我们可以看到, 新版的生命周期引入了两个全新的生命周期函数: getDerivedStateFromProps, getSnapShotBeforeUpdate; 这两个生命周期都属于特殊的生命周期，可能我们很少有机会能用到，简单给大家介绍一下，有个印象就行。
-
-getDerivedStateFromProps: 这个生命周期函数在官网上被称之为获取派生状态，用于取代早期的 componentWillMount、componentWillUpdate 和 componentWillReceiveProps, 也就是说无论是挂载阶段还是更新阶段全部都会调用。它适用于一种比较罕见的场景:当前组件的所有 state 均依赖于 props 中的内容
-
-react 官方要求是谨慎使用这个生命周期，因为它会导致代码冗余，并且使组件难以维护。目前我这边还没想到相关的使用场景，所以先暂时了解一下它的一些个使用方式。
-
-这个生命周期会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。它应返回一个对象来更新 state，如果返回 null 则不更新任何内容
+上面这个例子，我们需要先定义一个新数组，然后再创建一个 for 循环来遍历数组 1 并进行运算。而我们如果使用 Es6 中的新方法 map 就可以很容易做到：
 
 ```javascript
-// 早期的
-componentWillReceiveProps(nextProps) {
-  if (nextProps.isLogin !== this.props.isLogin) {
-    this.setState({
-      isLogin: nextProps.isLogin,
-    });
+const arr1 = [1, 2, 3];
+const arr2 = arr1.map((item) => item * 2);
+```
+
+这个例子中的 map 方法，它接受了一个对传入参数进行简单运算的函数作为参数，然后返回这个函数运算后的值。我们将它简单拆解一下看看：
+
+```javascript
+const arr1 = [1, 2, 3];
+const mapMethod = function (item, index, all) {
+  return item * 2;
+};
+// 它只是接受一个函数作为参数而已
+const arr2 = arr1.map(mapMethod);
+```
+
+```javascript
+const arr1 = [1, 2, 3];
+// 这个方法只是让我们理解，没有任何兼容性
+Array.prototype.myMap = function (fun) {
+  const arr = [];
+  for (let i = 0, l = this.length; i < l; i++) {
+    arr.push(fun(this[i]));
   }
-  if (nextProps.isLogin) {
-    this.handleClose();
-  }
-}
-// 新版的
-static getDerivedStateFromProps(nextProps, prevState) {
-  // 判断最传入的props中的值是否与现有的state中的值相同，如果相同返回空，如果不同则将新接收到的props中的值覆盖当前state里的值
-  if (nextProps.isLogin !== prevState.isLogin) {
-    return {
-      isLogin: nextProps.isLogin,
-    };
-  }
-  return null;
-}
-componentDidUpdate(prevProps, prevState) {
-  // 这里的prevProps
-  if (!prevState.isLogin && this.props.isLogin) {
-    this.handleClose();
-  }
+  return arr;
+};
+const arr2 = arr1.myMap((item) => item * 2);
+```
+
+#### 示例 2：
+
+又或者，我们需要将某个特定数组转换成一棵对象树，如果不使用高阶函数，可能是这样实现的
+
+```javascript
+const arr1 = [
+  ["tom", 3],
+  ["jerry", 2],
+  ["kitty", 2],
+];
+const obj1 = {};
+for (let i = 0, l = arr1.length; i < l; i++) {
+  const item = arr1[i];
+  obj1[item[0]] = item[1];
 }
 ```
 
-getSnapshotBeforeUpdate: 这个生命周期函数被放置在了 render 之后, 可以读取但无法使用 DOM 的时候。它使得我们的组件可以在可能更改之前就能从 DOM 中获得一些信息, 比如滚动位置。这个生命周期函数里的任何值都将会作为参数传递给 componentDidUpdate。
-
-来自官网的 getSnapshotBeforeUpdate 的例子
+上面同样是使用了遍历的方法，但我们使用 ES6 内置的 reduce 方法可以更容易地做到
 
 ```javascript
-class ScrollingList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.listRef = React.createRef();
-  }
+const arr1 = [
+  ["tom", 3],
+  ["jerry", 2],
+  ["kitty", 2],
+];
+const obj1 = arr1.reduce((old, item) => {
+  old[item[0]] = item[1];
+  return old;
+}, {});
+```
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    // 我们是否要添加新的 items 到列表
-    // 捕捉滚动位置, 以便我们可以稍后调整滚动
-    if (prevProps.list.length < this.props.list.length) {
-      const list = this.listRef.current;
-      return list.scrollHeight - list.scrollTop;
+关于 reduce，我们后续会有更深入的研究，它可以做很多的事情，比如累加，比如将二维数组转换成一维，比如计算数组中每个元素出现的次数，等等，学习使用它的方法，我们可能要花一整天的时间，所以，在这里不再进行描述。
+
+## 为什么使用高阶组件
+
+React 官方说，要使用 HOC 来解决横切关注点的问题
+
+ps: 横切关注点，指的是指的是一些具有横越多个组件的行为，使用传统的软件开发方法 不能够达到有效的模块化的一类特殊关注点
+推荐阅读：[https://zhuanlan.zhihu.com/p/76618283](https://zhuanlan.zhihu.com/p/76618283)
+
+ps: 有时候，我们会发现学会了一个知识点后反而不懂的更多了。。没关系，太深入的我们可以先不管它，先专注做好眼前的事情，有时间再慢慢深入研究。所以，这个横切关注点，我们先不用管它。
+
+因为组件是 react 中代码的最小复用单元。但我们会发现在很多时候，有些组件明明看起来很容易被复用，但往往在复用时又发现缺少了些什么。这个时候我们就可以使用高阶组件来对已定义的组件进行一些补充和完善。
+
+#### 高阶组件的写法
+
+```javascript
+function withExamp(WrapComponent) {
+  return class PP extends React.Component {
+    render() {
+      return <WrapComponent {...this.props} />;
     }
-    return null;
-  }
+  };
+}
+```
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // 如果我们有snapshot值, 我们已经添加了 新的items
-    // 调整滚动以至于这些新的items 不会将旧items推出视图
-    // (这边的snapshot是 getSnapshotBeforeUpdate方法的返回值)
-    if (snapshot !== null) {
-      const list = this.listRef.current;
-      list.scrollTop = list.scrollHeight - snapshot;
-    }
-  }
+#### 通过一个简单的高阶组件来理解高阶组件
 
+比如，我们定义了一个组件，它会在页面中渲染一个 name 的状态
+
+```javascript
+export default class Index extend Component{
   render() {
-    return <div ref={this.listRef}>{/* ...contents... */}</div>;
+    const {name} = this.props
+    return <div>Welcome To React World, { name }</div>
   }
 }
 ```
 
-[关联阅读](../../relevance/r15&r16.md)
+这个组件在我们多个页面中被调用，工作得很正常。但突然有一天产品设计了一个页面，在这个页面中我们因为种种原因，没办法往下传递这个 name 属性，那现在怎么办呢？修改 Index 组件肯定是不可能的，那可能会导致之前使用了这个组件的其它页面都要修改。
 
-- React 组件的生命周期有三个不同的阶段
+这个时候我们就可以使用高阶组件来实现
 
-#### 总结：
+```javascript
+function withName(WrapComponent){
+  return <WrapComponent { ...this.props } name={'Tom'} />
+}
 
-如果有面试官问起这个问题, 你可以直接描述 16.4 以后版本的生命周期, 如果面试官问起你更多的生命周期, 那么, 你可以把 WillMount、WillUpdate 这两个方法也简单说下, 甚至可以说说它们为什么会被弃用, 这应该可以给你加分
+export
+@withName
+class Index extend Component{
+  render() {
+    const {name} = this.props
+    return <div>Welcome To React World, { name }</div>
+  }
+}
 
-> #### 挂载阶段:
->
-> - constructor: React 在这里完成对数据的初始化，它接受两个参数：props 和 context，当想在函数内部使用这两个参数时，需使用 super()传入这两个参数
-> - render: React 在这里将你写入的 JSX 生成一个虚拟 Dom 树，然后渲染到页面中；
-> - componentDidMount: 组件第一次渲染完成，这个时候 DOM 节点已经生成，我们可以在这里以 refs 的方式获取元素或者调用 ajax 请求，返回数据 setState 后组件会重新渲染
->
-> #### 更新阶段:
->
-> - getDerivedStateFromProps: 它提供了两个参数: nextProps 与 prevState;旧版本的 componentWillReceiveProps 方法需要在这里判断前后两个 props 是否相同，如果不同再将新的 props 更新到相应的 state 上去，这样就破坏了 state 数据的单一数据源特性，导致组件状态变得不可控；在这个方法中，我们将不再有权访问 this.props,而只能通过比较 nextProps 与 prevState 的值来判断是否需要更新当前的 state。
-> - shouldComponentUpdate: 它的功能主要是用于优化，它提供了两个参数: nextProps 与 nextState; 在正常的 react 渲染流程中，当我们的父组件 state 发生变化时，无论是否影响到了当前组件的 props 都会造成当前组件的重新渲染。shouldComponentUpdate 可以让我们避免这种情况。同时，react 也给我们推荐了一种避免手动编写 shouldComponentUpdate 函数的方法就是使用 PureComponent
-> - render: 这里就是上面挂载阶段的 Render 方法，只不过在每一次组件更新时，React 会在这里通过其 diff 算法比较更新前后的新旧 DOM 树，比较以后，找到最小的有差异的 DOM 节点，并重新渲染；
-> - getSnapshotBeforeUpdate: 生命周期走到这里，代表着整个 DOM 已经生成完成但还没有渲染到页面中。我们可以在这里读取当前某个 DOM 元素的状态，并在 componentDidUpdate 中进行相应的处理。
-> - componentDidUpdate: 与挂载阶段的 componentDidMount 几乎一致，唯一的区别是 componentDidMount 只会在组件首次渲染时被触发，而页面每次被更新后都会触发 componentDidUpdate
->
-> #### 卸载阶段:
->
-> - componentWillUnmount: 这个与旧版完全一致，组件被卸载前触发，我们要在这将所有的事件监听、计时器等统统干掉
+export default Index
+```
+
+或者再举一个例子
+
+```javascript
+export default class Index extend Component{
+  render() {
+    return<div>这里是一段文本</div>
+  }
+}
+```
+
+但某天产品又提出了一个新需求，要求我们给这段文本加一个标题，怎么办呢？
+
+```javascript
+function withTitle(WrapComponent) {
+  return class InjectTitle extends Component {
+    render() {
+      return (
+        <div>
+          <div>
+            这是一段标题
+          </div>
+          <WrapComponent {...this.props} />
+        </div>
+      )
+    }
+  }
+}
+export
+@withTitle
+class Index extend Component{
+  render() {
+    return<div>这里是一段文本</div>
+  }
+}
+```
+
+上面这两个例子是我们比较常见的一种高阶组件的使用方式，用来描述我们怎样强化某个通用组件的 props，还有一种被称之为反向继承的方法，我们可以让高阶组件继承被包裹的组件：
+
+```javascript
+export default function (WrappedComponent) {
+  return class Inheritance extends WrappedComponent {
+    componentDidMount() {
+      // 可以方便地得到state，做一些更深入的修改。
+      console.log(this.state);
+    }
+    render() {
+      return super.render();
+    }
+  };
+}
+```
+
+##### 推荐使用的高阶组件
+
+React 拖动库[https://github.com/clauderic/react-sortable-hoc](https://github.com/clauderic/react-sortable-hoc)
+
+> 通过使用此库提供的高阶组件，可以方便地让列表元素可拖动。
+
+recompact[https://github.com/gregberge/recompact](https://github.com/gregberge/recompact)
+
+> recompact 提供了一系列使用的高阶组件，可以增强组件的行为，我们可以利用这个库学习高阶组件的写法。
+
+```javascript
+import React from "react";
+import {
+  setDisplayName,
+  compose,
+  pure,
+  withState,
+  renameProp,
+  withHandlers,
+} from "../src";
+
+export default compose(
+  setDisplayName("RecompactCounter"),
+  pure,
+  withState("value", "onChange", 1),
+  renameProp("value", "count"),
+  withHandlers({
+    onIncrement:
+      ({ count, onChange }) =>
+      () =>
+        onChange(count + 1),
+  })
+)(({ onIncrement, count }) => (
+  <button type="button" onClick={onIncrement}>
+    {count}
+  </button>
+));
+```
+
+## 高阶组件的实例
+
+##### 实现一个 loading 组件
+
+实现 Loading 组件时，发现需要去拦截它的渲染过程，故使用了反向继承的方式来完成。
+
+在通过装饰器调用时，需要传入一个函数作为入参，函数可以获取到 props，随后返回一个 Boolean 对象，来决定组件是否需要显示 Loading 状态
+
+```javascript
+import React, { Component } from "react";
+import { Spin } from "antd";
+export default function (loadingCheck) {
+  return function (WrappedComponent) {
+    return class extends WrappedComponent {
+      componentWillUpdate(nextProps, nextState) {
+        console.log("withLoading将会更新");
+      }
+      render() {
+        if (loadingCheck(this.props)) {
+          return (
+            <Spin tip="加载中" size="large">
+              {super.render()}
+            </Spin>
+          );
+        } else {
+          return super.render();
+        }
+      }
+    };
+  };
+}
+
+//
+import React from 'react'
+import { Spin } from 'antd'
+export default function AA(WrapComponent) {
+  // 返回一个匿名类，这个类继承了我们导入的wrapComponent
+  return class PP extends WrapComponent {
+    componentWillUpdate(nextProps, nextState) {
+      console.log('withLoading将会更新')
+    }
+    render() {
+      return (
+        // 直接从当前的state中获取到被封装的组件中的state或props或方法
+        <Spin tip="加载中" size="large" spinning={this.state.showLoading}>
+          {super.render()}
+        </Spin>
+      )
+    }
+  }
+}
+```
+
+##### 实现一个 copy 组件
+
+实现 copy 组件的时候，我们发现不需要去改变组件内部的展示方式，只是为其在外围增加一个功能，并不会侵入被传入的组件，所以使用了属性代理的方式。
+
+```javascript
+import gotem from "gotem";
+import React, { Component } from "react";
+import ReactDom from "react-dom";
+import { message } from "antd";
+export default copy = (targetName) => {
+  return (WrappedComponent) => {
+    return class extends Component {
+      componentDidMount() {
+        const ctx = this;
+        const dom = ReactDom.findDOMNode(ctx);
+        const nodes = {
+          trigger: dom,
+          // targetName为DOM选择器，复制组件将会复制它的值
+          target: dom.querySelector(targetName),
+        };
+        gotem(nodes.trigger, nodes.target, {
+          success: function () {
+            message.success("复制成功");
+          },
+          error: function () {
+            message.error("复制失败，请手动输入");
+          },
+        });
+      }
+      render() {
+        return <WrappedComponent {...this.props} />;
+      }
+    };
+  };
+};
+// 使用
+// 传入 h3 ，让复制组件去获取它的值
+@copy("h3")
+class Info extends Component {
+  render() {
+    return (
+      <div>
+        <h3>阿里云,点击复制这段文字</h3>
+      </div>
+    );
+  }
+}
+```
+
+#### 组合多个高阶组件
+
+上面的高阶组件为 React 组件增强了一个功能，如果需要同时增加多个功能需要怎么做？这种场景非常常见，例如我既需要增加一个组件标题，又需要在此组件未加载完成时显示 Loading。
+
+```javascript
+@withHeader
+@withLoading
+class Demo extends Component {}
+```
+
+使用 compose 可以简化上面的过程，看起来也更符合函数式编程的思想
+
+```javascript
+const enhance = compose(withHeader, withLoading);
+@enhance
+class Demo extends Component {}
+```
+
+> - 组合 Compose
+
+> compose 可以帮助我们组合任意个（包括 0 个）高阶函数，例如 compose(a,b,c)返回一个新的函数 d，函数 d 依然接受一个函数作为入参，只不过在内部会依次调用 c,b,a，从表现层对使用者保持透明。
+
+> 基于这个特性，我们便可以非常便捷地为某个组件增强或减弱其特征，只需要去变更 compose 函数里的参数个数便可。
+
+> compose 函数实现方式有很多种，这里推荐其中一个 recompact.compose，详情见下方参考类库。
+
+## 小结
+
+什么是高阶组件：高阶组件通过包裹（wrapped）被传入的 React 组件，经过一系列处理，最终返回一个相对增强（enhanced）的 React 组件，供其他组件调用。它可以抽离公共逻辑，像洋葱一样层层叠加给组件，每一层职能分明，可以方便地抽离与增添。在优化代码或解耦组件时，可以考虑使用高阶组件模式。

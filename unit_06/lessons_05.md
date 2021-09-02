@@ -1,139 +1,259 @@
-#### 什么是装饰器
+> Marion 的 react 实战课程 > 第六部分 > Reflect/Proxy
 
-装饰器是一种特殊类型的声明，它能够被附加到类声明，方法， 访问符，属性或参数上。 装饰器使用 @expression 这种形式，expression 求值后必须为一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。
+## Reflect
 
-通俗的理解可以认为就是在原有代码外层包装了一层处理逻辑。
+Reflect，在英文中的意思是反射，它是一个全局的普通对象。也就是说，我们可以直接使用 Reflect[方法名]的方式来执行其内部的方法。Reflect 是 ES6 为了操作对象而新增的 API，也就是说，它能执行几乎所有对象上的方法，那么，Object 上的方法有什么问题导致 W3C 要添加 Reflect 对象呢？它这样设计的目的是为了什么？
 
-装饰器在身边的例子随处可见，一个简单的例子
+- 将 Object 对象的一些明显属于语言内部的方法(比如 Object.defineProperty)，放到 Reflect 对象上，那么以后我们就可以从 Reflect 对象上可以拿到语言内部的方法。
 
-> 水龙头上边的起泡器就是一个装饰器，在装上以后就会把空气混入水流中，掺杂很多泡泡在水里。
-> 但是起泡器安装与否对水龙头本身并没有什么影响，即使拆掉起泡器，也会照样工作，水龙头的作用在于对水流的控制，至于水中掺不掺杂气泡则不是水龙头需要关心的。
-
-在 TypeScript 中装饰器还属于实验性语法，你必须在命令行或 tsconfig.json 里启用 experimentalDecorators 编译器选项。
-
-#### 为什么要用装饰器
-
-可能有些时候，我们会对传入参数的类型判断、对返回值的排序、过滤，对函数添加节流、防抖或其他的功能性代码，基于多个类的继承，各种各样的与函数逻辑本身无关的、重复性的代码。装饰器的实现让开发人员更加关注业务代码的开发，封装功能辅助性的代码。让开发人员把焦点放在业务上，实现焦点分离。
-
-所以，对于装饰器，可以简单地理解为是非侵入式的行为修改。
-
-需要注意的是：装饰器是一项实验性特性，在未来的版本中可能会发生改变！
-
-#### 如何定义装饰器
-
-装饰器本身其实就是一个函数，理论上忽略参数的话，任何函数都可以当做装饰器使用。
+- 在使用对象的 Object.defineProperty(obj, name, {})时，如果出现异常的话，会抛出一个错误，需要使用 try catch 去捕获，但是使用 Reflect.defineProperty(obj, name, desc) 则会返回 false。
 
 ```javascript
-function helloKitty(target: Function) {
-  console.log('hello Tom!');
+var aa = {}
+try {
+  Object.defineProperty(aa, 'bb', {value: 123});
+} catch(e) {
+  // 失败
 }
 
-@helloKitty
-class HelloKittyClass {}
+// 关于Object.defineProperty()
+// 其实就是一个给对象添加属性或给对象的属性赋值的方法，只不过通过它添加的属性会增加一些控制属性
+Object.defineProperty(对象名称, 属性名称, {
+  value: 属性的值, // 赋值，注意这个值与get\set不能同时存在，否则会内存溢出
+  get(){} // 读取器
+  set(){} // 存储器
+  writable: true // 是否可以改变，默认为不可改变
+  configurable: true // 是否可以删除，默认为不可删除
+  enumerable: true // 是否可以被for in遍历或通过Object.keys获取，默认不可遍历
+})
+
+// 新写法
+if (Reflect.defineProperty(aa, 'bb', {value: 123})) {
+  // 写入成功会返回true
+} else {
+  // 失败会返回false
+}
 ```
 
-#### 类装饰器
-
-应用于类构造函数，其参数是类的构造函数。
+Reflect 一共提供了 13 个方法，我们只要学习常用的一些方法即可，对它比较感兴趣的同学可以去菜鸟等网站自己行学习其它方法。
 
 ```javascript
-function addAge(args: number) {
-  return function (target: Function) {
-    target.prototype.age = args;
-  };
-}
+/**
+ * 读取对象的属性的值
+ * target 需要读取的对象
+ * name   属性名
+ * receiver 上下文对象(记得之前讲过的fn.call(this)吗)
+ */
+Reflect.get(target, name, receiver);
 
-@addAge(18)
-class Hello {
-  name: string;
-  age: number;
-  constructor() {
-    this.name = 'yugo';
-  }
-}
-
-let hello = new Hello();
-console.log(hello.age);
-```
-
-#### 方法装饰器
-
-它会被应用到方法的 属性描述符上，可以用来监视，修改或者替换方法定义。
-方法装饰会在运行时传入下列 3 个参数：
-
-1、对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
-2、成员的名字。
-3、成员的属性描述符{value: any, writable: boolean, enumerable: boolean, configurable: boolean}。
-
-```javascript
-function addAge(constructor: Function) {
-  constructor.prototype.age = 18;
-}
-​
-function method(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-   console.log(target);
-   console.log("prop " + propertyKey);
-   console.log("desc " + JSON.stringify(descriptor) + "\n\n");
+var tom = {
+  name: "Tom",
+  age: 3,
+  get desc() {
+    console.log(`我叫${this.name},我今年${this.age}岁了`);
+  },
 };
-​
-@addAge
-class Hello{
-  name: string;
-  age: number;
-  constructor() {
-    console.log('hello');
-    this.name = 'yugo';
-  }
-​
-  @method
-  hello(){
-    return 'instance method';
-  }
-​
-  @method
-  static shello(){
-    return 'static method';
-  }
-}
+Reflect.get(tom, "name");
+Reflect.get(tom, "desc");
+Reflect.get(tom, "desc", { name: "Jerry", age: 2 });
+
+/**
+ * 读取对象的属性的值
+ * target 需要读取的对象
+ * name   属性名
+ * value  属性的值
+ * receiver 上下文对象
+ */
+Reflect.get(target, name, value, receiver);
+
+/**
+ * 实例化一个构造函数
+ * target 实例化的构造函数
+ * args   实例化构造函数需要的参数
+ * newTarget 表示实例化生成的实例对象是谁的实例
+ */
+Reflect.construct(target, args, newTarget);
+/**
+ * 添加或修改对象的属性
+ * target 需要读取的对象
+ * name   属性名
+ * desc   描述
+ */
+Reflect.defineProperty(target, name, desc);
+
+// 判断对象是否有这个属性
+Reflect.has(target, name);
 ```
 
-#### 属性装饰器
+## Proxy
+
+Proxy 在英文中的意思是代理，在 Es6 中主要用于构建一个对目标对象操作进行拦截的代理器，通俗地讲，就是要写入或读取对象中某些属性的时候，会被 proxy 方法拦截并加以判断和处理。大道理先不说，我们先学着怎么用，用完了再说它的使用场景和方法吧
+
+Proxy 的使用方式如下：
 
 ```javascript
-function log(target: any, propertyKey: string) {
-    let value = target[propertyKey];
-    // 用来替换的getter
-    const getter = function () {
-        console.log(`Getter for ${propertyKey} returned ${value}`);
-        return value;
+var tom = {
+  name: "Tom",
+  age: 3,
+};
+/**
+ * 这个对象中包含一个用于监听什么时候获取了对象属性的方法
+ */
+var handler = {
+  /**
+   * 监听get方法
+   * @param {*} target 被监听的对象，可以是类可以是对象也可以是方法
+   * @param {*} key 对象的属性名
+   * @param {*} proxy 代理对象
+   */
+  get(target, key, proxy) {
+    console.log(
+      `${new Date().toLocaleTimeString("zh")}使用proxy获取了${key}的值`
+    );
+    return Reflect.get(target, key, proxy);
+  },
+};
+
+var proxy = new Proxy(tom, handler);
+proxy.name;
+```
+
+在上面的代码中，我们首先定义一个对象 tom, 然后声明了一个代理对象 handler, 再然后使用 Proxy 创建了一个代理对象 proxy, 最终的结果就是，只要使用 proxy 读取 tom 对象中的任意一个值都会被 handler 里的处理方法先过一遍再返回结果。一般来说，我们使用 proxy 来代替设计模式中的代理模式：
+
+- 拦截和监听外部对对象的访问
+- 降低函数或类的复杂度
+- 在复杂操作前对操作进行校验或对资源进行管理
+
+### proxy vlidate
+
+比如，我们需要对某个类的实例化操作进行数据校验
+
+```javascript
+// 写一堆的判断，如果参数比较多的话这里就没办法看下去了
+class Cats {
+  constructor(name, age) {
+    if (this.name !== "string") {
+      return throw Error("name只接触字符串参数");
     }
-    // 用来替换的setter
-    const setter = function (newVal) {
-        console.log(`Set ${propertyKey} to ${newVal}`);
-        value = newVal;
+    if (!this.age !== "number") {
+      return throw Error("age只接受数字参数");
+    }
+    if (!this.age > 15) {
+      return throw Error("这只猫太老了");
+    }
+    this.name = name;
+    this.age = age;
+  }
+}
+// 使用代理
+function constructorValidate(target, validate) {
+  return new Proxy(target, {
+    _validate: validate,
+    set(target, key, value, proxy) {
+      if (target.hasOwnProperty(key)) {
+        var validate = this._validate[key];
+        if (!!validate(value)) {
+          return Reflect.set(target, key, value, proxy);
+        } else {
+          throw Error(`写入失败，${key}的参数类型与预设的参数不符`);
+        }
+      } else {
+        throw Error(`你确定是${key}吗？我好像，貌似没有找到这么个属性啊`);
+      }
+    },
+  });
+}
+var validate = {
+  name(val) {
+    return typeof val === "string";
+  },
+  age(val) {
+    return typeof age === "number" && age < 15;
+  },
+};
+class Cats {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+    return constructorValidate(this, validate);
+  }
+}
+const tom = new Cats("Tom", 3);
+
+tom.name = 123;
+tom.age = 123;
+tom.age = "tom";
+
+// 还可以校验函数的参数是否正确
+var test = {
+  fn1(a, b, c) {},
+  fn2(a, b) {},
+};
+var argsType = {
+  fn1: ["string", "number", "boolean"],
+  fn2: ["number", "string"],
+};
+
+function argCheck(name, args, types) {
+  console.log(name, args, types);
+  for (let i = 0, l = types.length; i < l; i++) {
+    var item = args[i];
+    var type = types[i];
+    if (!item || typeof item !== type) {
+      console.warn(`${name}第${i}位参数不匹配`);
+    }
+  }
+}
+
+test = new Proxy(test, {
+  get(target, key, proxy) {
+    console.log(target, key, proxy);
+    var value = target[key];
+    return function (...args) {
+      var checkArgs = argCheck(key, args, argsType[key]);
+      return Reflect.apply(value, target, args);
     };
-    // 替换属性，先删除原先的属性，再重新定义属性
-    if (delete this[propertyKey]) {
-        Object.defineProperty(target, propertyKey, {
-            get: getter,
-            set: setter,
-            enumerable: true,
-            configurable: true
-        });
+  },
+});
+
+test.fn1();
+```
+
+### 私有属性
+
+早先的时候我们讲了#和*来表示私有属性，后来发现#好像不是那么好及，而*属性却无法做到真正的私有化，那现在用 proxy 我们就可以真实地实现私有变量了
+
+```javascript
+// 我们不想让appKey被外部访问到，也不允许外部修改
+var api = {
+  _apiKey: "123456789",
+  getUserInfo() {
+    console.log(this._appKey);
+  },
+  getOrderList() {},
+};
+var handler = {
+  get(target, key, proxy) {
+    console.log(proxy);
+    if (key[0] === "_") {
+      throw Error(
+        `${key}是一个私有变量，不允许直接获取，如需获取请使用xxx方法`
+      );
     }
-}
-class Calculator {
-    @log
-    public num: number;
-    square() {
-        return this.num * this.num;
+    return Reflect.get(target, key, proxy);
+  },
+  set(target, key, proxy) {
+    if (key[0] === "_") {
+      throw Error(
+        `${key}是一个私有变量，不允许直接修改，如需修改请调用xxx方法`
+      );
     }
-}
-let cal = new Calculator();
-cal.num = 2;
-console.log(cal.square());
-// Set num to 2
-// Getter for num returned 2
-// Getter for num returned 2
-// 4
+    Reflect.set(target, key, proxy);
+  },
+};
+
+var proxy = new Proxy(api, handler);
+
+proxy._apiKey;
+proxy._apiKey = "asdffd";
 ```

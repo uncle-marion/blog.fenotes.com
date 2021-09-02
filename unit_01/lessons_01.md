@@ -1,383 +1,339 @@
-> 企业项目实战 > 第一部分 > ES6 代码规范与基础回顾
+> Marion 的 react 实战课程 > 第一部分 > React 项目从零开始
 
-# 必须养成的 coding 习惯
+## 从创建一个全新的 react 项目开始
 
-https://blog.csdn.net/marion_lau/article/details/111935038
+#### 准备：开发环境的检查
 
-## 为什么要定义代码规范？
+- 在开始一切操作之前, 请检查你的 vscode 工作路径是否有包含中文, 如果有, 请修改它们至你硬盘的某个分区的根目录下，并将其命名为 example 或 workspace。以避免我们在开发的过程中会遇上一些奇怪且棘手的错误。
 
-一般来说在开发中每个人的代码习惯都不太一样, 这样就会导致代码风格不一致。而当前在一些小型甚至中小型创业型团队中, 完全没有代码规范, 以致于维护和修改 bug 的时候看别人的代码成为一种很难受的事情...
-这种情况尤其在前端开发中尤为明显。因为关于前端的开发规范到现在为止也没有行业权威标准, 基本上各大公司都有一套属于自己的标准, 而中小型公司则都是在开发中通过 **eslint** 进行约束。 但 eslint 终究无法规范一些方法与命名, 它只能简单地规范一些空格、换行或结束符号等，我们完全可以使用 **prettierrc.json** 来解决，但是各种命名规则与方法调用只能靠人力来检查。为了帮大家确认一套适应性较强的规范, 我在最近参考了一些大厂的规范, 经过比较, 发现 **Airbnb** 的标准貌似颇受推崇, 目前国内其它公司的标准基本都是参考这套标准整理而成。今天给大家稍微整理下, 期望大家在以后的开发工作中形成一个良好的代码习惯。
-
-### 命名规则
-
-- 无论何时, 不要使用单字母来声明变量或函数, 它们的命名应当有一定的描述性
-- 使用驼峰式来命名对象、函数和实例, 使用帕斯卡式命名构造函数或类
-- 不要再使用"\_"开头来定义私有属性, 因为这种约束没有意义, 另外, 也是因为在最新的 ECMA 中已经定义了私有属性修饰符：#
+- 检查你的 nodejs 的版本号
+- 检查你的 npm 的镜像地址
+- 检查你的 yarn 的镜像地址
 
 ```javascript
-// #代表的是私有属性, 目前在chrome 浏览器中已经实现
-class User {
-  // 声明私有属性并赋值
-  #id = 'xyz';
-  constructor(name) {
-    this.name = name;
-  }
-  getUserId() {
-    // 内部可以打印
-    console.log(this.#id);
-    return this.#id;
-  }
-}
-const tom = new User('tom');
-// 外部不行的
-console.log(tom.getUserId());
+node -v
+
+npm config list
+
+// 如果显示 metrics-registry = "http://registry.npmjs.org/"
+// 执行 npm config set registry https://registry.npm.taobao.org
+
+yarn config list
+
+// 同样的, 如果发现镜像不在taobao的, 修改它
+// 执行 yarn config set registry https://registry.npm.taobao.org
+
 ```
 
-- 如果在你的函数或回调中找不到 this 了, 不要使用 self/that 来保存 this, 而是使用箭头函数
+#### 使用 react 脚手架创建项目
+
+- 使用 npx create-react-app 来创建项目. 请注意，这里是 npx 而不是 npm; npx 是 npm 的一个新工具，它可以将远程 node 项目拉回到本地临时文件里运行，完成后再删除掉这个临时文件。它最大的好处是减少了我们全局安装某些脚手架的操作。
+- 例如 npx create-react-app 这个命令与你之前通过全局安装 create-react-app 然后再创建项目是一样的概念, 只是 npx 是执行了下面这三个步骤, 这样我们的硬盘里就不需要一直保留着 create-react-app 这个脚手架。
+
+> npm install -g create-react-app  
+> create-react-app 你的项目名  
+> npm uninstall -g create-react-app
 
 ```javascript
-// bad
-function foo() {
-  const that = this;
-  return function () {
-    console.log(that);
+// 创建项目, 注意你的项目名，必须是英文字母开头可以包含数字和下划线，不允许出现其它字符
+npx create-react-app 你的项目名
+
+// 如果你要建的是一个ts项目, 在后面加上--typescript
+// react中文文档这块有点小问题, ts项目需要 --template typescript 后缀而不是
+npx create-react-app 你的项目名 --template typescript
+//
+
+// 项目创建完成后, 通过终端进入你的项目文件夹
+
+cd 你的项目名
+```
+
+#### 安装依赖之前
+
+- npm 是我们平常开发时用来管理项目依赖的一个工具，它有很多的命令，我们在这里只需要记一些常用命令就行：
+- npm 常用命令与参数
+
+```javascript
+npm -v                        // 查看 npm 版本号
+npm config list               // 查看 npm 配置
+npm init                      // 在当前目录下创建一个 package.json 文件
+
+npm install <依赖名> || npm i  // 安装依赖，以下都以别名i为准
+npm i <依赖名>[@版本号]         // 安装指定版本号的依赖，注意，这种方式会安装当前大版本的最高版本
+npm i <依赖名> -S              // 安装依赖到项目生产环境
+npm i <依赖名> -D              // 安装依赖到项目开发环境
+npm i <依赖名> -g              // 安装依赖到本地代码库
+
+npm uninstall <依赖名>         // 卸载依赖
+npm cache clean               // 清除项目依赖缓存
+```
+
+- npm 因为国内的网络问题，可能需要切换代码仓库
+
+```javascript
+npm get registry                                         // 获取代码仓库的镜像地址
+npm config set registry                                  // 切换代码仓库的镜像地址
+npm config set registry https://registry.npm.taobao.org  // 切换仓库到 taobao
+npm config set registry https://registry.npmjs.org       // 切换仓库到 npm
+```
+
+- 也可以使用 nrm 来进行仓库管理
+
+```javascript
+npm i -g nrm                                              // 全局安装 npm 镜像管理工具
+nrm ls                                                    // 获取代码仓库的镜像
+nrm test                                                  // 测试代码仓库的响应时间
+nrm use npm                                               // 切换仓库到 npm
+nrm use taobao                                            // 切换仓库到 taobao
+```
+
+- 我们也可以使用 yarn 管理工具，它是为了弥补 npm 的一些缺陷而开发出来的新的 js 包管理工具，它使用了并行安装的方式所以比 npm 更快；它有离线下载模式，也就是说当某个依赖曾经被安装过，再次安装时会从本地缓存库中下载等很多的优点。
+
+```javascript
+npm i -g yarn
+yarn add <依赖名>           // 安装依赖到生产环境
+yarn add <依赖名> -D        // 安装依赖到开发环境
+
+yarn remove <依赖名>        // 卸载依赖
+yarn cache clean           // 清除缓存
+```
+
+#### 常用依赖安装
+
+- 每一次新建项目, 第一件事不是 start, 而是 install。所以不要急着运行你的项目, 你需要做的第一件事是安装一些必要的依赖
+
+```javascript
+
+// react-router-dom是react-router的扩展版，增加了一些对于dom操作的扩展
+npm i -S react-router-dom
+// redux 看你项目的情况决定是否要安装, 这里我们先安装, 因为它是我们专高6课程的核心部分
+npm i -S redux react-redux redux-promise redux-thunk redux-persist
+// decorators 因为我们的项目需要使用装饰器，所以这个必须安装
+npm i -S @babel/plugin-proposal-decorators
+// axios 目前用的比较多的http库, 基于promise, 可以同时运行在node和浏览器中, 有极其丰富的配置项
+npm i -S axios moment
+// 看你项目的情况, 安装antd或者antd-mobile, 专高6的核心是antd, 所以这里我们安装antd
+npm i -S antd
+// antd-mobile与它的依赖
+// npm i -S antd-mobile postcss-px2rem-exclude rc-form
+
+// 以下的内容只在开发环境依赖, 所以我们通过-D指令将它们安装在devDependencies里面
+// reactAppRewired与customize-cra是比较重要的插件, 一定要安装
+// react-app-rewired是让你在不执行"npm run eject"指令也能改变内置的webpack中的配置的一个插件；
+// customize-cra 是依赖于 react-app-rewired 的库, 通过 config-overrides.js 来修改底层的 webpack, babel配置
+npm i -D react-app-rewired customize-cra
+// antd的按需加载, 无论你是使用antd还是antd-mobile, 都需要安装
+npm i -D babel-plugin-import
+// 安装对于less的支持
+npm i -D less less-loader
+// 我们还需要很多依赖, 其它的依赖会在后续的课程中根据需要来安装
+
+```
+
+---
+
+#### 增加配置文件
+
+- 我们刚刚安装了"react-app-rewired"与"customize-cra"这两个依赖, 也说到了, customize-cra 是能通过一个叫 config-overrides.js 的文件来修改你的 webpack 的配置而不再需要运行 npm run eject 来暴露 webpack 配置文件。
+  所以, 现在我们要在你的根目录增加 config-overrides.js 文件, 增加装饰器、less、antd 与路径别名的相关配置。
+
+```javascript
+const path = require("path");
+
+const {
+  override,
+  addWebpackAlias, // 用于配置别名的
+  addLessLoader, // 用于加载less文件
+  addDecoratorsLegacy, // 用于使用ES的装饰器
+  fixBabelImports, // antd 按需加载
+  overrideDevServer, // 开发服务器
+} = require("customize-cra");
+
+/**
+ * 代理配置
+ *
+ * add proxy 本置代理
+ * 返回一个回调函数，customize-cra在执行这个回调的时候，会将当前的开发服务器的配置项以参数的形式传给我们
+ * 我们对这个config进行一个简单的处理后返回给customize-cra
+ */
+const addProxy = () => (config) => {
+  // 返回配置好的config
+  return {
+    ...config,
+    // 代理
+    proxy: {
+      // 拦截器（拦截所有以"/api"开头的http请求）
+      "/api": {
+        // 配置一个base url
+        target: "https://www.sina.com.cn",
+        // 是否修改源，
+        changeOrigin: true,
+        // 是否重写我们的拦截关键字
+        pathRewrite: {
+          "^/api": "/api",
+        },
+      },
+    },
   };
+};
+
+module.exports = {
+  webpack: override(
+    // 使用修饰器
+    addDecoratorsLegacy(),
+    // 加载less文件
+    addLessLoader({
+      lessOptions: {
+        javascriptEnabled: true,
+      },
+      sourceMap: true,
+    }),
+    // antd按需加载工具, 具体用法参考以下链接
+    // https://github.com/ant-design/babel-plugin-import
+    fixBabelImports("import", {
+      libraryName: "antd-mobile",
+      style: "css",
+    }),
+    // 路径别名
+    addWebpackAlias({
+      "@": path.resolve(__dirname, "src"),
+    })
+  ),
+  // 开发环境服务器代理, 一般情况下不需要我们自己配
+  devServer: overrideDevServer(addProxy()),
+};
+```
+
+#### 修改配置文件
+
+- 因为使用了"react-app-rewired", 所以, 我们需要修改 package.json 中的 scripts 属性中的值, 将其中的"react-scripts"统一修改成"react-app-rewired"。
+
+#### 运行项目
+
+- 运行项目, 确认以上的修改正确无误。
+
+以后我们在业务中修改/增加依赖的时候也要记得, 一次只修改几个相关的依赖, 不要把所有的依赖一次性改完, 出现错误的时候都不知道从哪里查起
+
+#### 修正因为别名造成的自动完成路径功能丢失
+
+- 在项目的根目录, 新建一个 jsconfig.json 文件, 内容如下
+
+```javascript
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
 }
+```
 
-// good
-function foo() {
-  return () => {
-    console.log(this);
-  };
+#### 配置代码格式
+
+在项目根目录下新建一个.prettierrc.json 文件，这个文件是配给 prettierrc 插件使用的, 主要是对于一些其它同事 coding 时未遵循规范, 代码可读性较差时, 可以顺手帮忙右键格式一下。内容如下：
+
+```javascript
+{
+  "bracketSpacing": true,  // 在对象中属性冒号的右侧添加空格
+  "printWidth": 100,       // 超过最大值换行
+  "useTabs": false,        // 缩进不使用tab, 使用空格
+  "tabWidth": 2,           // 缩进字节数
+  "semi": true,            // 句尾添加分号
+  "singleQuote": true,     // 使用单引号代替双引号
+  "arrowParens": "avoid",  // (x) => {} 箭头函数参数只有一个时是否要有小括号。avoid：省略括号
 }
 ```
 
-- 如果你的文件只导出一个类, 那么你的文件名应该与你的类名完全一致, 而在引用时也应该完全一致
+#### 调整你的项目文件夹
+
+- 当上面的内容修改完成, 调整你的文档结构如下图所示
+
+<img src="../assets/react_new_project.jpg" />
+
+需要配置在根目录的文件基本配置完成，然后我们再来对 src 目录下的文件与目录做一些调整, 除了 index.js 文件外，其它文件全部删除。
+
+然后新建五个文件夹:
+
+1. assets, 用于放置你将来的 css 和图片等媒体文件;
+2. components, 用来放置你所有的功能组件;
+3. pages, 用来放置你所有的页面文件(业务组件);
+4. reducer, 这个文件夹用于管理我们所有与 redux 有关的文件;
+5. utils, 用来放置你的 axios 配置文件与其它的业务功能插件等。
+
+这就是我们一个 react 项目初始化时需要的文件夹了, 后续会有更多的文件夹, 我们先不用着急, 到用的时候再一个个建立。
+
+#### 新建我们的首页
+
+- 在 pages 文件夹中, 新建一个 HomePage 的文件夹, 文件夹名称以帕斯卡形式（大驼峰）命名, 在这个文件夹下, 新建 index.jsx, style.less 两个文件，为什么 style.less 不放在；
+
+这里需要注意的是, 在我们的 components 与 pages 两个文件夹下, 所有的子文件夹都需要以帕斯卡形式命名, 而其内部至少有一个 index.jsx 与一个 style.less 的文件。
+
+为什么要这样？因为我们要保证文件名与导出的模块名一致, 而我们的 pages 与 components 中每一个文件夹下的内容都是一个或多个独立的组件, 而组件名只能以帕斯卡方式命名：
 
 ```javascript
-class CheckBox {
-  // ...
-}
-export default CheckBox;
-import CheckBox from './CheckBox';
-```
-
-- 总是使用模组 (import/export) 而不是其他非标准模块系统。如果你的环境不支持那就想办法让它支持
-- 不要使用通配符"\*"来导出模块,
-
-```javascript
-// bad
-const AirbnbStyleGuide = require('./AirbnbStyleGuide');
-module.exports = AirbnbStyleGuide.es6;
-
-// bad
-import * as AirbnbStyleGuide from './AirbnbStyleGuide';
-
-// ok
-import AirbnbStyleGuide from './AirbnbStyleGuide';
-export default AirbnbStyleGuide.es6;
-
-// best
-import { es6 } from './AirbnbStyleGuide';
-export default es6;
-```
-
-### 变量定义
-
-- 使用 Const 来定义常量, 使用 let 来定义变量, 如果不是必要, 请忽略还有 var 这个关键字
-- 不要使用","来一次性定义大量的变量, 一是不方便阅读, 二是不方便修改
-- 如果需要在程序最上方定义大量的变量时, 请给你的变量和常量分组
-
-```javascript
-// 什么是常量？可以理解为"不变化的量"大致的意思就是, 在你的程序运行时不会去改变它的值
-const goSportsTeam = true;
-const items = getItems();
-
-// 什么是变量？
-let dragonball;
-let i;
-let length;
-```
-
-- 请在需要的时候才声明你的变量而不是在每个函数的头部声明, 因为我们现在使用的只有 const 和 let, 它们不存在变量提升的问题了
-
-```javascript
-// 你声明了它, 可是你不一定会用到它
-function(hasName) {
-  const name = getName();
-
-  if (!hasName) {
-    return false;
+// Homepage/index.jsx
+import React, { Component } from 'react';
+import './style.less';
+export default class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      msg: '这是我的首页',
+    };
   }
-
-  this.setFirstName(name);
-
-  return true;
-}
-
-// good
-function(hasName) {
-  if (!hasName) {
-    return false;
+  render() {
+    const { msg } = this.state;
+    return <div className="homepage">{msg}</div>;
   }
-
-  const name = getName();
-  this.setFirstName(name);
-
-  return true;
-}
-```
-
-### 字符串
-
-- 在所有的 js 文件中, 只使用\'作为字符串的包围符号, \"仅用于 html 声明 attr 属性
-
-```javascript
-// 虽然这样也可以, 但我们在需要对一些包含\"的字符串做操作时, 转义符号可能会造成一些迷惑
-// 关键是, 全世界都认为使用单引号比双引号好
-const name = 'Capt. Janeway';
-
-// good
-const name = 'Capt. Janeway';
-```
-
-- 当我们需要拼接字符串与变量时, 请使用字符串模板
-
-```javascript
-// 字符串是不可变对象, 当用操作符+连接字符串的时候, 每执行一次+都会申请一块新的内存,
-// 然后复制上一个+操作的结果和本次操作的右操作符到这块内存空间, 因此用+连接字符串的
-// 时候会涉及好几次内存申请和复制
-function sayHi(name) {
-  return 'How are you, ' + name + '?';
 }
 
-// join在连接字符串的时候, 会先计算需要多大的内存存放结果, 然后一次性申请所需内存并
-// 将字符串复制过去, 这是为什么join的性能优于+的原因, 但现在我们有了字符串模板, 比
-// 起join的性能更好
-function sayHi(name) {
-  return ['How are you, ', name, '?'].join();
+// router/index.js
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+// 为什么要用index.jsx? index在Js, Html中, 代表了索引页, 也是当前目录的默认首页。所以, 在这里我们不需要指定文件名就能直接将目录中的index导入, 可以减少文件名称的输入以减少因为文件名输入错误造成的一些问题
+import Homepage from '@pages/Homepage';
+
+function Router() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/homepage" component={Homepage} />
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
-// good
-function sayHi(name) {
-  return `How are you, ${name}?`;
-}
+export default Router;
 ```
 
-### 数组
-
-- 使用数组字面量来创建数组
-- 如果要给数组增加新的元素, 使用 push
-- 如果要复制数组, 使用拓展运算符“...”
-
-### 对象
-
-- 使用对象字面量来创建对象
+将上面两个文件保存后, 我们再来修改根目录的 index.jsx 文件
 
 ```javascript
-// {}是javascript对象字面量创建的形式, 其本质和new Object()并无区别, 默认都是继承了
-// Object对象上的prototype, 那么为什么一定要用字面量来创建对象呢？因为{}是字面量, 可
-// 以立即求值, 而new Object()本质上是方法（只不过这个方法是内置的）调用, 既然是方法调
-// 用, 就涉及到在proto链中遍历该方法, 当找到该方法后, 又会生产方法调用必须的堆栈信息,
-// 方法调用结束后, 还要释放该堆栈
-const item = {};
+// react项目的核心文件, 每一个文件都需要引入它
+import React from "react";
+// 核心文件也包括ReactDOM, 但它不需要在其它文件中引用
+import ReactDOM from "react-dom";
+// 路由配置, 我们刚刚写的
+import Router from "./router";
+
+// 全局的样式文件
+import "@/assets/style.less";
+
+ReactDOM.render(
+  // 对每一个模块都执行严格模式检查
+  <React.StrictMode>
+    <Router />
+  </React.StrictMode>,
+  document.getElementById("docwrap")
+);
 ```
 
-- 无论何时, 不要使用 js 保留字作为 key 的名字, 如果必须要用, 可以使用同义词替换；
+#### 运行你的项目
 
-```javascript
-// class是js的保留字, 这样使用在有些浏览器中可能无法取出class对应的属性
-const superman = {
-  class: 'alien',
-  print() {
-    console.log(this.class);
-  },
-};
+好了, 现在我们的第一个最简单的页面实现了, 通过这个过程我们学习了什么？第一是环境的检查和配置, 第二是 react 项目的创建, 然后是 react 运行环境的一些小配置, 最后是整个目录和文件的梳理。好了, 今天的课程内容就到这里了, 大家一会自习的时候, 可以多建几个项目, 熟悉这一整个流程和相关的配置项。
 
-// good
-const superman = {
-  type: 'alien',
-  print() {
-    console.log(this.class);
-  },
-};
-```
-
-- 正常情况下, 在同一个位置声明你所有的属性, 哪怕是动态的属性名称
-
-```javascript
-function createKey(k) {
-  return `keyNamed${k.slice(0, 1).toUpperCase() + k.slice(1)}`;
-}
-
-// 在外部声明, 一眼看上去与上面的对象声明没有任何关系
-const obj = {
-  id: 5,
-  name: 'San Francisco',
-};
-obj[createKey('enabled')] = true;
-
-// good
-const obj = {
-  id: 5,
-  name: 'San Francisco',
-  [createKey('enabled')]: true,
-};
-```
-
-- 对象中如果有方法, 要使用简写
-
-```javascript
-// bad
-const atom = {
-  value: 1,
-  addValue: function (value) {
-    return atom.value + value;
-  },
-};
-
-// good
-const atom = {
-  value: 1,
-  addValue(value) {
-    return atom.value + value;
-  },
-};
-```
-
-- 声明对象属性时, 如果有外部已赋值的属性时, 请使用简写, 并为其分组
-
-```javascript
-const anakinSkywalker = "Anakin Skywalker";
-function lukeSkywalker() {
-  console.log(this);
-};
-// 不好的例子, 明显的代码冗余了
-const obj = {
-  episodeOne: 1,
-  twoJedisWalkIntoACantina: 2,
-  lukeSkywalker = lukeSkywalker,
-  episodeThree: 3,
-  mayTheFourth: 4,
-  anakinSkywalker = anakinSkywalker,
-};
-
-// 好的例子, 但没有分组, 我们不能一眼看出来哪些属性是简写
-const obj = {
-  episodeOne: 1,
-  twoJedisWalkIntoACantina: 2,
-  lukeSkywalker,
-  episodeThree: 3,
-  mayTheFourth: 4,
-  anakinSkywalker,
-};
-
-// 最好的写法, 属性名简写, 同时还对简写属性进行了分组, 可以很清晰地看出来哪些属性是简写的
-const obj = {
-  lukeSkywalker,
-  anakinSkywalker,
-  episodeOne: 1,
-  twoJedisWalkIntoACantina: 2,
-  episodeThree: 3,
-  mayTheFourth: 4,
-};
-```
-
-### 函数
-
-- 如非必要, 请使用函数声明来声明函数
-
-```javascript
-// 因为函数声明是可命名的, 所以他们在调用栈中更容易被识别。此外,
-// 函数声明会把整个函数提升（hoisted）, 而函数表达式只会把函数的
-// 引用变量名提升。这条规则使得箭头函数可以取代函数表达式
-function foo() {}
-```
-
-- 如果需要判断参数是否存在, 要给它加一个默认值而不是尝试去改变它
-
-```javascript
-function handleThings(opts) {
-  // 很糟糕: 如果参数 opts 是 false 的话, 它就会被设定为一个对象。
-  opts = opts || {};
-  // ...
-}
-
-// good
-function handleThings(opts = {}) {
-  // ...
-}
-```
-
-- 当你必须使用函数表达式（或传递一个匿名函数）时, 请使用箭头函数
-- 如果一个函数只有一行且只有一个参数, 可以把所有的括号抛掉
-
-```javascript
-// 相对于普通函数表达式来说, 箭头函数创造了一个新的 this 执行环境,
-// 通常情况下都能满足你的需求, 而且这样的写法更为简洁。
-[1, 2, 3].map(x => {
-  return x * x;
-});
-[1, 2, 3].map(x => x * x);
-```
-
-### 解构
-
-- 无论是什么环境, 当你想要获取一个对象内的属性时, 请一定要使用解构, 因为解构可以减少临时引用属性
-
-```javascript
-// 代码冗余, 关键是临时引用
-function getFullName(user) {
-  const firstName = user.firstName;
-  const lastName = user.lastName;
-
-  return `${firstName} ${lastName}`;
-}
-
-// good
-function getFullName(obj) {
-  const { firstName, lastName } = obj;
-  return `${firstName} ${lastName}`;
-}
-
-// best
-function getFullName({ firstName, lastName }) {
-  return `${firstName} ${lastName}`;
-}
-```
-
-- 数组也可以使用解构
-
-```javascript
-const arr = [1, 2, 3, 4];
-
-// bad
-const first = arr[0];
-const second = arr[1];
-
-// good
-const [first, second] = arr;
-```
-
-- 需要回传多个值时, 请使用对象而不是数组, 因为数组可能会被改变排序
-
-```javascript
-// bad
-function processInput(input) {
-  // then a miracle occurs
-  return [left, right, top, bottom];
-}
-
-// 调用时需要考虑回调数据的顺序。
-const [left, __, top] = processInput(input);
-
-// good
-function processInput(input) {
-  // then a miracle occurs
-  return { left, right, top, bottom };
-}
-
-// 调用时只选择需要的数据
-const { left, right } = processInput(input);
-```
+关于本小节中所有的配置内容, 大家可以先死记, 并且保存一份在你的笔记当中, 以便随时复制, 后期在真正需要的时候再去查询相关文档学习。

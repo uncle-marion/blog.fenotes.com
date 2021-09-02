@@ -1,862 +1,156 @@
-> 企业项目实战 > React 函数式编程 > React Hooks
+> Marion 的 react 实战课程 > 第五部分 > webpack 入门
 
-# React 的新特性 Hook
+## webpack 的特点
 
-### 什么是 Hook? 为什么要使用 Hook?
+> 可以解析 JSX 语法  
+> 可以解析 ES6 语法新特性  
+> 支持 LESS、SCSS 预处理器  
+> 编译完成自动打开浏览器  
+> 单独分离 CSS 样式文件  
+> 支持文件 MD5 戳，解决文件缓存问题  
+> 支持图片、图标字体等资源的编译  
+> 支持浏览器源码调试  
+> 实现组件级热更新  
+> 实现代码的热替换，浏览器实时刷新查看效果  
+> 区分开发环境和生产环境  
+> 分离业务功能代码和公共依赖代码
 
-首先我们要理解**什么是 Hook**。Hook，中文意义是“钩子”的意思。在 React 中，Hook 是一个特殊的函数，它可以监视系统或进程中的各种状态，让我们在函数组件中也可以使用状态以及实现类似于 componentDidMount 与 componetDidUpdatet 等生命周期一样的方法；
+Webpack 是当下最热门的前端资源模块化管理和打包工具。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需要的时候再异步加载。通过 loader 的转换，任何形式的资源都可以视作模块，比如 CommonJs 模块、AMD 模块、ES6 模块、CSS、图片、JSON、LESS 等
 
-**为什么要使用 Hook?** 一是因为类组件中仍然存在大量的 this 指向造成的困惑，使用内联函数又会造成过度地创建句柄；另一个原因是类组件中的生命周期函数本身的缺陷，造成我们在编写业务时需要将相干逻辑分散到不同的生命周期，同时，在同一个生命周期函数中又存在大量不相干逻辑，这让我们读代码时理解业务逻辑变得困难；然后最大的问题是，在组件之间复用状态逻辑变得越来越困难，特别在一些复杂的逻辑组件和高阶组件中，复用性变得越来越差。而 Hook 的优势恰恰在于它是基于函数组件开发的，完全没有 this 问题；每一个副作用只管理自己的业务逻辑同时自定义的 Hook 更加方便复用状态逻辑；然后自定义的 Hook 可以让我们非常方便地复用状态逻辑。
+> Webpack 的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们，最后打包为一个浏览器可识别的 JavaScript 文件。
 
-### React Hook 的使用规则
+<img src="../assets/images/unit_05/webpack_banner.png">
 
-- 只在最顶层使用 Hook: 不允许在循环、条件判断或嵌套函数中调用 Hook，要确保总是在你的 React 函数的最顶层调用它们
-- 只在自己的依赖更新时才执行 effect:
-- .1 使用 useEffect 完成副作用操作，赋值给 useEffect 的函数会在组件渲染到屏幕之后执行；
-- .2 不要忘记函数依赖，需要把 useEffect 内部引用到的方式，声明为当前 effect 的依赖；
-- 理解每一次的 rendering
+## 仍然是从零开始
 
-### React Hook 有哪些特性
-
-#### useState
-
-我们可以把 useState 理解为类组件中的 this.setState。useState 是允许我们在 React 函数组件中添加状态的 Hook。
+创建一个项目
 
 ```javascript
-// 常用的写法，我们是用es6的方法将useState返回的数组解构了
-const [inputValue, setInputValue] = useState('请输入');
+mkdir react_mobile
+cd react_mobile
+npm init -y
 ```
 
-useState 方法接受一个默认值作为参数，返回一个数组：数组的第一个成员是我们刚刚传入的默认值，第二个成员是一个用于改变我们定义的默认值的匿名函数，我们可以把第二个成员当成我们在 class 组件中的 this.setState()，只不过这里这个匿名函数只能改变当前状态的值。
-
-##### 隋性的 useState
-
-与 setState 一样，如果初始 state 需要通过复杂计算获得，则可以传入一个函数，在函数中计算并返回初始的 state，当然，此函数只在初始渲染时被调用
+安装最小依赖
 
 ```javascript
-const TestInput = props => {
-  // useState在首次渲染时使用useState中传入的函数来初始化inputValue, 二次渲染时则直接读取inputValue这个变量的值
-  const [inputValue, setInputValue] = useState(() => props.value || '请输入');
-  return (
-    <div>
-      <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
-      {inputValue}
-    </div>
-  );
-};
+npm i -S react react-dom
+npm i -D webpack
 ```
 
-##### state 的普通更新
-
-##### 函数式更新
-
-与 this.setState 类似，如果新的 state 需要通过使用先前的 state 计算得出，那么可以将一个被称之为 updater 的函数传递给 setState。这个函数将接收当前的 state，然后返回一个更新后的值
+创建目录结构
 
 ```javascript
-function TestCount({ initialCount }) {
-  const [count, setCount] = useState(initialCount);
-  return (
-    <>
-      数量: {count}
-      <button onClick={() => setCount(initialCount)}>重置</button>
-      <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
-      <button onClick={() => setCount(prevCount => prevCount - 1)}>-</button>
-    </>
-  );
-}
+mkdir src
+mkdir webpack
+mkdir public
 ```
 
-##### 对象更新
-
-需要注意的是，与 class 组件中的 setState 方法不同，useState 是全量替换，它不会像 this.setState 那样进行浅拷贝来自动合并更新对象。我们需要用函数式的 setState 结合展开运算符来达到合并更新对象的效果
+然后在 public 下生成一个 index.html 文件
 
 ```javascript
-const defaultObj = {
-  a: 1,
-  b: 2,
-};
-function TestObject() {
-  const [obj, setObj] = useState(() => {
-    return {
-      ...defaultObj,
-      c: 3,
-    };
-  });
-
-  return (
-    <>
-      obj.a: {obj.a}
-      obj.b: {obj.b}
-      obj.c: {obj.c}
-      <button
-        onClick={() =>
-          setObj({
-            ...obj,
-            c: 5,
-          })
-        }
-      >
-        改写
-      </button>
-    </>
-  );
-}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>超级小的react项目</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
 ```
 
-##### 建议使用方式
-
-上面的更新对象的方式写法十分不方便而且极易出现 bug，更合理的方式应该是将组件中相关的内容放在不同的 state 里面，这样就可以避免更新某个状态时需要手动维护其它状态。
-如果一定要维护上面那种复杂状态的话，我们稍后会学习 useReducer，这个 api 在管理复杂状态时要比 useState 好用
+同时在 src 下生成一个 index.js 文件
 
 ```javascript
-// 不好的写法
-const [containInfo, setContainInfo] = useState({
-  left: 0,
-  top: 0,
-  width: 0,
-  height: 0,
-});
-const handleContainerResize = ({ width, height }) =>
-  setContainInfo({ ...containInfo, width, height });
-const handleContainerMove = ({ left, top }) =>
-  setContainInfo({ ...containInfo, left, top });
-// 好的写法
-const [pos, setPos] = useState({ left: 0, top: 0 });
-const [size, setSize] = useState({ width: 0, height: 0 });
-const handleContainerResize = ({ width, height }) => setSize({ width, height });
-const handleContainerMove = ({ left, top }) => setPos({ left, top });
+import React from "react";
+import { render } from "react-dom";
+
+// 将组件渲染到指定的位置
+render(<div>超级小的react项目</div>, document.getElementById("root"));
 ```
 
-##### setState 没有回调函数
-
-无论 useState 还是 this.setState，它们都是异步调用的，也就是说每次组件调用完成后我们都没办法拿到最新的 state 值。为了解决这个问题，class 组件允许我们在 this.setState 中加入一个回调函数来实时获取最新的 state 值：
+为了让我们的项目跑起来，还需要让我们的 webpack 运行起来，在 webpack 下生成一个 webpack.config.js 文件
 
 ```javascript
-this.setState(newState, state => {
-  // 这个函数接收到的参数就是最新的state
-});
-```
-
-但是函数组件没有提供这样一个可以拿到最新的 state 的回调函数。所以 hook 在我们接下来要学习的另一个 API: useEffect 中提供了实时获取 state 的方法：
-
-#### useEffect
-
-useEffect，这个词中文官网或者说一些中文翻译网站，将它译为副作用。为了更好地理解副作用，我们需要重温一下什么是纯函数。
-
-##### 纯函数
-
-> 当一个函数的返回结果只依赖于它的参数，并且没有副作用，我们就可以将这个函数称之为一个纯函数。
->
-> 1. 函数的返回结果只依赖于它的参数
-> 2. 函数的执行过程里面没有副作用
-
-```javascript
-const arr = [1, 2, 3, 4, 5];
-// 纯的函数
-function pureFun(arr, start, end) {
-  return arr.slice(start, end);
-}
-// 非纯函数
-function fun(arr, start, end) {
-  return arr.splice(start, end);
-}
-pureFun(arr, 0, 2); // 无论调用多少次，都是[1,2]
-fun(arr, 1, 3); // 第一次是[1,2],第二次是[3,4],第三次是[5],然后是[],它甚至还强行改变了外部的arr
-```
-
-##### 副作用
-
-通过上面的两个函数，我们可以得知，所谓的副作用就是指一个函数做了和本身运算返回值无关的事情，比如：修改了全局变量、修改了传入的参数、甚至是 console.log()，所以 ajax 与获取 dom 的操作都算是副作用的。
-
-而在函数组件中，它的副作用指的是修改了组件中的 state，或者调用了某个外部方法又或者获取一段 ajax 数据等等。
-
-##### 怎样使用 useEffect
-
-```javascript
-useEffect(effect, dependencies);
-```
-
-useEffect 的第一个参数 effect 是需要执行的副作用函数，它可以是我们定义的任何函数，我们在这个函数里操作一些浏览器的 API 或者与外部环境进行交互。这个函数在每次组件渲染完成后被调用。例如
-
-```javascript
-const TestInput = props => {
-  const [inputValue, setInputValue] = useState(() => props.value || '请输入');
-  useEffect(() => {
-    console.log('组件已经渲染完成，副作用被执行');
-    // setInputValue('!!!!不可以用这种方式来更新组件状态!!!!')
-  });
-  console.log('开始渲染组件');
-  return (
-    <div>
-      <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
-      {inputValue}
-    </div>
-  );
-};
-```
-
-上面的副作用函数我们已经使用过很长时间了，就不再说太多。。但要注意的是，在没有提供第二个依赖参数之前，我们不能在副作用中尝试修改组件状态！
-
-##### 通过 useEffect 来获取最新的 state
-
-刚才已经说到了 useEffect 的第二个参数，useEffect 允许我们通过 dependencies 来限制当前这个副作用函数应该在什么时间被执行：只有在 dependencies 数组里面的元素发生变化时才会执行。因此我们可以通过控制一些状态的变化来判断是否执行这个副作用
-
-```javascript
-const TestInput = props => {
-  const [inputValue, setInputValue] = useState(() => props.value || '请输入');
-  useEffect(() => {
-    console.log('组件已经渲染完成，副作用被执行', inputValue);
-  }, [inputValue]);
-  console.log('开始渲染组件');
-  return (
-    <div>
-      <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
-      {inputValue}
-    </div>
-  );
-};
-```
-
-##### useEffect 带来的一些问题
-
-在我们之前的课程里，经常会发现，有一些稍复杂的组件逻辑中，副作用的依赖项经常会提示警告，比如下面这段代码：
-
-<img src="../assets/effectWarn.jpg" />
-
-```javascript
-useEffect(() => {
-  const arr = [];
-  for (let i = 0; i < 10; i++) {
-    arr.push(pageNo + i);
-  }
-  loading = false;
-  setList([...list, ...arr]);
-  // 下面这行的意思是，不允许eslint检查下一行代码是否符合hooks的依赖规则
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [pageNo]);
-```
-
-#### useLayoutEffect
-
-useLayoutEffect 的使用场景并不是很多，但在一些需要在渲染之后对一些大的模块做调整，会影响到页面的整体布局时，它会在 Dom 变更之后同步调用 effect:
-
-```javascript
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import './style.less';
-
-const TestLayoutEffect = () => {
-  const moveDiv = useRef();
-  // 渲染完成后将div往右移动600像素
-  useEffect(() => {
-    moveDiv.current.style = 'margin-left: 600px';
-  }, []);
-  return (
-    <div className="layout">
-      <div ref={moveDiv} className="square">
-        square
-      </div>
-    </div>
-  );
-};
-export default TestLayoutEffect;
-```
-
-通过上面的 demo 我们可以看到，使用 effect 来调整模块位置总是会伴随着闪屏，而使用 layoutEffect 就没有了这个问题，因为它会阻塞浏览器的绘制，将自己的工作插入在 Dom 更新完之后渲染之前。我们可以看到，使用 layoutEffect 时，无论怎么刷新页面，几乎都是看不见任何页面变化的。
-
-#### useContext
-
-React Hook 里的 context 与 class 组件里的 context 是一样的效果，在上个月的 context 中我们知道了，context 能够允许数据跨越组件层级直接传递到任何的子组件上。我们今天再次重复一遍以加深记忆
-
-```javascript
-//Page.js
-// Context 可以让我们无须明确地传遍每一个组件，就能将值深入传递进组件树。
-import React, { Component } from 'react';
-import List from './List';
-//导出ThemeContext，让后面的Item组件可以拿到
-export const ThemeContext = React.createContext();
-export default class Page extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { theme: 'red' };
-  }
-  onChangeTheme = color => {
-    this.setState({ theme: color });
-  };
-  render() {
-    const data = [
-      { id: 1, text: '随随便便输入', color: 'yellow' },
-      { id: 2, text: '随便输入', color: 'blue' },
-    ];
-    // 使用一个 Provider 来将当前的 theme 传递给以下的组件树。
-    // 无论多深，任何组件都能读取这个value值。
-    return (
-      <div>
-        <ThemeContext.Provider
-          value={{ theme: this.state.theme, onChangeTheme: this.onChangeTheme }}
-        >
-          <List data={data} />
-        </ThemeContext.Provider>
-      </div>
-    );
-  }
-}
-// List.js
-import React from 'react';
-import Item from './Item';
-export default function List(props) {
-  return (
-    <div>
-      {props.data.map(i => (
-        <Item key={i.id} color={i.color}>
-          {i.text}
-        </Item>
-      ))}
-    </div>
-  );
-}
-//Item.js
-import React, { useContext } from 'react';
-//引入useContext
-///导入Page中的ThemeContext对象
-import { ThemeContext } from './Page';
-export default function Item(props) {
-  //拿到context数据
-  const context = useContext(ThemeContext);
-  return (
-    <div>
-      <p style={{ color: context.theme }}>
-        {props.children}
-        <button onClick={() => context.onChangeTheme(props.color)}>
-          {' '}
-          点击变色{' '}
-        </button>
-      </p>
-      <ThemeContext.Consumer>
-        {value => {
-          console.log(value, 'render');
-        }}
-      </ThemeContext.Consumer>
-    </div>
-  );
-}
-```
-
-#### useRef
-
-useRef 的功能与 class 组件 中的 ref 功能基本类似，但 hooks 还赋予了它全新的用法：
-https://react.docschina.org/docs/hooks-reference.html#useref
-需要注意的是这里：**useRef 会在每次渲染时返回同一个 ref 对象**，我们可以利用这个特性来方便地保存一些变量。
-
-- 基本用法：获取子组件或者 Dom 节点的句柄
-  > 句柄的名词解释：
-  > 句柄的英文是 handle。在英文中，有操作、处理、控制之类的意义。作为一个名词时，是指某个中间媒介，通过这个中间媒介可控制、操作某样东西。以我们前端的理解来说，就是一个 ID，可以通过这个 ID 来访问 Dom 节点对象。
-
-```javascript
-import React, { useState, useEffect, useRef } from 'react';
-export default TestInput = props => {
-  const [inputValue, setInputValue] = useState('');
-  const inputEl = useRef(null);
-  useEffect(() => {
-    // `current` 指向已挂载到 DOM 上的文本输入元素
-    inputEl.current.focus();
-  });
-  return (
-    <div>
-      <input
-        ref={inputEl}
-        value={inputValue}
-        onChange={e => setInputValue(e.target.value)}
-      />{' '}
-      {inputValue}
-      <p>{props.visible}</p>
-    </div>
-  );
-};
-```
-
-如上面的例子，首先我们通过 useRef 创建一个变量 inputEl，页面渲染时将获取到的 input 真实 DOM 存储到 inputEl.current 中，页面渲染完成后执行 useEffect，利用真实 DOM 让 input 输入框获取焦点。
-
-- 渲染周期之间共享数据的存储
-
-```javascript
-function Timer() {
-  const intervalRef = useRef();
-
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      // ...
-    });
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  });
-}
-```
-
-useRef() Hook 不仅仅可以用于储存 Dom 节点，还可以用来储存任意的属性。useRef 返回的 ref 对象是一个 current 属性可变且可以容纳任意值的通用容器，类似于一个 class 的实例属性。像上面这段代码一样，我们可以把一个定时器 ID 存入到 useRef 中，这样这个定时器 ID 不仅仅在 useEffect 中可以拿到，而且在整个组件函数的任意位置都可以获取到。
-
-- 利用 useRef 获取上一轮的 props 或 state
-
-```javascript
-function Counter() {
-  const [count, setCount] = useState(0);
-  const prevCountRef = useRef();
-  useEffect(() => {
-    prevCountRef.current = count;
-  });
-  const prevCount = prevCountRef.current;
-
-  return (
-    <>
-      <h1>
-        新的：{count}; 旧的：{prevCount}
-      </h1>
-      <button onClick={() => setCount(count => count + 1)}>加个数</button>
-    </>
-  );
-}
-```
-
-在上面的例子中我们可以看到，首先利用页面渲染拿到了 count 的值为 0，然后此时的 prevCount 刚刚创建，所以它的值是个 undefined，当页面渲染完成后进入副作用 useEffect 中，进行赋值操作。这个时候 count 的值就保存到了 current 中了。
-
-> 当然，这个时候页面并不会重新渲染，因为我们的 prevCount 并不是通过 setState 方法写入的，所以 react 认为这个变量的变化并不需要渲染到页面中。
-> 当点击按钮后，因为 count 的变化导致 react 接受到了渲染 DOM 的命令，于是页面开始重新渲染，所以这个时候 prevCount 的值变化为 0，并在本次渲染完成后因为副作用 useEffect 中的重新赋值为 1。
-
-#### useMemo
-
-在 class 组件中，我们使用 shouldComponentUpdate 方法或者通过继承 PureComponent 类来减少因为父组件的状态变化导致子组件的重复渲染：
-
-##### shouldComponentUpdate
-
-```javascript
-// 使用shouldComponentUpdate来优化
-import React, { Component } from 'react';
-
-class TestButton extends Component {
-  // shouldComponentUpdate(prevProps) {
-  //   return prevProps.num !== this.props.num
-  // }
-  render() {
-    console.log('我们来看看父组件的state变化是否会造成子组件的重新渲染');
-    return (
-      <div>
-        <h1>props中的内容：{this.props.num}</h1>
-        <button onClick={this.props.onClick}>click me</button>
-      </div>
-    );
-  }
-}
-
-export default class TestShouldUpdate extends Component {
-  state = {
-    inputVal: '',
-    num: 1,
-  };
-  render() {
-    return (
-      <div>
-        <input
-          value={this.state.inputVal}
-          onChange={e => this.setState({ inputVal: e.target.value })}
-        />
-        <TestButton
-          num={this.state.num}
-          onClick={() =>
-            this.setState(prevState => ({
-              num: prevState.num + 1,
-            }))
-          }
-        />
-      </div>
-    );
-  }
-}
-```
-
-##### React.PureComponent
-
-上面这个例子，我们知道，也可以使用 React.PureComponent 来优化：
-
-```javascript
-import React, { Component, PureComponent } from 'react';
-
-class TestButton extends PureComponent {
-  render() {
-    console.log('我们来看看父组件的state变化是否会造成子组件的重新渲染');
-    return (
-      <div>
-        <h1>props中的内容：{this.props.num}</h1>
-        <button onClick={this.props.onClick}>click me</button>
-      </div>
-    );
-  }
-}
-
-export default class TestShouldUpdate extends Component {
-  state = {
-    inputVal: '',
-    num: 1,
-  };
-  render() {
-    return (
-      <div>
-        <input
-          value={this.state.inputVal}
-          onChange={e => this.setState({ inputVal: e.target.value })}
-        />
-        <TestButton
-          num={this.state.num}
-          // 注意这里，因为每次都会重新生成函数，所以会导致react发现函数引用地址不一致而重新渲染
-          onClick={() =>
-            this.setState(prevState => ({
-              num: prevState.num + 1,
-            }))
-          }
-        />
-      </div>
-    );
-  }
-}
-```
-
-##### React.memo
-
-好了，到这里我们之前的关于 class 组件的优化方式就回顾得差不多了，但是，我们的函数组件怎么优化呢？要知道函数组件可没有 shouldComponentUpdate 或 PureComponent。
-React 提供了一个叫 memo 的高阶函数来实现我们上面的优化:
-
-```javascript
-const TestButton = memo(
-  props => {
-    console.log('我们来看看父组件的state变化是否会造成子组件的重新渲染');
-    return (
-      <div>
-        <h1>props中的内容：{props.num}</h1>
-        <button onClick={props.onClick}>click me</button>
-      </div>
-    );
+const path = require("path");
+// 这个插件的作用是将我们打好包的文件写入到html中
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+module.exports = {
+  //指定入口文件，程序从这里开始编译,__dirname当前所在目录, ../表示上一级目录, ./同级目录
+  entry: path.resolve(__dirname, "../src/index.js"),
+  // 输出的配置
+  output: {
+    // 输出的路径
+    path: path.resolve(__dirname, "../dist"),
+    // 输出的文件名
+    filename: "bundle.js",
   },
-  (prevProps, nextProps) => prevProps.num === nextProps.num
-);
-```
-
-memo 接收两个参数，第一个参数是我们的函数组件，第二个参数是一个可选参数，当我们不传入可选参数时，memo 的作用与 PureComponent 一致，会对 props 的内容做一个浅比较；同样的，我们也可以传入一个函数，像 shouldComponentUpdate 一样去用它，不过它的用法与 shouldComponentUpdate 完全相反，需要渲染返回 false，否则返回 true!
-
-##### React.useMemo
-
-如同上面的例子，memo 用于优化函数组件的渲染行为，当传入的值未发生变化的情况下组件不参与渲染，否则重新渲染组件。
-
-而 useMemo 则用于定义一段函数逻辑是否需要重复执行，本质上都是利用了同样的算法来判断依赖是否改变，从而判断是否触发特定逻辑。useMemo 主要用于减少不必要的计算来实现优化。
-
-我们继续拿上面的例子来说话
-
-```javascript
-import React, { useState, memo, useMemo } from 'react';
-
-const TestButton = memo(props => {
-  console.log('我们来看看父组件的state变化是否会造成子组件的重新渲染');
-  return (
-    <div>
-      <h1>props中的内容：{props.num}</h1>
-      <button onClick={props.onClick}>click me</button>
-    </div>
-  );
-});
-
-export default function TestMemo() {
-  const [inputVal, setInputVal] = useState('');
-  const [num, setNum] = useState(0);
-  // 这个函数在每次渲染时都会重新生成，导致引用地址始终不一致，所以我们在调用TestButton时不可避免地重新渲染
-  const onClick = () => setNum(num + 1);
-  // 与useEffect一样，我们在使用useMemo时也需要一个依赖，否则仍然会生成不同的函数
-  // const onClick = useMemo(() => {
-  //   return () => setNum(num + 1);
-  // }, [num]);
-  // useCallback，它与useMemo基本一致，只不过useMemo是返回我们传入的回调函数执行后的值，而useCallback则直接返回了我们传入的回调函数；如果我们使用useMemo返回了一个函数，那么就可以直接使用useCallback来直接返回一个函数以省略掉顶层的函数
-  // const onClick = useCallback(() => setNum(num + 1), [num])
-  return (
-    <div>
-      <input value={inputVal} onChange={e => setInputVal(e.target.value)} />
-      <TestButton num={num} onClick={onClick} />
-    </div>
-  );
-}
-```
-
-##### useMemo 与 useCallback 的区别
-
-useCallback 它与 memo 基本一致，不过官方的说法是 memo 返回的是一个变量，而 callback 返回的是一个可调用的函数；这一块，初始的时候我总是弄错，后来才发现，它的意思是说，memo 返回给我们的是我们传入的回调函数被执行后返回的值，而 callback 则是将我们的回调函数直接返回了。
-
-##### useMemo/useCallback 和 useEffect 的执行时机
-
-useMemo 与 useEffect 最大的区别在于调用时机。useEffect 是副作用，所以它必须要等到渲染完成后执行；而 useMemo 是需要有返回值的，它的返回值需要直接参与渲染，所以 useMemo 是在渲染前完成的。
-
-#### useReducer
-
-useReducer，跟 redux 中的 reducer 差不多，它是一个纯函数，接收当前组件的 state 和一个用于描述操作目的的 action，计算然后返回最新的 state。
-
-##### reducer 函数
-
-```javascript
-function countReducer(state = 1, { type }) {
-  switch (type) {
-    case 'add':
-      return state + 1;
-    case 'sub':
-      return state - 1;
-    default:
-      return state;
-  }
-}
-```
-
-上面是一个最简单的 reducer 的例子，通过 action 的 type 属性对应地计算并返回一个全新的 state，它没有任何副作用，不会尝试影响外部状态或是传入的参数。这意味着只要给它相同的输入，它返回的内容也始终都是相同的，因此，通过 reducer 函数会很容易推测 state 的变化。
-
-```javascript
-const initState = {
-  //...
-  count: 1,
-};
-function countReducer(state = initState, { type }) {
-  switch (type) {
-    case 'add':
-      return { ...state, count: state.count + 1 };
-    case 'sub':
-      return { ...state, count: state.count - 1 };
-    default:
-      return state;
-  }
-}
-```
-
-通过上面的代码我们重新温习了在 reduce 中如果去返回一个 javascript 对象：reducer 处理的 state 对象是一个不可变数据，我们永远都不要尝试直接修改参数中的 state 对象，这会导致一些意外的错误发生，比如明明改变了 state 中的数据但页面就是无法侦测到变化导致不能重新渲染等，我们应该做的是使用 ES6 中的解构赋值方式去创建一个新的对象，并复写我们需要改变的 state 属性。
-
-##### action 对象
-
-在我们的 redux 中，action 用来描述和表示即将触发的行为：用 type 来表示具体的行为类型，用 payload 来传递需要的数据
-
-```javascript
-const action = {
-  type: 'addBook',
-  payload: {
-    bookId,
-    bookName,
-    author,
+  // 需要配置的模块，这是webpack的核心
+  module: {
+    // 规则集合
+    rules: [
+      {
+        // 对所有后缀为js或jsx的文件使用的规则 test在这里应该是匹配的意思
+        test: /\.(js|jsx)$/,
+        use: {
+          // babel-loader 用于编译jsx的转换器 webpack loader用于将一些奇奇怪怪类型的文件转换成浏览器能识别的文件
+          loader: "babel-loader",
+          // 设定
+          options: {
+            // 将所有的es6和jsx相关代码转换成浏览器能识别的es5
+            presets: ["es2015", "react"],
+          },
+        },
+        // 不需要编译的位置
+        exclude: /node_modules/,
+      },
+    ],
   },
+  // 需要配置的插件
+  plugins: [
+    // 找到public下的index.html文件，将打包好的js文件写进去，然后在我们的dist文件夹下生成一个index.html文件
+    new HtmlWebpackPlugin({ template: "./public/index.html" }),
+  ],
+  // 声明当前为开发环境
+  mode: "development",
 };
-function bookReducer(state, { type, payload }) {
-  switch (type) {
-    case 'addBook':
-      const books = [...state.books, payload];
-      return {
-        ...state,
-        books,
-      };
-    case 'subBook':
-      const books = state.books.filter(item => item.bookId !== payload.bookId);
-      return {
-        ...state,
-        books,
-      };
-    default:
-      return state;
-  }
+```
+
+上面的 webpack 配置中使用了一些 babel 的插件，那么我们也需要安装一下对应的依赖：
+
+```bash
+npm i -D @babel/plugin-proposal-class-properties @babel/plugin-transform-runtime @babel/preset-react @babel/preset-env
+```
+
+为了让我们写的文件被 node 和 webpack 识别，我们还需要在根目录下创建一个.babelrc 的文件
+
+```json
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties"
+  ]
 }
 ```
 
-从上面的简例中我们可以看到，action 的类型是添加一本书籍，payload 中是需要添加的书籍的资料信息，在 reducer 的 switch 中根据 action 的 type 来判断执行什么操作，然后在 addBook 动作中将新增的书籍放入到当前的书籍列表 books 中，然后以解构赋值的方式返回一个新增书籍信息后的 state。
+ok，到这里，我们的全手写最小化的 react 就可以运行了，在你的根目录执行下面这个命令：
 
-##### 如何使用 useReducer
-
-在 React Hook 中，我们已经学习了如何改变状态的 useState 和副作用 useEffect，我们刚刚又重新复习了 redux 中的 action 和 reducer。那么，大家应该能猜到我们将要学习的另一种操作 hooks 中 state 的方法：useReducer。下面，我们仍然通过一些 Demo 来学习如何使用 useReducer 来管理 state。
-
-- 简单的加减操作
-
-```javascript
-import React, { useReducer } from 'react';
-const initState = {
-  count: 1,
-};
-function countReducer(state, { type }) {
-  switch (type) {
-    case 'add':
-      return { ...state, count: state.count + 1 };
-    case 'sub':
-      return { ...state, count: state.count - 1 };
-    default:
-      return state;
-  }
-}
-export default function Counter() {
-  // 调用useReducer
-  // 第一个参数，就是我们的reducer，写法与redux的reducer完全一致
-  // 第二个参数，初始化的state，需要注意的是，我们在redux中，initState的赋值操作是在reduce中去做的，但在useReducer中，它必须在这里传入
-  // useReducer的返回值为最新的state和dispatch函数，dispatch函数我们在之前的redux学习中已经说到了，它是用来派发action的，将action派发给reducer函数
-  const [state, dispatch] = useReducer(countReducer, initState);
-  return (
-    <div>
-      count: {state.count}
-      {/* 通过dispatch将action派发给reducer */}
-      <button onClick={() => dispatch({ type: 'add' })}>加个数</button>
-      <button onClick={() => dispatch({ type: 'sub' })}>减个数</button>
-    </div>
-  );
-}
+```bash
+webpack --config webpack/webpack.config.js
 ```
 
-从上面的例子中我们可以看出来，useReducer 的使用方式与 redux 的使用方式完全一致，然后我们来实现一个相对来说较为复杂的 Demo
+很复杂是不是？比起 npx create-react-app 麻烦太多太多了，但是在企业里有很多独特的需求必须要使用 webpack 来配置项目，所以，webpack 的相关配置是我们必须要学会且熟记的，这也是我们将来获取高薪的一个必备技能点！
 
-- useState 版的 login 实现，我们先看下使用 useState 怎样实现 login
+## 课程小结
 
-```javascript
-function LoginPage() {
-  const [name, setName] = useState('');
-  const [pwd, setPwd] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [errLog, setErrLog] = useState('');
-  const [isLogged, setIsLogged] = useState(false);
+使用 webpack 创建 react 项目，需要创建 webpack/webpack.config.js 文件以及在根目录创建.babelrc 文件。其中 babelrc 文件的配置是为了让我们的 node 和 webpack 能读取 react 的 jsx 格式；而 webpack.config.js 文件是我们项目启动的核心：
 
-  cosnt login = ev => {
-    if (isLoading) {
-      return
-    }
-    setIsLoading(true);
-    setErrLog('');
-    login({name, pwd}).then(() => {
-      setIsLogged(true);
-      setIsLoading(false);
-    }).catch(err => {
-      setErrLog(err.message);
-      setName('');
-      setPwd('');
-      setIsLoading(false);
-      setIsLogged(false);
-    })
-  }
-  return (<div>login</div>)
-}
-```
+> entry: 入口文件，指定该文件可以让 webpack 从这个导入这个文件开始，将所有有关联的文件一网打尽  
+> output: 出口配置，在这个对象里配置我们需要输出的文件名和文件路径  
+> module: 模块配置，webpack 会读取这里面的 loader 模块，然后使用它们将我们需要的文件进行编译，方便浏览器解析  
+> plugins: 插件配置，可以让 webpack 变得更聪明一点
 
-在上面的例子中我们定义了 5 个必要的 state 来描述页面状态，从 login 函数当中登陆成功或失败时进行了一些 state 的设置。在没有注释的情况下，代码的可读性也还可以。但可以想象一下，如果我们的需求变得越来越复杂时，可能会有更多的 state 需要管理，更多的 setState 分散在程序的各个位置，一不小心就会出现错误或遗漏，这样的维护体验是我们需要摒弃的。那么，使用 useReducer 来管理这些状态呢？
-
-```javascript
-const initState = {
-  name: '',
-  pwd: '',
-  isLoading: false,
-  errLog: '',
-  isLogged: false,
-};
-function loginReducer(state, { action, payload }) {
-  switch (type) {
-    case 'login':
-      return {
-        ...state,
-        isLoading: true,
-        errLog: '',
-      };
-    case 'success':
-      return {
-        ...state,
-        isLoading: false,
-        isLogged: true,
-      };
-    case 'error':
-      return {
-        name: '',
-        pwd: '',
-        isLoading: false,
-        isLogged: false,
-        errLog: payload.message,
-      };
-  }
-}
-export default function loginPage() {
-  const [state, dispatch] = useReducer(loginReducer, initState);
-  const [name, pwd, isLoading, isLogged, errLog] = state;
-  const login = ev => {
-    dispatch({ type: 'login' });
-    login({ name, pwd })
-      .then(() => {
-        dispatch({ type: 'success' });
-      })
-      .catch(err => {
-        dispatch({
-          type: 'error',
-          payload: err,
-        });
-      });
-  };
-  return <div>login</div>;
-}
-```
-
-从上面这段代码可以看出，虽然使用 useReducer 后代码变得更多了，但很明显代码的可读性也更高了，我们能更清晰地了解整个 state 变化的逻辑。LoginPage 现在不需要关心如何处理登陆成功失败这些行为，这些任务都分配给了 loginReducer 了，表现与业务完全分离开来。同时，我们的代码复用性也提高了一个层次，比如说在程序中某个地方需要触发一次登陆失败的操作，只需要 dispatch({type: 'error'})即可。
-
-useReducer 可以让我们将做什么和怎么做分开：比如点击了登陆按钮，我们要做的就是 dispatch({type: 'login'});点击了退出按钮就 dispatch({type: 'logout'});我们的组件再也不关心某些状态时需要怎么做，相关的代码都在 reducer 中维护，组件只需要知道什么时候做什么就行。
-
-> 做个小结
-> 无论说得多好，reducer 终归是比 state 多了些代码或者方法，所以我们仍然要考虑什么时候才会使用 useReducer:
-> 如果你的 state 是一个较大的数组或对象
-> 如果你的 state 变化比较复杂，经常一个操作需要修改多个 state
-> 如果你需要在深层的子组件中去修改一些状态(这个应该是在总结里的，下面还有一个 Demo，先放着)
-> 如果你的应用比较大，希望表现与业务分开维护
-
-##### 配合 useContext 来使用 useReducer
-
-刚刚的例子中我们学会了怎样使用 useReducer 来集中处理复杂的 state。但如果我们的页面比较复杂，需要拆分成多层多个组件，我们怎样在子组件来触发 dispatch 呢？
-答案是使用 useContext，useContext 允许我们将方法跨组件层级直接传递到任何子组件中
-
-仍然是使用上面的 login 来示例，假如我们的登陆按钮被拆分成了一个子组件：
-
-```javascript
-const initState = {
-  name: '',
-  pwd: '',
-  isLoading: false,
-  errLog: '',
-  isLogged: false,
-};
-function loginReducer(state, { action, payload }) {
-  switch (type) {
-    case 'login':
-      return {
-        ...state,
-        isLoading: true,
-        errLog: '',
-      };
-    case 'success':
-      return {
-        ...state,
-        isLoading: false,
-        isLogged: true,
-      };
-    case 'error':
-      return {
-        name: '',
-        pwd: '',
-        isLoading: false,
-        isLogged: false,
-        errLog: payload.message,
-      };
-  }
-}
-const { Provider } = createContext();
-export default function loginPage() {
-  const [state, dispatch] = useReducer(loginReducer, initState);
-  const [name, pwd, isLoading, isLogged, errLog] = state;
-  const login = ev => {
-    dispatch({ type: 'login' });
-    login({ name, pwd })
-      .then(() => {
-        dispatch({ type: 'success' });
-      })
-      .catch(err => {
-        dispatch({
-          type: 'error',
-          payload: err,
-        });
-      });
-  };
-  return <div>login</div>;
-}
-```
+好了，这里就是最基本的 webpack 用法，下一课我们将要学习更多的 loader 和 plugins 的使用方式，同时还要学习如何使用它们来优化我们的项目以获得更好的用户体验。

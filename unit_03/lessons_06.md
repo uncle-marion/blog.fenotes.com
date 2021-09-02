@@ -1,2 +1,2 @@
-# lessons_14. Redux 与ReduxPromise
+# lessons_06. redux persist
 

@@ -1,8 +1,6 @@
-> 企业项目实战 > React 进阶 > React 状态管理工具 -> Redux
+> Marion 的 react 实战课程 > 第三部分 > 什么是 Redux
 
-# React 状态管理工具 Redux
-
-#### 什么是 Redux
+## 什么是 Redux
 
 - 由于 React 并没有官方的状态管理机制, 所以 Redux 其实是 React 事实上的状态管理工具, 提供一个应用于 JavaScript 的可预测的状态容器, 提供可预测的状态管理。
 
@@ -14,7 +12,7 @@
 
 ---
 
-#### 什么是状态, 为什么要使用 Redux 来管理状态
+## 什么是状态, 为什么要使用 Redux 来管理状态
 
 - 所谓状态, 一般用来描述人或事物表现出来的形态。是指某种事物处于生成、生存、发展、消亡时期或各转化临界点时的形态或事物态势。在这里可以简单地理解为变量, 即 React 组件自身的一些能影响它自己长什么样子的变量。
 
@@ -26,7 +24,7 @@
 
 ---
 
-#### Redux 有三大原则, 分别是哪些原则
+## Redux 有三大原则, 分别是哪些原则
 
 - 单一数据源: 整个应用的 State 存储在全站唯一的一个 Store 中的对象/状态树里
 
@@ -42,7 +40,7 @@
 
 ---
 
-#### 什么是纯函数
+## 什么是纯函数
 
 - 输入输出数据流是显式的：如果函数的调用参数相同，则永远返回相同的结果。
 
@@ -96,7 +94,7 @@ onChage() {
 
 ---
 
-#### 什么是 Action
+## 什么是 Action
 
 - Action 是把数据从**应用**传到 store 的有效载荷。它是 store 数据的唯一来源。在不使用任何插件的情况下，我们需要通过 store.dispatch() 将 action 传回到 store。
 
@@ -121,16 +119,16 @@ Action 本质上是一个 JavaScript 普通对象。所以我们约定, Action �
 
 ```javascript
 // actionTypes.js
-export const ORDER_DISHES = 'ORDER_DISHES';
+export const ORDER_DISHES = "ORDER_DISHES";
 
 // action.js
-import { MSG_NAME } from '../actionTypes';
+import { MSG_NAME } from "../actionTypes";
 
 export function orderDishes() {
   return {
-    type: 'ORDER_DISHES',              // 描述动作
-    payload: '谁谁谁要了一份西红杮炒鸡蛋'  // 描述内容
-  }
+    type: "ORDER_DISHES", // 描述动作
+    payload: "谁谁谁要了一份西红杮炒鸡蛋", // 描述内容
+  };
 }
 
 // 注意：reduce方法接受两个参数
@@ -149,7 +147,80 @@ reducer 使用中的一些注意事项
 
 ---
 
-#### 什么时候应该用 Redux
+## 一个纯的 Redux Demo
+
+```javascript
+import { PureComponent } from "react";
+// 从redux中引入一个createStore
+import { createStore } from "redux";
+
+// 定义一个reduce方法
+// reduce方法需要两个参数，一个当前状态对象state，一个用于描述将要对store做些什么的对象
+function clickReduce(state = { text: "这是什么" }, action) {
+  // 如果是指定的点击事件，新建一个对象，将原有的state与新的属性合并后返回
+  if (action.type === "BTN_CLICK") {
+    // 这里我们不能直接改变state的内容，只需要返回一个我们修改完成的对象就行
+    return Object.assign({}, state, action);
+  }
+  // 如果不是，返回原有的state(无任何变动)
+  return state;
+}
+
+// 新建一个状态仓库，Redux通过全局唯一的store对象管理项目中所有的状态
+// createStore接受三个参数 (reducer, preloadedState, enhancer)
+// 参数一, 必填 reducer 一个reduce或reduce的集合
+// 参数二, 可选 preloadedState 一个state或state的集合
+// 参数三, 可选 store增强器，一个柯里化工具
+const store = createStore(clickReduce, { a: "aa", b: "bb" });
+// 我们来看看store里面有些什么内容
+// store.dispatch 用于向store派发action消息的方法
+// store.getState 用于向store获取state的方法
+// store.subscribe 用于监听store内部的值的变化，当它被调用时，我们可以拿到最新的store
+
+console.log(store, store.getState());
+
+// action对象
+const clickAction = {
+  // reduce里注册的事件type
+  type: "BTN_CLICK", // action用于区别与其它action的标记
+  // 需要传入的状态
+  text: "这是redux返回的内容", // payload必须是同步的
+};
+
+export default class MiniRedux extends PureComponent {
+  constructor(props) {
+    super(props);
+    // 设定组件state为从store中获取
+    this.state = store.getState();
+  }
+
+  componentDidMount() {
+    // 我们可以理解为这是一个事件监听回调，类似于JQ中的on
+    store.subscribe(() => {
+      // 当store发生改变的时候，我们重新读取state
+      console.log(store.getState(), 2222);
+      this.setState(store.getState());
+    });
+  }
+
+  btnClick() {
+    // 通过store的dispatch方法去主动触发reduce，参数是一个action对象；
+    // 类似于JQ中的trigger或是vue中的emit
+    store.dispatch(clickAction);
+  }
+
+  render() {
+    return (
+      <div className="miniRedux">
+        <span>{this.state.text}</span>
+        <button onClick={this.btnClick}>点我</button>
+      </div>
+    );
+  }
+}
+```
+
+## 什么时候应该用 Redux
 
 - 随着单页面应用变得越来越复杂, 正确地管理状态这一需求更加重要。什么时候用 redux, 什么时候不应该用 redux?
 
