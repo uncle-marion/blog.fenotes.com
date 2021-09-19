@@ -41,10 +41,12 @@
 - 第六部分 ECMAScript 基础
   - [lessons_01. ES6 常用方法](unit_06/lessons_01.md)
   - [lessons_02. promise 与 async/await](unit_06/lessons_03.md)
-  - [lessons_03. 函数式编程的一些小知识](unit_06/lessons_02.md)
-  - [lessons_04. Set/Map](unit_06/lessons_04.md)
-  - [lessons_05. Reflect/Proxy](unit_06/lessons_05.md)
-  - [lessons_06. ES 笔试题实现](unit_06/lessons_06.md)
+  - [lessons_03. 原型与原型链以及继承](unit_06/lessons_07.md)
+  - [lessons_04. JS 事件循环](unit_06/lessons_09.md)
+  - [lessons_05. Set/Map](unit_06/lessons_04.md)
+  - [lessons_06. Reflect/Proxy](unit_06/lessons_05.md)
+  - [lessons_07. 函数式编程的一些小知识](unit_06/lessons_02.md)
+  - [lessons_08. ES 笔试题实现](unit_06/lessons_06.md)
 - 第七部分 React Hooks
   - [lessons_01. 常用 hook](unit_07/lessons_01.md)
   - [lessons_02. 其它 hook](unit_07/lessons_02.md)

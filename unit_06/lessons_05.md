@@ -2,21 +2,31 @@
 
 ## Reflect
 
-Reflect，在英文中的意思是反射，它是一个全局的普通对象。也就是说，我们可以直接使用 Reflect[方法名]的方式来执行其内部的方法。Reflect 是 ES6 为了操作对象而新增的 API，也就是说，它能执行几乎所有对象上的方法，那么，Object 上的方法有什么问题导致 W3C 要添加 Reflect 对象呢？它这样设计的目的是为了什么？
+Reflect，在英文中的意思是反映反射，一般会被翻译成映射，它是一个全局的普通对象。也就是说，我们可以直接使用 Reflect[方法名]的方式来执行其内部的方法。Reflect 是 ES6 为了操作对象而新增的 API，也就是说，它能执行几乎所有对象上的方法。
 
-- 将 Object 对象的一些明显属于语言内部的方法(比如 Object.defineProperty)，放到 Reflect 对象上，那么以后我们就可以从 Reflect 对象上可以拿到语言内部的方法。
+- 未来，W3C 会将 Object 对象的一些明显属于语言内部的方法(比如 Object.defineProperty)，放到 Reflect 对象上，那么以后我们就可以从 Reflect 对象上可以拿到语言内部的方法。
 
 - 在使用对象的 Object.defineProperty(obj, name, {})时，如果出现异常的话，会抛出一个错误，需要使用 try catch 去捕获，但是使用 Reflect.defineProperty(obj, name, desc) 则会返回 false。
 
 ```javascript
-var aa = {}
+var aa = {};
 try {
-  Object.defineProperty(aa, 'bb', {value: 123});
-} catch(e) {
+  Object.defineProperty(aa, 'bb', { value: 123 });
+} catch (e) {
   // 失败
 }
 
-// 关于Object.defineProperty()
+// 新写法
+if (Reflect.defineProperty(aa, 'bb', { value: 123 })) {
+  // 写入成功会返回true
+} else {
+  // 失败会返回false
+}
+```
+
+- 关于 Object.defineProperty()
+
+```javascript
 // 其实就是一个给对象添加属性或给对象的属性赋值的方法，只不过通过它添加的属性会增加一些控制属性
 Object.defineProperty(对象名称, 属性名称, {
   value: 属性的值, // 赋值，注意这个值与get\set不能同时存在，否则会内存溢出
@@ -26,16 +36,11 @@ Object.defineProperty(对象名称, 属性名称, {
   configurable: true // 是否可以删除，默认为不可删除
   enumerable: true // 是否可以被for in遍历或通过Object.keys获取，默认不可遍历
 })
-
-// 新写法
-if (Reflect.defineProperty(aa, 'bb', {value: 123})) {
-  // 写入成功会返回true
-} else {
-  // 失败会返回false
-}
 ```
 
 Reflect 一共提供了 13 个方法，我们只要学习常用的一些方法即可，对它比较感兴趣的同学可以去菜鸟等网站自己行学习其它方法。
+
+- Reflect.get(target, name, receiver);
 
 ```javascript
 /**
@@ -44,19 +49,22 @@ Reflect 一共提供了 13 个方法，我们只要学习常用的一些方法�
  * name   属性名
  * receiver 上下文对象(记得之前讲过的fn.call(this)吗)
  */
-Reflect.get(target, name, receiver);
 
 var tom = {
-  name: "Tom",
+  name: 'Tom',
   age: 3,
   get desc() {
     console.log(`我叫${this.name},我今年${this.age}岁了`);
   },
 };
-Reflect.get(tom, "name");
-Reflect.get(tom, "desc");
-Reflect.get(tom, "desc", { name: "Jerry", age: 2 });
+Reflect.get(tom, 'name');
+Reflect.get(tom, 'desc');
+Reflect.get(tom, 'desc', { name: 'Jerry', age: 2 });
+```
 
+- Reflect.set(target, name, value, receiver);
+
+```javascript
 /**
  * 读取对象的属性的值
  * target 需要读取的对象
@@ -64,8 +72,12 @@ Reflect.get(tom, "desc", { name: "Jerry", age: 2 });
  * value  属性的值
  * receiver 上下文对象
  */
-Reflect.get(target, name, value, receiver);
+Reflect.set(target, name, value, receiver);
+```
 
+- Reflect.construct(target, args, newTarget);
+
+```javascript
 /**
  * 实例化一个构造函数
  * target 实例化的构造函数
@@ -73,6 +85,11 @@ Reflect.get(target, name, value, receiver);
  * newTarget 表示实例化生成的实例对象是谁的实例
  */
 Reflect.construct(target, args, newTarget);
+```
+
+- Reflect.defineProperty(target, name, desc);
+
+```javascript
 /**
  * 添加或修改对象的属性
  * target 需要读取的对象
@@ -80,7 +97,11 @@ Reflect.construct(target, args, newTarget);
  * desc   描述
  */
 Reflect.defineProperty(target, name, desc);
+```
 
+Reflect.has(target, name);
+
+```javascript
 // 判断对象是否有这个属性
 Reflect.has(target, name);
 ```
@@ -93,7 +114,7 @@ Proxy 的使用方式如下：
 
 ```javascript
 var tom = {
-  name: "Tom",
+  name: 'Tom',
   age: 3,
 };
 /**
@@ -108,7 +129,7 @@ var handler = {
    */
   get(target, key, proxy) {
     console.log(
-      `${new Date().toLocaleTimeString("zh")}使用proxy获取了${key}的值`
+      `${new Date().toLocaleTimeString('zh')}使用proxy获取了${key}的值`
     );
     return Reflect.get(target, key, proxy);
   },
@@ -132,14 +153,14 @@ proxy.name;
 // 写一堆的判断，如果参数比较多的话这里就没办法看下去了
 class Cats {
   constructor(name, age) {
-    if (this.name !== "string") {
-      return throw Error("name只接触字符串参数");
+    if (this.name !== 'string') {
+      return throw Error('name只接触字符串参数');
     }
-    if (!this.age !== "number") {
-      return throw Error("age只接受数字参数");
+    if (!this.age !== 'number') {
+      return throw Error('age只接受数字参数');
     }
     if (!this.age > 15) {
-      return throw Error("这只猫太老了");
+      return throw Error('这只猫太老了');
     }
     this.name = name;
     this.age = age;
@@ -165,10 +186,10 @@ function constructorValidate(target, validate) {
 }
 var validate = {
   name(val) {
-    return typeof val === "string";
+    return typeof val === 'string';
   },
   age(val) {
-    return typeof age === "number" && age < 15;
+    return typeof age === 'number' && age < 15;
   },
 };
 class Cats {
@@ -178,11 +199,11 @@ class Cats {
     return constructorValidate(this, validate);
   }
 }
-const tom = new Cats("Tom", 3);
+const tom = new Cats('Tom', 3);
 
 tom.name = 123;
 tom.age = 123;
-tom.age = "tom";
+tom.age = 'tom';
 
 // 还可以校验函数的参数是否正确
 var test = {
@@ -190,8 +211,8 @@ var test = {
   fn2(a, b) {},
 };
 var argsType = {
-  fn1: ["string", "number", "boolean"],
-  fn2: ["number", "string"],
+  fn1: ['string', 'number', 'boolean'],
+  fn2: ['number', 'string'],
 };
 
 function argCheck(name, args, types) {
@@ -226,7 +247,7 @@ test.fn1();
 ```javascript
 // 我们不想让appKey被外部访问到，也不允许外部修改
 var api = {
-  _apiKey: "123456789",
+  _apiKey: '123456789',
   getUserInfo() {
     console.log(this._appKey);
   },
@@ -235,7 +256,7 @@ var api = {
 var handler = {
   get(target, key, proxy) {
     console.log(proxy);
-    if (key[0] === "_") {
+    if (key[0] === '_') {
       throw Error(
         `${key}是一个私有变量，不允许直接获取，如需获取请使用xxx方法`
       );
@@ -243,7 +264,7 @@ var handler = {
     return Reflect.get(target, key, proxy);
   },
   set(target, key, proxy) {
-    if (key[0] === "_") {
+    if (key[0] === '_') {
       throw Error(
         `${key}是一个私有变量，不允许直接修改，如需修改请调用xxx方法`
       );
@@ -255,5 +276,5 @@ var handler = {
 var proxy = new Proxy(api, handler);
 
 proxy._apiKey;
-proxy._apiKey = "asdffd";
+proxy._apiKey = 'asdffd';
 ```

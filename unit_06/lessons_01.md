@@ -27,30 +27,29 @@
 >  第二个阶段会从上到下依次执行代码, 如果是赋值就给变量赋值, 如果是方法就执行方法, 方法中遇到了变量就回去内存中查找, 如果变量已赋值, 则返回值, 如果未赋值则返回 undefined;  
 >  注意：虽然 const 与 let 也会被预处理, 但没有变量提升, 在哪定义就在哪里使用;  
 >  变量声明会被提升到其当前作用域的最上面而不是整个程序的最上面;  
->  变量提升的优先级：函数声明 > 变量声明 > 参数赋值。
+>  变量提升的优先级：变量声明 > 参数赋值 > 函数声明。 理解起来就是，当变量声明、参数赋值与函数声明同在一个方法中存在时，函数声明会覆盖参数赋值和变量声明，参数赋值会覆盖变量声明。
 
 ```javascript
 var a = 1;
 function test() {
-  console.log(a, "a1"); // undefined
-  var a = 2; // a被预读后存在了内存里, 当函数被调用时, a变量已存在, 所以a1位置时可以读取到变量
-  console.log(a, "a2"); // 2, a已经被赋值
+  console.log(a, 'a1');
+  var a = 2;
+  console.log(a, 'a2');
   function test1(a) {
-    console.log(a, "a3"); // 5, 接收到的参数为提升上来的a赋值
-    var a = 3; // a被预读后提升至当前作用域的最上方
+    console.log(a, 'a3');
+    var a = 3;
     a = 4;
-    console.log(a, "a4"); // 4
+    console.log(a, 'a4');
   }
-  // 指定时间后执行传入的参数方法, 该参数方法是一个用后即销毁的闭包, 内部环境中如有使用外部变量的, 以调用时为准
   setTimeout(function () {
-    console.log(a, "a5"); // 7
+    console.log(a, 'a5');
     test1(a);
   }, 500);
   var a = 5;
   test1(a);
   setTimeout(
     function (a) {
-      console.log(a, "a6"); // 6
+      console.log(a, 'a6');
     },
     0,
     6
@@ -66,7 +65,7 @@ test();
 > 暂时性死区概念主要是为了解决变量提升问题, 防止在变量声明前就使用这个变量, 从而导致意外的行为与操作。
 
 ```javascript
-a = 2; // 这里是死区, 初始化之前不能使用a。
+a = 2;
 console.log(a);
 let a;
 ```
@@ -76,8 +75,8 @@ let a;
 > 为什么要使用模板字符串而不是使用“+”运算符来拼接字符串？字符串拼接是所有程序设计语言都需要的操作。当拼接结果较长时, 如何保证效率就成为一个很重要的问题。早些年的时候在阅读《javascript 高级程序设计》中, 有一段关于字符串特点的描述记得很深刻。原文应该是这样说的：ECMAScript 中的字符串是不可变的, 也就是说, 字符串一旦创建, 他们的值就不能改变。要改变某个变量的保存的的字符串, 首先要销毁原来的字符串, 然后再用另外一个包含新值的字符串填充该变量。
 
 ```javascript
-let lang = "java";
-lang = lang + "Script";
+let lang = 'java';
+lang = lang + 'Script';
 ```
 
 > 上面这段代码看起来很简单, 但实际上操作稍有些复杂, 解析器首先会创建一个新字符串, 然后在这个字符串中填充“Java”和“Script”, 然后销毁原来的字符串“Java”和“Script”, 因为这两个字符串已经没用了。  
@@ -112,12 +111,12 @@ lang = lang + "Script";
  * map方法不会对空数组进行检测, map方法不会改变原始数组
  **/
 function mapCallback(value, index, array) {
-  console.log("mapCallback方法的参数", value, index, array);
+  console.log('mapCallback方法的参数', value, index, array);
   return value * value;
 }
-const arr = [1, 2, 3];
+var arr = [1, 2, 3];
 // 简单的map
-const newArr = arr.map(mapCallback);
+var newArr = arr.map(mapCallback);
 //[2,4,6]
 // 注：当方法内仅一行代码时, 可以省略掉花括号与return,
 // map方法中内容仅一行代码且该代码是表达式时默认返回该表达式
@@ -138,12 +137,12 @@ const newArr = arr.map(mapCallback);
  * filter方法不会改变原数组
  */
 function filterCallback(value, index) {
-  console.log("filterCallback方法的参数：", value, index);
+  console.log('filterCallback方法的参数：', value, index);
   return value > 2;
 }
-const arr = [1, 2, 3];
+var arr = [1, 2, 3];
 // 简单的filter
-const newArr = arr.filter(filterCallback);
+var newArr = arr.filter(filterCallback);
 // [3]
 ```
 
@@ -162,38 +161,38 @@ reduce 是一个极常用到的方法, 我们不仅可以用它来对数字进�
  * @param {number} index 当前索引
  */
 function reduceCallback(previousValue, currentValue, index) {
-  console.log("reduceCallback方法的参数", previousValue, currentValue, index);
+  console.log('reduceCallback方法的参数', previousValue, currentValue, index);
   return previousValue + currentValue;
 }
-const arr = [1, 2, 3];
+var arr = [1, 2, 3];
 /**
  * reduce方法
  * @param {function} callback 回调函数, 该函数中返回的内容会被当成下一次遍历时的第一个参数
  * @param {any} initialValue 初始值, 该参数是一个可选参数, 会被当成首次遍历时的回调函数的第一个参数
  */
-const accumulated = arr.reduce(reduceCallback, 0);
+var accumulated = arr.reduce(reduceCallback, 0);
 // 6
 ```
 
 reduce 是一个很有思想的方法, 它的回调函数第一个参数并不是固定的, 当我们调用 reduce 方法时传入初始化值的时候, 它是这个传入的参数, 如果没有传入初始化参数, 它就是数组的第一个元素, 而当回调被执行过一遍以后, 它又成了上次执行回调函数时返回的值。根据它的这个特点, 我们可以实现一些复杂的功能
 
 ```javascript
-const str = "4687231567182461978234";
+var str = '4687231567182461978234';
 /**
  * 将上面的字符串去重后排序
  */
-const newStr = str
-  .split("")
+var newStr = str
+  .split('')
   .reduce((prev, next) => {
     return prev.includes(next) ? prev : prev.concat(next);
   }, [])
   .sort()
-  .join("");
+  .join('');
 // '123456789'
 /**
  * 将指定的数组转换成对象
  */
-const newObj = newStr.split("").reduce((prev, next, index) => {
+var newObj = newStr.split('').reduce((prev, next, index) => {
   prev[next] = index;
   return prev;
 }, {});
@@ -203,25 +202,22 @@ const newObj = newStr.split("").reduce((prev, next, index) => {
 4. includes() 判断数中是否包含给定的值
 
 ```javascript
-const arr = [1, 2, 3];
+var arr = [1, 2, 3];
 arr.includes(2);
-// true
 arr.includes(6);
-// false
 ```
 
 5. find() 找到第一个符合条件的数组成员
 
 ```javascript
-const arr = [1, 2, 3];
+var arr = [1, 2, 3];
 arr.find(2);
-// 2
 ```
 
 find 方法也接受一个回调函数作为参数, 以实现对复杂数 c 组成员的检索
 
 ```javascript
-const arr = [
+var arr = [
   { a: 1, b: 2 },
   { a: 3, b: 5 },
 ];
@@ -244,15 +240,14 @@ arr.find(findCallback);
 7. fill() 以指定的值填充数组, 不怎么用, 确切地说是一直没用过
 
 ```javascript
-const arr = new Array(5);
+var arr = new Array(5);
 arr.fill(5);
-// [5, 5, 5, 5, 5]
 ```
 
 8. arr.every(callback) 依据判断条件, 数组的元素是否全满足, 若满足则返回 ture
 
 ```javascript
-const arr = [1, 2, 3];
+var arr = [1, 2, 3];
 /**
  * everyCallback
  * @param {any} value 当前索引的元素
@@ -263,14 +258,13 @@ function everyCallback(value, index) {
   return value > 3;
 }
 
-const greater = arr.every(everyCallback);
-// false
+var greater = arr.every(everyCallback);
 ```
 
 9. arr.some() 依据判断条件, 数组的元素是否有一个满足, 若有一个满足则返回 ture
 
 ```javascript
-const arr = [1, 2, 3];
+var arr = [1, 2, 3];
 /**
  * someCallback
  * @param {any} value 当前索引的元素
@@ -280,9 +274,7 @@ const arr = [1, 2, 3];
 function someCallback(value, index) {
   return value > 3;
 }
-
-const greater = arr.some(someCallback);
-// false
+var greater = arr.some(someCallback);
 ```
 
 #### ES6 的对象新增常用方法
@@ -292,12 +284,12 @@ const greater = arr.some(someCallback);
 > 我们在需要对两个对象进行比较时，一般都会使用“===”，偶尔偷懒的时候或者会使用“==”，但在一些特殊情况下，我们从这两个操作符中并不能获得满意的结果
 
 ```javascript
-+0 === -0; // 它们的绝对值是一样的，所以它们相等
-NaN === NaN; // 它们是两个不同的对象，所以它们不相等
++0 === -0;
+NaN === NaN;
 
 // 使用Object.is
-Object.is(+0, -0); // false
-Object.is(NaN, NaN); // true
+Object.is(+0, -0);
+Object.is(NaN, NaN);
 ```
 
 2. Object.assign 合并对象
@@ -305,9 +297,9 @@ Object.is(NaN, NaN); // true
 > 这是一个常用方法，主要用于对象的合并，将源对象的所有可枚举属性复制到目标对象上。
 
 ```javascript
-const obj = { a: 1 };
-const obj1 = { b: 2 };
-const obj2 = { c: 3 };
+var obj = { a: 1 };
+var obj1 = { b: 2 };
+var obj2 = { c: 3 };
 Object.assign(obj, obj1, obj2);
 ```
 
@@ -332,13 +324,13 @@ Object.assign 处理数组但会把数组视为对象
 - Object.entries()与 Object.fromEntries()
 
 ```javascript
-const obj = {
+var obj = {
   a: 1,
   b: 2,
   c: 3,
 };
-const arr = Object.entries(obj);
-const obj1 = Object.fromEntries(arr);
+var arr = Object.entries(obj);
+var obj1 = Object.fromEntries(arr);
 ```
 
 - get 与 set
@@ -346,18 +338,14 @@ const obj1 = Object.fromEntries(arr);
 > get 与 set 主要用于解决一些我们在定义某些对象中的属性时，该属性的来源数据仍未确定，需要等待数据确定后才能获取，如下：
 
 ```javascript
-const obj = {
+var obj = {
   a: 1,
-  // c的值依赖a和b, 但b在此时仍未定义
   get c() {
     return this.a + this.b;
   },
 };
-// 某一个特定时刻，我们对obj.b做了定义，这时向c取值就成了可能
 obj.b = 2;
-// obj.c的取值操作会被get方法拦截，然后按照我们定义的方式，将指定的数据进行运算后返回
 console.log(obj.c);
-// 3
 ```
 
 > 如同上面的代码，我们在最初定义对象的时候，obj.c 所依赖的属性 obj.b 尚未定义，这个时候无论是将 c 定义成一个方法还是定义成一个赋值函数都不太合适，get 方法相对来说就比较合适了，我们在这里定义，但并未真正地调用，所以，内部的 this.b 并不会引起报错。直到 obj.b 被定义后的未来，我们需要使用 obj.c 属性时，可以使用直接获取的方式来调用 get 方法
@@ -369,28 +357,28 @@ console.log(obj.c);
 ```javascript
 // 展开操作符的用法
 // 复制/合并数组
-const arr1 = [1, 2, 3];
-const arr2 = [...arr1];
-const arr3 = [3, 4, 5];
-const arr4 = [...arr1, ...arr2, ...arr3];
+var arr1 = [1, 2, 3];
+var arr2 = [...arr1];
+var arr3 = [3, 4, 5];
+var arr4 = [...arr1, ...arr2, ...arr3];
 // 复制/合并对象
-const obj1 = { a: 1, b: 2 };
-const obj2 = { ...obj1 };
-const obj3 = { c: 3, d: 4 };
-const obj4 = { ...obj2, ...obj3, ...{ a: 5 } };
+var obj1 = { a: 1, b: 2 };
+var obj2 = { ...obj1 };
+var obj3 = { c: 3, d: 4 };
+var obj4 = { ...obj2, ...obj3, ...{ a: 5 } };
 // 使用展开操作符合并对象时, 如果已经存在某个key, 则将其覆盖为后续的具有相同key的值, 可以视为assign方法的快捷版
 // 传递参数
 function fn1(a, b, c) {
   console.log(a, b, c);
 }
-const arr5 = [1, 2, 3];
+var arr5 = [1, 2, 3];
 fn1(...arr5);
 // 解构赋值
-const arr6 = [4, 5, 6];
-const [aa, ...other] = arr6;
+var arr6 = [4, 5, 6];
+var [aa, ...other] = arr6;
 
-const obj6 = { a: 1, b: 2, c: 3 };
-const { c, ...other } = obj6;
+var obj6 = { a: 1, b: 2, c: 3 };
+var { c, ...other } = obj6;
 
 // 剩余参数的用法
 function fn2({ a, ...other }) {
@@ -419,16 +407,16 @@ class Person {
   }
   // 这是实例方法的写法, 不需要加上function
   say() {
-    return "我的名字叫" + this.name + "今年" + this.age + "岁了";
+    return '我的名字叫' + this.name + '今年' + this.age + '岁了';
   }
   // 静态属性的声明
-  static nickName = "你猜";
+  static nickName = '你猜';
   // 静态方法的声明
   static printNickName() {
     console.log(Person.nickName);
   }
 }
-var obj = new Person("laotie", 88);
+var obj = new Person('laotie', 88);
 console.log(obj.say()); //我的名字叫laotie今年88岁了
 ```
 
@@ -441,11 +429,9 @@ console.log(obj.say()); //我的名字叫laotie今年88岁了
 > 调用位置：调用位置就是函数在代码中被调用的位置(不是声明位置)
 
 ```javascript
-// 在这里声明
 function fn() {
-  console.log(this, "fn");
+  console.log(this, 'fn');
 }
-// 在这里调用, 当前的调用位置是window, 所以, fn里的this指向就是window
 fn();
 ```
 
@@ -453,81 +439,72 @@ fn();
 
 ```javascript
 function fn() {
-  // 当前的调用栈是 fn
-  // 对应的调用位置是全局作用域window
-  console.log(this, "fn");
-  fn1(); // fn1的调用位置
+  console.log(this, 'fn');
+  fn1();
 }
 function fn1() {
-  // 当前的调用栈是 fn -> fn1
-  // 对应的调用位置是fn, fn的调用位置是window, 所以这里的this也指向window
-  console.log(this, "fn1");
-  fn2(); // fn2的调用位置
+  console.log(this, 'fn1');
+  fn2();
 }
 function fn2() {
-  // 当前的调用栈是 fn -> fn1 -> fn2
-  // 对应的调用位置是fn - fn1, fn的调用位置是window, 所以这里的this也指向window
-  console.log(this, "fn2");
+  console.log(this, 'fn2');
 }
-fn(); // fn的调用位置
+fn();
 ```
 
 > 默认绑定：默认绑定即独立的函数调用, 当其他规则无法应用时的默认规则, 如
 
 ```javascript
 function fn() {
-  // 这里打印window.str
-  console.log(this.str, "fn");
+  console.log(this.str, 'fn');
 }
-var str = "abc";
-fn(); // 调用位置对应的是window, 所以fn的this指向window
+var str = 'abc';
+fn();
 ```
 
 > 隐式绑定：当函数有上下文对象时, 隐式绑定会将函数中的 this 指向到这个上下文对象。
 
 ```javascript
 function fn() {
-  // 这里打印obj.str
-  console.log(this.str, "fn");
+  console.log(this.str, 'fn');
 }
-var str = "abc";
+var str = 'abc';
 var obj = {
-  str: "xyz",
+  str: 'xyz',
   fn: fn,
 };
-obj.fn(); // 这里的上下文对应的调用位置是obj, 所以fn的this指向obj
+obj.fn();
 ```
 
 > 对象的属性引用链只有上一层或者说最后一层会在调用位置起作用, 因为作用域链对于 this 的寻找只会到当前的活动对象或变量对象中, 不会到更上一层
 
 ```javascript
 function fn() {
-  // 这里打印obj.str
-  console.log(this.str, "fn");
+  console.log(this.str, 'fn');
 }
-var str = "abc";
-const obj = {
-  str: "xyz",
-  fn: fn, // fn的绑定环境在obj这里
+var str = 'abc';
+var obj = {
+  str: 'xyz',
+  fn: fn,
 };
-const obj1 = {
-  str: "123",
+var obj1 = {
+  str: '123',
   obj: obj,
 };
-obj1.obj.fn(); // 调用位置对应的是obj, 所以fn的this仍然指向obj
+obj1.obj.fn();
 ```
 
 > 显式绑定：能一眼看出来它的 this 指向的, 比如 call 或 apply
 
 ```javascript
 function fn() {
-  console.log(this.str, "fn");
+  console.log(this.str, 'fn');
 }
 var obj = {
-  str: "abc",
+  str: 'abc',
 };
 function fn1() {
-  fn.call(obj); // 显式绑定this到obj, 所以fn中的this指向到obj
+  fn.call(obj);
 }
 fn1();
 fn1.call(window);
@@ -537,12 +514,12 @@ fn1.call(window);
 
 ```javascript
 function fn() {
-  console.log(this.str, "fn");
+  console.log(this.str, 'fn');
 }
 var obj = {
-  str: "abc",
+  str: 'abc',
 };
-var fn1 = fn.bind(obj); // 通过bind的方式强制将fn方法与obj对象绑定到一起后返回一个新的函数
+var fn1 = fn.bind(obj);
 fn1();
 ```
 
@@ -552,18 +529,13 @@ fn1();
 function fn(str) {
   this.str = str;
 }
-var obj = new fn("abc");
+var obj = new fn('abc');
 obj.str;
-// 这里的new操作可以这样来理解
 {
-  // 创建一个对象obj
   var obj = new Object();
-  // 将新对象obj的内存地址指向到fn函数的原型对象
   obj.__proto__ = fn.prototype;
-  // 利用函数的call方法, 将原本指向window的绑定对象指向了obj。这样一来，我们向函数中再传递实参时，对象的属性就被挂载到了obj上
-  var result = fn.call(obj, "abc");
-  // 如果函数没有返回其它对象，那么就返回对象obj
-  return result === "object" ? result : obj;
+  var result = fn.call(obj, 'abc');
+  return result === 'object' ? result : obj;
 }
 ```
 
@@ -575,39 +547,37 @@ function fn() {
   console.log(this.str);
 }
 var obj = {
-  str: "abc",
+  str: 'abc',
   fn: fn,
 };
 var obj1 = {
-  str: "xyz",
+  str: 'xyz',
   fn: fn,
 };
-obj.fn(); // abc, 隐式绑定, 通过上下文确定this环境指向obj
-obj1.fn(); // xyz, 隐式绑定, 通过上下文确定this环境指向obj1
-obj.fn.call(obj1); // 显式绑定, this指向obj1
-obj1.fn.call(obj); // 显式绑定, this指向obj
-// 可以看到，显式绑定的优先级要高于隐式绑定
+obj.fn();
+obj1.fn();
+obj.fn.call(obj1);
+obj1.fn.call(obj);
 ```
 
 ```javascript
 // new操作符的比较
 function fn(str) {
   this.str = str;
+  this.fn = str => {
+    console.log(this.str, str);
+  };
 }
 var obj = {
   fn: fn,
 };
-// 先通过new操作符绑定一个对象
-var obj1 = new obj.fn("123");
+var obj1 = new obj.fn('123');
 var obj2 = {};
-// 看看能否通过显式绑定来修改new操作符的指向
-obj1.fn.call(obj2, "xyz");
-// 看看是否能通过隐式绑定来修改前面两个的this指向
-obj.fn("abc");
-console.log(obj.str, "obj"); // 隐式绑定
-console.log(obj1.str, "obj1"); // 显式绑定
-console.log(obj2.str, "obj2"); // new 操作符绑定
-// 可以看到，通过new操作符绑定的优先级要高于显式绑定
+obj1.fn.call(obj2, 'xyz');
+obj.fn('abc');
+console.log(obj.str, 'obj');
+console.log(obj1.str, 'obj1');
+console.log(obj2.str, 'obj2');
 ```
 
 - 总结：
@@ -623,37 +593,43 @@ console.log(obj2.str, "obj2"); // new 操作符绑定
 
 ```javascript
 // 隐式绑定
-const fn = () => {
-  console.log(this.str, "fn");
+var fn = () => {
+  console.log(this.str, 'fn');
 };
-var str = "abc";
+var str = 'abc';
+// 方法被定义到了obj对象
 var obj = {
-  str: "xyz",
+  str: 'xyz',
   fn: fn,
 };
+// 根据上下文，这里的this指向obj
 obj.fn();
 
-function fn() {
-  const fn1 = () => {
-    console.log(this, "fn1");
+// 显式绑定
+function fun() {
+  var fun1 = () => {
+    console.log(this, 'fun1');
   };
   return {
-    fn1,
-    fn2: () => {
-      console.log(this, "fn2");
+    fun1,
+    fun2: () => {
+      console.log(this, 'fun2');
     },
   };
 }
-var str = "abc";
-var obj = {
-  str: "xyz",
-};
+var str = 'abc';
 var obj1 = {
-  str: "123",
+  str: 'xyz',
 };
-var fn3 = fn.call(obj);
-var obj3 = fn3.fn1.call(obj1);
-var obj4 = fn3.fn2.call(obj1);
+var obj2 = {
+  str: '123',
+};
+// 显式绑定，fn3中的fun1的this指向obj1
+var fn3 = fun.call(obj1);
+// 显式绑定，fn3.fun1原本指向的是obj1，但在这里被强行绑定到了obj2
+fn3.fun1.call(obj2);
+// 与上面的一致
+fn3.fun2.call(obj2);
 ```
 
 > 总结：  
@@ -672,32 +648,36 @@ var obj4 = fn3.fn2.call(obj1);
 
 ```javascript
 let obj = {
-  msg: "hello",
+  msg: 'hello',
   fn1: function (name) {
-    console.log(this.msg, "fn1"); // this指向obj
+    console.log(this.msg, 'fn1');
+    // hello fn1
     function fn2() {
-      console.log(this.msg, "fn2"); // this指向window
+      console.log(this.msg, 'fn2');
+      // undefined fn2
       return `${this.msg}, ${name}`;
     }
+    // 调用时无上下文，指向默认对象window
     return fn2();
   },
 };
-obj.fn1("tom");
-// undefined, tom
+// 根据上下文，this指向obj
+obj.fn1('tom');
+// 返回 undefined, tom
 
 // 箭头函数的写法
 let obj = {
-  msg: "hello",
+  msg: 'hello',
   fn1: function (name) {
-    console.log(this.msg, "fn1"); // this指向obj
+    console.log(this.msg, 'fn1'); // this指向obj
     fn2 = () => {
-      console.log(this, "fn2"); // this指向obj
+      console.log(this, 'fn2'); // this指向obj
       return `${this.msg}, ${name}`;
     };
     return fn2();
   },
 };
-obj.fn1("tom");
+obj.fn1('tom');
 // 所以, 我们再也不需要使用that/self来保存当前this指向了
 ```
 
@@ -705,17 +685,17 @@ obj.fn1("tom");
 
 ```javascript
 let obj = {
-  msg: "hello",
+  msg: 'hello',
   fn1: function (name) {
-    console.log(this.msg, "fn1"); // this指向obj
+    console.log(this.msg, 'fn1'); // this指向obj
     fn2 = () => {
-      console.log(this, "fn2"); // this指向obj
+      console.log(this, 'fn2'); // this指向obj
       return `${this.msg}, ${name}`;
     };
-    return fn2.call({ msg: "hallo" });
+    return fn2.call({ msg: 'hallo' });
   },
 };
-obj.fn1("tom");
+obj.fn1('tom');
 // hello, tom
 // this指针没有偏移到新对象
 ```

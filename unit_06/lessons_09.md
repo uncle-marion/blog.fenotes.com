@@ -1,16 +1,14 @@
-> 企业项目实战 > JavaScript 进阶 > JavaScript 的事件机制
-
-### 面试题
+> Marion 的 react 实战课程 > 第六部分 > JavaScript 的事件机制
 
 #### 为什么 JavaScript 是单线程的
 
-> JavaScript 语言的最大特点就是单线程，也就是说，同一个时间只能做一件事。这样设计的方案主要源于其语言特性，因为 JavaScript 是浏览器脚本语言，它可以操纵 DOM ，可以渲染动画，可以与用户进行互动，如果是多线程的话，执行顺序无法预知，而且操作以哪个线程为准也是个难题。所以，为了避免复杂性，从一诞生，JavaScript 就是单线程，这已经成了这门语言的核心特征，将来也不会改变。
+> 要理解 Javascript 的事件机制，首先我们需要知道 Javascript 是一门单线程的编程语言。JavaScript 语言的最大特点就是单线程，也就是说，同一个时间只能做一件事。这样设计的方案主要源于其语言特性，因为 JavaScript 是浏览器脚本语言，它可以操纵 DOM ，可以渲染动画，可以与用户进行互动，如果是多线程的话，执行顺序无法预知，而且操作以哪个线程为准也是个难题。所以，为了避免复杂性，从一诞生，JavaScript 就是单线程，这已经成了这门语言的核心特征，将来也不会改变。
 > 在 HTML5 时代，浏览器为了充分发挥 CPU 性能优势，允许 JavaScript 创建多个线程，但是即使能额外创建线程，这些子线程仍然是受到主线程控制，而且不得操作 DOM，类似于开辟一个线程来运算复杂性任务，运算好了通知主线程运算完毕，结果给你，这类似于异步的处理方式，所以本质上并没有改变 JavaScript 单线程的本质。
 
 #### 如果 JavaScript 是单线程的，为什么它可以执行多线程操作（异步操作）
 
-> JS 是单线程的，只有一个主线程
-> 函数内的代码从上到下顺序执行，遇到被调用的函数先进入被调用函数执行，待完成后继续执行
+> JS 是单线程的，只有一个主线程  
+> 函数内的代码从上到下顺序执行，遇到被调用的函数先进入被调用函数执行，待完成后继续执行  
 > 遇到异步事件，浏览器另开一个线程，主线程继续执行，待结果返回后，执行回调函数
 
 因为 JS 这个语言是运行在宿主环境中，比如 浏览器环境，nodeJs 环境; 在浏览器中，浏览器负责提供这个额外的线程; 在 Node 中，Node.js 借助 libuv 来作为抽象封装层， 从而屏蔽不同操作系统的差异，Node 可以借助 libuv 来实现多线程。而这个异步线程又分为 微任务 和 宏任务，我们就用两天的时间来研究 JS 的异步原理以及其事件循环机制。
@@ -182,11 +180,11 @@ console.log(3);
 
 ##### 总结：
 
-1 不同的任务会放进不同的任务队列之中。
-2 先执行 macro-task，等到函数调用栈清空之后再执行所有在队列之中的 micro-task。
-3 等到所有 micro-task 执行完之后再从 macro-task 中的一个任务队列开始执行，就这样一直循环。
-4 宏任务和微任务的队列执行顺序排列如下：
-5 macro-task（宏任务）：script(整体代码), setTimeout, setInterval, setImmediate（NodeJs）, I/O, UI rendering。
+1 不同的任务会放进不同的任务队列之中。  
+2 先执行 macro-task，等到函数调用栈清空之后再执行所有在队列之中的 micro-task。  
+3 等到所有 micro-task 执行完之后再从 macro-task 中的一个任务队列开始执行，就这样一直循环。  
+4 宏任务和微任务的队列执行顺序排列如下：  
+5 macro-task（宏任务）：script(整体代码), setTimeout, setInterval, setImmediate（NodeJs）, I/O, UI rendering。  
 6 micro-task（微任务）: process.nextTick（NodeJs）, Promise, MutationObserver(html5 新特性)
 
 总结练习：
@@ -253,9 +251,9 @@ new Promise(resolve => {
   console.log(5);
 });
 console.log(6);
-process.nextTick(() => {
+Promise.resolve(() => {
   console.log(7);
-});
+}).then(res => res());
 console.log(8);
 ```
 
