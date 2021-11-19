@@ -1,7 +1,7 @@
 {
   "title": "React Training",
   "author": "marion.lau@foxmail.com",
-  "description": "加入八维团队后，在教学生时总感觉有些力不从心的样子，于是抽时间，把所能想起来的一些内容梳理了一下，放在这里，做为以后上课时的索引",
+  "description": "加入八维团队后，在带领学员梳理基础知识时总感觉有些力不从心的样子，于是抽时间，把所能想起来的一些内容梳理了一下，放在这里，做为以后上课时的索引",
   "plugins": [
     "expandable-chapters",
     "prism",

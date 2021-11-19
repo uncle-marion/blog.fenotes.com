@@ -7,13 +7,13 @@
 - windows 客户端：
   直接官网下载，下一步到底，不需要什么配置
 
-```ssh
+```javascript
 https://github.com/git-for-windows/git/releases/download/v2.33.0.windows.2/Git-2.33.0.2-64-bit.exe
 ```
 
 - mac 客户端：
 
-```ssh
+```javascript
 brew install git
 ```
 
@@ -27,7 +27,7 @@ brew install git
 
 #### 1. 生成公钥
 
-```ssh
+```javascript
 ssh-keygen -t rsa -C '你在码云注册的邮箱地址'
 ```
 

@@ -84,7 +84,7 @@ export function throttle(
 ) {
   // 如果第一次调用和最后一次调用都为false,可能会出现用户操作完全无响应的情况
   if (!options.leading && !options.trailing) {
-    console.warn("options的leading属性和trailing属性，至少要有一个为true!");
+    console.warn('options的leading属性和trailing属性，至少要有一个为true!');
     options.trailing = true;
   }
   // 缓存一个定时器，便于执行最后一次任务
@@ -174,7 +174,7 @@ export function throttle(
 
 ```javascript
 function isObject(obj) {
-  return Object.prototype.toString.call(obj) === "[object Object]";
+  return Object.prototype.toString.call(obj) === '[object Object]';
 }
 function isEqual(obj1, obj2) {
   // 当其中一个为值类型或null
@@ -215,14 +215,32 @@ function isEqual(obj1, obj2) {
  * @returns
  */
 function isIterativeObject(val) {
-  // 确认参数是对象且不是null
-  var nonNullObject = val && typeof val === "object";
-  // 确认参数不是正则对象或日期对象
+  // 确认参数存在而且是一个非正则与日期的对象（确认是引用类型的数组或对象）
   return (
-    nonNullObject &&
-    Object.prototype.toString.call(val) !== "[object RegExp]" &&
-    Object.prototype.toString.call(val) !== "[object Date]"
+    // 参数存在且是一个对象
+    val &&
+    typeof val === 'object' &&
+    // 非正则对象
+    Object.prototype.toString.call(val) !== '[object RegExp]' &&
+    // 非日期对象
+    Object.prototype.toString.call(val) !== '[object Date]'
   );
+}
+
+/**
+ * 获取对象的key的集合
+ * @param {*} obj
+ * @returns obj
+ */
+function getTargetKeys(obj) {
+  return isIterativeObject(obj)
+    ? // 对象是一个引用类型的对象
+      { _target: obj, targetKeys: Object.keys(obj) }
+    : // 不是一个引用类型的对象
+      // 为什么要让target是一个空对象？
+      // 如果target不是一个引用类型，我们不能直接使用source覆盖target，
+      // 要避免source对象中的属性是引用类型的对象造成合并后的对象引用属性与原属性一致
+      { _target: {}, targetKeys: [] };
 }
 
 /**
@@ -232,23 +250,18 @@ function isIterativeObject(val) {
  * @returns
  */
 function arrayMerge(target, source) {
-  // 浅拷贝
-  var destination = [...target];
-  source.forEach(function (item, index) {
-    // target数组中没有对应的值
-    if (typeof destination[index] === "undefined") {
-      destination[index] = mergeObject({}, item);
-    }
-    // source数组中的值是一个对象，直接丢给深度合并的方法
-    else if (isIterativeObject(item)) {
-      destination[index] = deepmerge(target[index], item);
-    }
-    // source数组中的不是一个对象，直接判断target数组中是否有对应的值
-    else if (!target.includes(item)) {
-      destination.push(item);
-    }
-  });
-  return destination;
+  return source.reduce(
+    (destination, item, index) => {
+      // 判断target数组中是否有对应的值(只有基本类型的属性可以判断出来，其它都会走下面的else)
+      if (!target.includes(item)) {
+        destination.push(item);
+      } else {
+        destination[index] = deepmerge(target[index], item);
+      }
+      return destination;
+    },
+    [...target]
+  );
 }
 
 /**
@@ -258,42 +271,26 @@ function arrayMerge(target, source) {
  * @returns
  */
 function mergeObject(target, source) {
-  // 取出source中所有的key
-  var sourceKeys;
-  // 确认source对象非null非正则非日期
-  if (isIterativeObject(source)) {
-    // 取出source对象中所有的key
-    sourceKeys = Object.keys(source);
-  }
   // 如果source是正则/日期/null, 直接返回source
-  // source为非引用类型，直接赋值就行
-  else {
+  if (!isIterativeObject(source)) {
     return source;
   }
-  // 取出所有target中的keys
-  var targetKeys;
-  if (isIterativeObject(target)) {
-    // 取出target对象中所有的key
-    targetKeys = Object.keys(target);
-  }
-  // 为什么要让target是一个空对象？
-  // 如果target不是一个引用类型，我们不能直接使用source覆盖target，
-  // 要避免source对象中的属性是引用类型的对象造成合并后的对象引用属性与原属性一致
-  else {
-    target = {};
-    targetKeys = [];
-  }
-  // 合并去重
-  var allKeys = [...new Set([...targetKeys, ...sourceKeys])];
 
-  // 新建一个对象用于保存合并后的对象属性（不影响target和source）
-  var destination = {};
-  for (const key of allKeys) {
+  // 取出source中所有的key
+  const sourceKeys = Object.keys(source);
+
+  // 取出所有target中的keys
+  const { _target, targetKeys } = getTargetKeys(target);
+
+  // 合并去重
+  const allKeys = [...new Set([...targetKeys, ...sourceKeys])];
+
+  // 生成并返回一个新对象
+  return allKeys.reduce((destination, key) => {
     // 这里继续进行深层合并
-    destination[key] = deepmerge(target[key], source[key]);
-  }
-  // 返回合并后的对象
-  return destination;
+    destination[key] = deepmerge(_target[key], source[key]);
+    return destination;
+  }, {});
 }
 
 /**
@@ -304,7 +301,12 @@ function mergeObject(target, source) {
  */
 function deepmerge(target, source) {
   // source对象不是可迭代对象，直接覆盖
-  if (isIterativeObject(source)) {
+  // 无论前面的参数是什么，只要后面这个参数是一个基本类型的或者是function\正则\日期对象；
+  // 直接覆盖前面的参数，不需要再进行更多的判断了
+  if (!source && source === undefined) {
+    return target;
+  }
+  if (!isIterativeObject(source)) {
     return source;
   }
   // 判断source对象是否是一个数组
@@ -319,19 +321,25 @@ function deepmerge(target, source) {
   }
 }
 
+// 参数一是什么都无所谓
+// 参数二是基本类型，直接给参数一赋值
+// 参数二是引用类型，进入递归式判断并赋值
+
 /**
  * 多个对象进行合并的方法
  * @returns
  */
 deepmerge.all = function deepmergeAll(...rest) {
   if (!rest || rest.length < 2) {
-    throw Error("玩呢？你是要合并个寂寞啊");
+    throw Error('玩呢？你是要合并个寂寞啊');
   }
   // 使用reduce方法，逐个合并
-  return array.reduce(function (prev, next) {
+  return rest.reduce(function (prev, next) {
     return deepmerge(prev, next);
   });
 };
+
+export default deepmerge;
 ```
 
 使用 Object.create 方式来 copy
@@ -342,7 +350,7 @@ deepmerge.all = function deepmergeAll(...rest) {
  */
 function deepClone(target) {
   function isObject(val) {
-    return val && (typeof val === "object" || typeof val === "function");
+    return val && (typeof val === 'object' || typeof val === 'function');
   }
 
   function clone(data) {
@@ -356,9 +364,9 @@ function deepClone(target) {
       // 使用对应的构造方法重新实例化一个对象
       return new data.constructor(data);
     }
-    if (typeof data === "function") {
+    if (typeof data === 'function') {
       // 使用函数的构造方法重新生成一个函数
-      return new Function("return " + data.toString())();
+      return new Function('return ' + data.toString())();
     }
 
     // 走完上面的一堆类型检查，现在是真正的对象和数组了
@@ -372,7 +380,7 @@ function deepClone(target) {
     // 上面的这一步操作其实就是我们常用的{...obj}或Object.assign(obj)
     // 区别在于，我们使用解构或assign这种方式进行的浅拷贝会丢失掉对象的原型, 而这种方式不会
 
-    keys.forEach((key) => {
+    keys.forEach(key => {
       const val = data[key];
       // 如果这个属性是引用类型的
       if (isObject(val)) {
@@ -447,7 +455,7 @@ function myNew(constructor, ...rest) {
   const obj = Object.create(constructor.prototype);
   const result = constructor.call(obj, ...rest);
   // 这里是为了避免constructor不是一个构造函数
-  return typeof result === "object" ? result : obj;
+  return typeof result === 'object' ? result : obj;
 }
 
 function Fun(name, age) {
@@ -458,7 +466,7 @@ Fun.prototype.getUserInfo = function () {
   return `我的姓名${this.name},我的年龄${this.age}`;
 };
 
-const fun = myNew(Fun, "Tom", 3);
+const fun = myNew(Fun, 'Tom', 3);
 
 console.log(fun.getUserInfo());
 ```
@@ -478,16 +486,16 @@ function fun(a, b) {
 }
 fun.myCall = function (target, ...args) {
   // 隐式绑定，在target中创建一个属性，这个属性的值是当前的this，从方法的调用者上看就是fun方法
-  Reflect.set(target, "fn", this);
+  Reflect.set(target, 'fn', this);
   // 创建一个变量用于缓存方法执行的结果
   const result = target.fn(...args);
   // 清除刚刚给对象创建的属性
-  Reflect.deleteProperty(target, "fn");
+  Reflect.deleteProperty(target, 'fn');
   // 返回执行的结果
   return result;
 };
 var obj = {
-  name: "Tom",
+  name: 'Tom',
 };
 fun.myCall(obj, 1, 2);
 ```
@@ -518,9 +526,9 @@ Function.prototype.myBind = function (context, ...outerArgs) {
 // 正则方法
 function parseToMoney(num) {
   num = parseFloat(num.toFixed(3));
-  let [integer, decimal] = String.prototype.split.call(num, ".");
-  integer = integer.replace(/\d(?=(\d{3})+$)/g, "$&,");
-  return integer + "." + (decimal ? decimal : "");
+  let [integer, decimal] = String.prototype.split.call(num, '.');
+  integer = integer.replace(/\d(?=(\d{3})+$)/g, '$&,');
+  return integer + '.' + (decimal ? decimal : '');
 }
 ```
 
@@ -541,14 +549,14 @@ function parseParam(url) {
   // 将 ? 后面的字符串取出来
   const paramsStr = /.+\?(.+)$/.exec(url)[1];
   // 将字符串以 & 分割后存到数组中
-  const paramsArr = paramsStr.split("&");
+  const paramsArr = paramsStr.split('&');
   let paramsObj = {};
   // 将 params 存到对象中
-  paramsArr.forEach((param) => {
+  paramsArr.forEach(param => {
     // 只处理有 value 的参数
     if (/=/.test(param)) {
       // 分割 key 和 value
-      let [key, val] = param.split("=");
+      let [key, val] = param.split('=');
       // 解码
       val = decodeURIComponent(val);
       // 判断是否需要转为数字
@@ -598,7 +606,7 @@ class EventEmitter {
   // 触发事件的方法
   emit(eventName) {
     // 遍历执行所有订阅的事件
-    this.events[eventName] && this.events[eventName].forEach((cb) => cb());
+    this.events[eventName] && this.events[eventName].forEach(cb => cb());
   }
 }
 ```

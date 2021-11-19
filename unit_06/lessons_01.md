@@ -597,12 +597,10 @@ var fn = () => {
   console.log(this.str, 'fn');
 };
 var str = 'abc';
-// 方法被定义到了obj对象
 var obj = {
   str: 'xyz',
   fn: fn,
 };
-// 根据上下文，这里的this指向obj
 obj.fn();
 
 // 显式绑定
@@ -624,11 +622,8 @@ var obj1 = {
 var obj2 = {
   str: '123',
 };
-// 显式绑定，fn3中的fun1的this指向obj1
 var fn3 = fun.call(obj1);
-// 显式绑定，fn3.fun1原本指向的是obj1，但在这里被强行绑定到了obj2
 fn3.fun1.call(obj2);
-// 与上面的一致
 fn3.fun2.call(obj2);
 ```
 

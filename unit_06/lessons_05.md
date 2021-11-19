@@ -8,8 +8,10 @@ Reflect，在英文中的意思是反映反射，一般会被翻译成映射，�
 
 - 在使用对象的 Object.defineProperty(obj, name, {})时，如果出现异常的话，会抛出一个错误，需要使用 try catch 去捕获，但是使用 Reflect.defineProperty(obj, name, desc) 则会返回 false。
 
+- 将所有的 Object 操作都变成了容易理解的函数行为而不是以前的使用运算符来判断左右侧的值的操作，比如 name in obj 或 delete obj[name]
+
 ```javascript
-var aa = {};
+var aa = { cc: 456 };
 try {
   Object.defineProperty(aa, 'bb', { value: 123 });
 } catch (e) {
@@ -22,6 +24,14 @@ if (Reflect.defineProperty(aa, 'bb', { value: 123 })) {
 } else {
   // 失败会返回false
 }
+// 以前判断对象是否有值
+console.log(cc in aa);
+// 现在
+Reflect.has(aa, 'cc');
+// 以前删除对象的属性
+delete aa['cc'];
+// 现在
+Reflect.deleteProperty(aa, 'cc');
 ```
 
 - 关于 Object.defineProperty()
@@ -36,6 +46,7 @@ Object.defineProperty(对象名称, 属性名称, {
   configurable: true // 是否可以删除，默认为不可删除
   enumerable: true // 是否可以被for in遍历或通过Object.keys获取，默认不可遍历
 })
+// 注意，get与set方法不能与value和writable同时存在，否则会报错！！
 ```
 
 Reflect 一共提供了 13 个方法，我们只要学习常用的一些方法即可，对它比较感兴趣的同学可以去菜鸟等网站自己行学习其它方法。
@@ -44,7 +55,7 @@ Reflect 一共提供了 13 个方法，我们只要学习常用的一些方法�
 
 ```javascript
 /**
- * 读取对象的属性的值
+ * 读取对象的属性
  * target 需要读取的对象
  * name   属性名
  * receiver 上下文对象(记得之前讲过的fn.call(this)吗)
@@ -53,26 +64,84 @@ Reflect 一共提供了 13 个方法，我们只要学习常用的一些方法�
 var tom = {
   name: 'Tom',
   age: 3,
+  // desc的属性是通过计算后得到的
   get desc() {
     console.log(`我叫${this.name},我今年${this.age}岁了`);
   },
 };
+
 Reflect.get(tom, 'name');
 Reflect.get(tom, 'desc');
-Reflect.get(tom, 'desc', { name: 'Jerry', age: 2 });
+// 上下文，相当于是call(obj)
+var jerry = {
+  name: 'Jerry',
+  age: 2,
+};
+Reflect.defineProperty(jerry, 'desc', {
+  get() {
+    console.log('这个方法打印的东西不一样了', this.name, this.age);
+  },
+});
+// 三个参数
+// 参数一，当前对象，
+// 参数二，属性的名称
+// 参数三，被操作的上下文对象
+// 使用当前对象里的方法去计算第三个参数中的属性
+Reflect.get(tom, 'desc', jerry);
+Reflect.get(jerry, 'desc', tom);
 ```
 
 - Reflect.set(target, name, value, receiver);
 
 ```javascript
 /**
- * 读取对象的属性的值
- * target 需要读取的对象
+ * 增加或修改对象的属性
+ * target 需要操作的对象
  * name   属性名
  * value  属性的值
  * receiver 上下文对象
  */
-Reflect.set(target, name, value, receiver);
+var jerry = {
+  set desc(params) {
+    console.log(parmas, '######');
+  },
+};
+Reflect.set(jerry, 'name', 'Jerry');
+Reflect.set(jerry, 'age', 2);
+
+var obj = {
+  set aa(value) {
+    this.cc = this.bb() + value;
+  },
+  bb: function () {
+    return 44;
+  },
+};
+var obj1 = {
+  bb: function () {
+    return 33;
+  },
+};
+// 使用obj对象的aa方法计算后将值写入obj1里
+Reflect.set(obj, 'aa', 'aa', obj1);
+```
+
+- Reflect.apply(function, target, args)
+
+```javascript
+// 比如
+function fun() {
+  console.log(this.name);
+}
+fun.apply({ name: 'tom' });
+
+// 可是如果有人改写了fun的apply方法呢？
+fun.apply = params => console.log(params);
+// 所以，我们只能使用Function方法来写比较安全一点
+Function.prototype.apply.call(fun, { name: 'tom' });
+// 但这样写，代码也未免太长了些，而Reflect正好帮我们提供了这个方法
+Reflect.apply(fun, { name: 'tom' }, []);
+// 注意，apply的第三个参数必须要传，否则会报错
 ```
 
 - Reflect.construct(target, args, newTarget);
@@ -99,12 +168,23 @@ Reflect.construct(target, args, newTarget);
 Reflect.defineProperty(target, name, desc);
 ```
 
-Reflect.has(target, name);
+- Reflect.has(target, name);
 
 ```javascript
 // 判断对象是否有这个属性
 Reflect.has(target, name);
 ```
+
+- Reflect.getPrototypeOf(obj)
+
+```javascript
+var obj = {};
+// 不允许在代码中直接读取__proto__
+Object.getPrototypeOf(obj) === obj.__proto__;
+Reflect.getPrototypeOf(obj) === obj.__proto__;
+```
+
+- Reflect.setPrototypeOf(obj)
 
 ## Proxy
 
@@ -153,13 +233,13 @@ proxy.name;
 // 写一堆的判断，如果参数比较多的话这里就没办法看下去了
 class Cats {
   constructor(name, age) {
-    if (this.name !== 'string') {
-      return throw Error('name只接触字符串参数');
+    if (typeof this.name !== 'string') {
+      return throw Error('name只接受字符串参数');
     }
-    if (!this.age !== 'number') {
+    if (typeof this.age !== 'number') {
       return throw Error('age只接受数字参数');
     }
-    if (!this.age > 15) {
+    if (this.age > 15) {
       return throw Error('这只猫太老了');
     }
     this.name = name;

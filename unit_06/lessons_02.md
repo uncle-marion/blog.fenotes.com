@@ -7,8 +7,8 @@
 - 面向过程，就是我们平常用的最多的声明变量、输出、计算这些，统统都是所谓的面向过程的范式：
 
 ```javascript
-const greeting = "hello";
-console.log(greeting + ", " + "world");
+const greeting = 'hello';
+console.log(greeting + ', ' + 'world');
 ```
 
 - 面向对象，将我们需要处理的多个对象抽象成一个类，然后在类中定义各种方法，再将其实例化成一个新的对象来继承类中的属性和方法，最后调用：
@@ -16,28 +16,27 @@ console.log(greeting + ", " + "world");
 ```javascript
 // 定义了一个类
 const Program = function () {
-  this.greeting = (args) => console.log("hello" + ", " + args);
+  this.greeting = args => console.log('hello' + ', ' + args);
 };
 // 用上面定义的类实例化了一个对象
 const program = new Program();
 // 调用这个对象里的方法
-program.greeting("world");
+program.greeting('world');
 ```
 
 - 面向函数，我们不关心需要处理的对象
 
 ```javascript
-const program = (greeting) => (name) => (log) =>
-  log([greeting, name].join(", "));
+const program = greeting => name => log => log([greeting, name].join(', '));
 // 没有定义变量，没有指令，就是一级级地把参数传入进去
-program("hello")("world")(console.log);
+program('hello')('world')(console.log);
 ```
 
 - 函数式编程是一种声明式(declarative)编程范式，它不同于命令式编程，在函数式编程中没有 ifelse 或变量的概念，在函数式编程中，所有的变量只能被赋值一次，函数式编程没有循环这个概念它们只有递归，函数的运行只依靠参数。
 
 ```javascript
 // 命令式编程范式
-const doubleMap = (nums) => {
+const doubleMap = nums => {
   const doubled = [];
   for (let i = 0, l = nums.length; i < l; i++) {
     doubled.push(nums[i] * 2);
@@ -45,7 +44,7 @@ const doubleMap = (nums) => {
   return doubled;
 };
 // 声明式编程范式
-const doubleMap = (nums) => nums.map((n) => n * 2);
+const doubleMap = nums => nums.map(n => n * 2);
 
 // 命令式编程
 let a = 1;
@@ -62,7 +61,7 @@ for (let i = 0; i < 100; i++) {
   sum += i;
 }
 // 声明式编程
-const f = (n) => (n < 0 ? 0 : n + f(n - 1));
+const f = n => (n < 0 ? 0 : n + f(n - 1));
 f(100);
 ```
 
@@ -109,13 +108,13 @@ function outerFunc() {
 
 ```javascript
 function fn(args) {
-  const param = "abc";
+  const param = 'abc';
   return () => {
     console.log(args, param);
   };
 }
 // fn函数被调用时，返回它内部的一个匿名函数，当这个匿名函数被返回时，js执行引擎会将它的上下文也就是fn函数中的内部属性和变量保存起来，等待被调用
-const fn1 = fn("xyz");
+const fn1 = fn('xyz');
 fn1();
 ```
 
@@ -138,7 +137,7 @@ add(-5, 6, Math.abs);
 ```javascript
 // 简单的map
 function mapCallback(value, index, array) {
-  console.log("mapCallback方法的参数", value, index, array);
+  console.log('mapCallback方法的参数', value, index, array);
   return value * value;
 }
 // 调用map函数
@@ -146,7 +145,7 @@ const newArr = [1, 2, 3].map(mapCallback);
 
 // 简单的filter
 function filterCallback(value, index) {
-  console.log("filterCallback方法的参数：", value, index);
+  console.log('filterCallback方法的参数：', value, index);
   return value > 2;
 }
 // 调用filter函数
@@ -168,7 +167,7 @@ function forEach(array, func) {
     func(array[i]);
   }
 }
-forEach([1, 2, 3], (item) => {
+forEach([1, 2, 3], item => {
   // 我们将item作为参数从forEach函数传递到当前函数
   console.log(item);
 });
@@ -241,14 +240,14 @@ countDownFrom(10);
 
 ```javascript
 const categories = [
-  { id: "animals", parent: null },
-  { id: "mammals", parent: "animals" },
-  { id: "cats", parent: "mammals" },
-  { id: "dogs", parent: "mammals" },
-  { id: "chihuahua", parent: "dogs" },
-  { id: "labrador", parent: "dogs" },
-  { id: "persian", parent: "cats" },
-  { id: "siamese", parent: "cats" },
+  { id: 'animals', parent: null },
+  { id: 'mammals', parent: 'animals' },
+  { id: 'cats', parent: 'mammals' },
+  { id: 'dogs', parent: 'mammals' },
+  { id: 'chihuahua', parent: 'dogs' },
+  { id: 'labrador', parent: 'dogs' },
+  { id: 'persian', parent: 'cats' },
+  { id: 'siamese', parent: 'cats' },
 ];
 ```
 
@@ -278,9 +277,9 @@ function makeTree(list, parent = null) {
   const obj = {};
   list
     // 使用filter筛选出对应的元素
-    .filter((item) => item.parent === parent)
+    .filter(item => item.parent === parent)
     // 把每一个元素的ID当成key赋给obj
-    .forEach((item) => (obj[item.id] = makeTree(list, item.id)));
+    .forEach(item => (obj[item.id] = makeTree(list, item.id)));
   return obj;
 }
 console.log(JSON.stringify(makeTree(categories), null, 2));
@@ -296,23 +295,23 @@ function loadImageCallback(url, callback) {
   let image = new Image();
   // 必须预留出一个用于返回失败信息的参数位置
   image.onload = () => callback(null, image);
-  image.onerror = () => callback("image load fail at " + url);
+  image.onerror = () => callback('image load fail at ' + url);
   image.src = url;
 }
 // 渲染方法
 function showImg(src) {
-  let imgEl = document.createElement("img");
+  let imgEl = document.createElement('img');
   imgEl.src = src;
   document.body.appendChild(imgEl);
 }
 // 业务处理（我们需要按顺序显示图片）
-loadImageCallback("img1src", (err, img1) => {
+loadImageCallback('img1src', (err, img1) => {
   if (err) throw err;
   addImg(img1.src);
-  loadImageCallback("img2src", (err, img2) => {
+  loadImageCallback('img2src', (err, img2) => {
     if (err) throw err;
     addImg(img2.src);
-    loadImageCallback("img3src", (err, img3) => {
+    loadImageCallback('img3src', (err, img3) => {
       if (err) throw err;
       addImg(img3.src);
     });
@@ -324,30 +323,37 @@ loadImageCallback("img1src", (err, img1) => {
 
 ```javascript
 // promise的图片加载程序
-function loadImagePromise() {
+function loadImagePromise(url) {
   return new Promise((res, rej) => {
     let image = new Image();
-    image.onload = () => res(image);
-    image.onerror = () => rej("image load fail at " + url);
+    image.onload = () => {
+      console.log(image.width, image.height, image.daba);
+      res(image);
+    };
+    image.onerror = () => rej('image load fail at ' + url);
     image.src = url;
   });
 }
 // 渲染方法
-function showImg(src) {
-  let imgEl = document.createElement("img");
+function addImg(src) {
+  let imgEl = document.createElement('img');
   imgEl.src = src;
   document.body.appendChild(imgEl);
 }
 // 通过promise来组合使用
 Promise.all([
-  loadImageCallback("img1src"),
-  loadImageCallback("img2src"),
-  loadImageCallback("img3src"),
+  loadImagePromise('http://vueshop.glbuys.com/userfiles/head/436406537.jpg'),
+  loadImagePromise(
+    'http://47.93.101.203/uploads/attach/2021/08/20210814/24cbd7553998072f096ef0d25aae97a1.jpg'
+  ),
+  loadImagePromise(
+    'http://47.93.101.203/uploads/attach/2021/09/20210907/470fc9aa26ad30336770fdbb7ff2773d.png'
+  ),
 ])
-  .then((images) => {
-    images.forEach((img) => addImg(img.src));
+  .then(images => {
+    images.forEach(img => addImg(img.src));
   })
-  .catch((err) => console.log(err));
+  .catch(err => console.log(err));
 ```
 
 ### 工具的使用：普通函数的柯里化
@@ -357,41 +363,41 @@ Promise.all([
 ```javascript
 const goods = [
   {
-    name: "长袖衬衫",
-    type: "衬衫",
+    name: '长袖衬衫',
+    type: '衬衫',
   },
   {
-    name: "短袖衬衫",
-    type: "衬衫",
+    name: '短袖衬衫',
+    type: '衬衫',
   },
   {
-    name: "长裤",
-    type: "裤子",
+    name: '长裤',
+    type: '裤子',
   },
   {
-    name: "休闲西服",
-    type: "外套",
+    name: '休闲西服',
+    type: '外套',
   },
 ];
 // 命令式编程
-const shirtFilter = goods.filter((item) => item.type === "衬衫");
-const trousersFilter = goods.filter((item) => item.type === "长裤");
+const shirtFilter = goods.filter(item => item.type === '衬衫');
+const trousersFilter = goods.filter(item => item.type === '长裤');
 
 // 经过简单抽象的实现
 const hasType = (type, item) => item.type === type;
-const shirtFilter = goods.filter((item) => hasType("衬衫", item));
+const shirtFilter = goods.filter(item => hasType('衬衫', item));
 
 // 将抽象出来的方法转换成柯里化函数
-const hasType = (type) => (item) => item.type === type;
-const shirtFilter = goods.filter(hasType("衬衫"));
+const hasType = type => item => item.type === type;
+const shirtFilter = goods.filter(hasType('衬衫'));
 ```
 
 我们在上面将筛选函数进行了手动柯里化，但这种方式不得不说有点不方便，我们需要手动去改变代码内容，所以，我们需要一个工具来实现柯里化的过程。
 
 ```javascript
 function curry(func) {
-  if (typeof func !== "function") {
-    throw Error("No function provided!");
+  if (typeof func !== 'function') {
+    throw Error('No function provided!');
   }
   return function curriedFn(...args) {
     // 判断通过...args传入的参数长度是否小于函数参数列表的长度
@@ -408,23 +414,23 @@ function curry(func) {
   };
 }
 const hasType = curry((type, item) => item.type === type);
-const shirtFilter = goods.filter(hasType("衬衫"));
+const shirtFilter = goods.filter(hasType('衬衫'));
 console.log(shirtFilter);
 ```
 
 我们在上面实现了一个将普通多元函数转换为一个柯里化函数的方法，这个方法有很多的实现方式，这里就不一一举例了，大家了解它实现的逻辑就行；而且，在一些优秀的工具库中比如 lodash 中也是有的。如果我们的业务中已经存在 lodash 类似的工具库，那么直接引用就行
 
 ```javascript
-import _ from "lodash";
+import _ from 'lodash';
 const hasType = _.curry((type, item) => item.type === type);
 ```
 
 ### 工具的使用：合并多个方法
 
 ```javascript
-const compose = (f, g) => (x) => f(g(x));
-var first = (arr) => arr[0];
-var reverse = (arr) => arr.reverse();
+const compose = (f, g) => x => f(g(x));
+var first = arr => arr[0];
+var reverse = arr => arr.reverse();
 var last = compose(first, reverse);
 last([1, 2, 3, 4, 5]);
 ```
@@ -479,15 +485,15 @@ nikita smith    pot          20   3
 
 ```javascript
 // 引入fs插件用以读取文件
-const fs = require("fs");
+const fs = require('fs');
 // 以utf8格式读取文件内容，注意，如果没有后面第二个参数，可能读回来的是一个Buffer类，里面都是些bytes，就是传说中的二进制数据。为了解决这个问题，我们需要告诉系统我们需要以什么格式来读文件
 const data = fs
   // 路径需要自己匹配，windows下不一样的
-  .readFileSync("src/pages/Functions/data.txt", "utf-8")
+  .readFileSync('src/pages/Functions/data.txt', 'utf-8')
   // 通过换行符将文本转换成一个数组
-  .split("\n")
+  .split('\n')
   // 通过replace方法把空格转换成逗号后再将行内容转换成数组
-  .map((line) => line.replace(/\s{2,}/g, ",").split(","))
+  .map(line => line.replace(/\s{2,}/g, ',').split(','))
   // 使用reduce来将其转换成一个对象
   .reduce((customers, line) => {
     // 用数组第一个值当成key然后将其赋成一个数组
@@ -521,8 +527,8 @@ console.log(data);
 function makeTree(list, parent) {
   let tree = {};
   list
-    .filter((item) => item.parent === parent)
-    .forEach((item) => (tree[item.code] = makeTree(list, item.code)));
+    .filter(item => item.parent === parent)
+    .forEach(item => (tree[item.code] = makeTree(list, item.code)));
   return tree;
 }
 console.log(JSON.stringify(makeTree()));

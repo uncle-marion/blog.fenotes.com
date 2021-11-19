@@ -104,7 +104,7 @@ Nvm 常用命令如下
 
 注意，上面的 <node version>表示的是 node 版本号，比如：
 
-```ssh
+```javascript
 nvm install 14.16.1 // 表示安装14.16.1版本的nodejs到你的系统
 nvm use 14.16.1 // 表示我们切换node环境到14.16.1版本
 ```
@@ -114,27 +114,27 @@ nvm use 14.16.1 // 表示我们切换node环境到14.16.1版本
 nvm 与 npm 或 yarn 一样，需要配置指定的库，如果没有配置，则可能会出现一些比如 timeout 等问题，所以我们需要配置安装路径到 taobao 的镜像库。
 找到你的 nvm 安装文件夹，打开 settings 文件夹，在文件最后输入：
 
-```ssh
+```javascript
 node_mirror: https://npm.taobao.org/mirrors/node/
 npm_mirror: https://npm.taobao.org/mirrors/npm/
 ```
 
 然后执行上面学到的 nvm list available 命令，检索远端服务器可安装的 node 版本。因为我们是学习，所以，就直接安装 nodejs 的最新稳定版。
 
-```ssh
+```javascript
 nvm install 14.16.1
 ```
 
 安装完成之后，在你的 powershell 中输入
 
-```ssh
+```javascript
 node - v;
 npm - v;
 ```
 
 如果都能正常显示版本号，证明你的 node 也安装完成了。如果不能正常显示版本号，那么可能是你的 node 配置未能自动生效，解决起来也很简单，执行下面的命令就行
 
-```ssh
+```javascript
 nvm use 14.16.1
 ```
 

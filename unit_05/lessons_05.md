@@ -49,7 +49,7 @@ react 项目
 
 startup.sh
 
-```c#
+```javascript
 #!/bin/bash -e
 # root
 ## 这里是我们的环境变量名称，$1对应的是product或test等等
