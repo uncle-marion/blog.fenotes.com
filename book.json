@@ -1,12 +1,11 @@
 {
   "title": "React Training",
   "author": "marion.lau@foxmail.com",
-  "description": "加入八维团队后，在带领学员梳理基础知识时总感觉有些力不从心的样子，于是抽时间，把所能想起来的一些内容梳理了一下，放在这里，做为以后上课时的索引",
+  "description": "前端开发人员应知应会，如果你想要入职前端这个行业，建议你将本书中的内容都过一遍，已经了解的知识就当是复习了，不了解的知识，特别是项目这块的，作为一个好的前端，应该都要知道要养成习惯。",
   "plugins": [
     "expandable-chapters",
     "prism",
     "-highlight",
-    "copy-code-button",
     "page-copyright",
     "custom-favicon"
   ],
@@ -18,15 +17,15 @@
     "page-copyright": {
       "isShowQRCode": false,
       "description": "modified at",
-      "signature": "marion.lau",
-      "wisdom": "Frontend Developer & overall web enthusiast",
+      "signature": "前端笔记",
+      "wisdom": "致所有想要进入前端开发行业的新人们  -- marion.lau",
       "format": "YYYY-MM-dd hh:mm:ss",
-      "copyright": "Copyright &#169; marion.lau",
+      "copyright": "Copyright &#169; marion.lau@foxmail.com",
       "timeColor": "#666",
       "copyrightColor": "#666",
       "utcOffset": "8",
       "style": "normal",
-      "baseUri": "http://www.fenoters.com",
+      "baseUri": "http://www.fenotes.com",
       "noPowered": true
     }
   },

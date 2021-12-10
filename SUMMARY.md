@@ -1,16 +1,16 @@
 # Summary
 
 - [前言](README.md)
-- 第一部分 React 项目从零开始
+- 第一部分 项目，从零开始
   - [lessons_01. 企业项目开发流程](unit_01/project_procedures.md)
-  - [lessons_02. 从零开始建立一个 React 项目](unit_01/create_react.md)
-  - [lessons_03. 版本管理工具](unit_01/git.md)
-  - [lessons_04. 项目构建与管理工具](unit_01/webpack.md)
-  - [lessons_05. 使用 customize-cra 管理 react 项目](unit_01/customize-cra.md)
-  - [lessons_06. axios 封装](unit_01/axios_package.md)
-  - [lessons_07. 防抖与节流](unit_01/utils_package.md)
-  - [lessons_08. storage 管理](unit_01/storage_package.md)
-  - [lessons_09. ESLint 与代码规范](unit_01/eslint.md)
+  - [lessons_02. 开发环境配置](unit_01/operating_environment.md)
+  - [lessons_03. 代码构建工具 Webpack](unit_01/webpack.md)
+  - [lessons_04. 使用 Customize Cra 管理 React 项目](unit_01/customize-cra.md)
+  - [lessons_05. 版本管理工具 Git](unit_01/git.md)
+  - [lessons_06. Axios 封装](unit_01/axios_package.md)
+  - [lessons_07. Storage 管理](unit_01/storage_package.md)
+  - [lessons_08. 防抖与节流](unit_01/utils_package.md)
+  - [lessons_09. 代码规范与 ESLint](unit_01/eslint.md)
 - 第二部分 React 基础回顾
   - [lessons_01. 组件与 state](unit_02/component_state.md)
   - [lessons_02. 组件嵌套与通信](unit_02/communication.md)
@@ -19,15 +19,17 @@
   - [lessons_06. 嵌套路由与权限管理](unit_02/route_auth.md)
   - [lessons_07. 高阶组件](unit_02/hoc.md)
   - [lessons_08. 传送门及其它](unit_02/portals.md)
-  - [lessons_09. JSX 与虚拟 DOM](unit_01/dom_jsx.md)
-  - [lessons_09. DIFF 与 FIBER](unit_01/diff_fiber.md)
+  - [lessons_09. JSX 与虚拟 DOM](unit_02/dom_jsx.md)
+  - [lessons_09. DIFF 与 FIBER](unit_02/diff_fiber.md)
 - 第三部分 React 状态管理
-  - [lessons_01. 什么是 Redux](unit_03/lessons_01.md)
-  - [lessons_02. react-redux](unit_03/lessons_02.md)
-  - [lessons_03. redux 开发工具与 store 配置](unit_03/lessons_03.md)
+  - [lessons_01. 什么是 Redux](unit_03/redux.md)
+  - [lessons_02. react-redux](unit_03/react-redux.md)
+  - [lessons_03. redux 开发工具与 store 配置](unit_03/set_config.md)
   - [lessons_04. redux 中间件](unit_03/lessons_04.md)
   - [lessons_05. redux 规范](unit_03/lessons_05.md)
   - [lessons_06. redux persist](unit_03/lessons_06.md)
+  - [lessons_07. redux-saga](unit_03/redux_saga.md)
+  - [lessons_08. dva 与 umi](unit_03/dva_umi.md)
 - 第四部分 React 项目实战-第三方组件库
   - [lessons_01. Antd Modal](unit_04/lessons_01.md)
   - [lessons_02. Antd Form](unit_04/lessons_02.md)
@@ -79,3 +81,6 @@
   - [lessons_04. 微信支付](unit_10/lessons_03.md)
 - 第十二部分 把 Vue 和小程序拉出来遛遛
 - 第十三部分 完整复习
+- 附件
+  - [项目技术方案](enclusore/tech-scheme.md)
+  - [跨域](enclusore/cross-domin.md)

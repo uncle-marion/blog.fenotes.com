@@ -1,82 +1,35 @@
-> 平安蜀黍的 react 实战课程 > 第一部分 > 从零开始建立一个 React 项目
+> Marion 前端教程 > 前端开发应知应会 > 第一部分 > 项目的建立
 
-### 从零开始新建一个项目
+### 一、准备开发环境
 
-#### 一、准备：开发环境的检查
+### 使用 react 脚手架创建项目
 
-- 在开始一切操作之前, 请伪装一下你的专业性，**工作路径中的目录名应该都是由英文单词构成且符合项目语义**！！然后，将你的工作文件夹定在硬盘根目录 c 盘或 d 盘，并将其命名为 Example 或 Workspace。以尽量避免我们在开发的过程中会遇上一些因为中文路径导致的奇怪且棘手的错误。
+到这里，我们最基本的环境大致是 ok 了，有了前端的运行环境 nodejs，有了包管理工具 npm 和 yarn，可以正式开始创建 react 项目了。
 
-- 检查你的 nodejs 的版本号
-
-```javascript
-node - v;
-```
-
-- 检查你的 npm 的镜像地址
+#### 1. 使用 create-react-app 脚手架创建项目
 
 ```javascript
-npm config list
+// 全局安装一个create-react-app的脚手架工具
+npm install -g create-react-app
 
-// 如果显示 metrics-registry = "http://registry.npmjs.org/"
-// 执行 npm config set registry https://registry.npm.taobao.org
-```
+// 使用脚手架创建你的项目
+create-react-app 你的项目名
 
-- 检查你的 yarn 的镜像地址
-
-```javascript
-yarn config list
-
-// 同样的, 如果发现镜像不在taobao的, 修改它
-// 执行 yarn config set registry https://registry.npm.taobao.org
-```
-
-#### 二、使用 react 脚手架创建项目
-
-- 使用 npx create-react-app 来创建项目. 请注意，这里是 npx 而不是 npm; npx 是 npm 的一个新工具，它可以将远程 Node 项目拉回到本地临时文件里运行，完成后再删除掉这个临时文件。它最大的好处是减少了我们全局安装某些脚手架的操作。
-
-- 如下图，这个命令与你之前通过全局安装 create-react-app 然后再创建项目是一样的概念, 只是 npx 是执行了下面这三个步骤, 这样我们的硬盘里就不需要一直保留着 create-react-app 这个脚手架。
-
-```javascript
-npm install -g create-react-app  // 全局安装一个create-react-app的脚手架工具
-create-react-app 你的项目名  // 创建你的项目
-npm uninstall -g create-react-app // 从全局环境删除掉create-react-app脚手架工具
-```
-
-实例如下：
-
-```javascript
-// 创建项目, 注意你的项目名，必须是英文字母开头可以包含数字和下划线，不允许出现其它字符
+// 也可以这样创建，注意这里用的是npx而不是npm
 npx create-react-app 你的项目名
-
-// 如果你要建的是一个ts项目, 在后面加上--template typescript 后缀
-npx create-react-app 你的项目名 --template typescript
-
-// 项目创建完成后, 通过终端进入你的项目文件夹
-cd 你的项目名
 ```
 
-#### 三、等待项目创建完成
+#### 三、学习 npm
 
-npm 是我们平常开发时用来管理项目依赖的一个工具，它有很多的命令，我们在这里需要记下一些常用命令：
+npm 是我们平常开发时用来管理项目依赖的一个工具，它有很多的命令，我们在这里需要记下一些**常用命令**：
 
 - npm 常用命令与参数
 
 ```javascript
-npm -v                        // 查看 npm 版本号
-npm config list               // 查看 npm 配置
-npm init                      // 在当前目录下创建一个 package.json 文件
 
-npm install <依赖名> || npm i  // 安装依赖，以下都以别名i为准
-npm i <依赖名>[@版本号]         // 安装指定版本号的依赖，注意，这种方式会安装当前大版本的最高版本
-npm i <依赖名> -S              // 安装依赖到项目生产环境
-npm i <依赖名> -D              // 安装依赖到项目开发环境
-npm i <依赖名> -g              // 安装依赖到本地代码库
-
-npm uninstall <依赖名>         // 卸载依赖
-npm cache clean               // 清除项目依赖缓存
 ```
 
-- npm 因为国内的网络问题，可能需要切换代码仓库
+- npm 因为国内的网络问题，可能需要切换镜像地址
 
 ```javascript
 npm get registry                                         // 获取代码仓库的镜像地址
@@ -85,14 +38,17 @@ npm config set registry https://registry.npm.taobao.org  // 切换仓库到 taob
 npm config set registry https://registry.npmjs.org       // 切换仓库到 npm
 ```
 
-- 也可以使用 nrm 来进行仓库管理
+- 推荐使用 nrm 来进行仓库管理
 
 ```javascript
-npm i -g nrm                                              // 全局安装 npm 镜像管理工具 nrm
-nrm ls                                                    // 获取代码仓库的镜像
-nrm test                                                  // 测试代码仓库的响应时间
-nrm use npm                                               // 切换仓库到 npm
-nrm use taobao                                            // 切换仓库到 taobao
+// 全局安装nrm工具
+npm i -g nrm
+```
+
+安装完成后可以使用下面这些命令来管理镜像库
+
+```javascript
+
 ```
 
 - 我们也可以使用 Yarn 管理工具，它是为了弥补 npm 的一些缺陷而开发出来的新的 js 包管理工具，它使用了并行安装的方式所以比 npm 更快；它有离线下载模式，也就是说当某个依赖曾经被安装过，再次安装时会从本地缓存库中下载等很多的优点。
@@ -142,10 +98,7 @@ npm i -S antd
 ```javascript
 // 以下的内容只在开发环境依赖, 所以我们通过-D指令将它们安装在devDependencies里面
 // 所谓的开发环境依赖，表示这个代码仅在开发或打包时需要，项目打包完成后就不再需要了
-// reactAppRewired与customize-cra是比较重要的插件, 一定要安装
-// react-app-rewired是让你在不执行"npm run eject"指令也能改变内置的webpack中的配置的一个插件；
-// customize-cra 是依赖于 react-app-rewired 的库, 通过 config-overrides.js 来修改底层的 webpack, babel配置
-npm i -D react-app-rewired customize-cra
+
 // antd的按需加载, 无论你是使用antd还是antd-mobile, 都需要安装
 npm i -D babel-plugin-import
 // 安装对于less的支持
@@ -363,9 +316,12 @@ ReactDOM.render(
 
 检查代码没有问题后就可以启动项目了，在你的终端执行 npm start 或 yarn start: 好了, 现在我们实现了一个最简易的网站, 那么我们就来总结一下，今天学习的内容：
 
-#### 课后问题
+---
+
+### 课后问题
 
 - 从零开始一个 React 项目的流程应该是怎样的？
 - 不运行 npm run eject 的情况下，怎样定制我们的 webpack 插件？
 - 一个完整的项目应该包含有哪些目录和文件？
+- npm 常见的命令有哪些？怎么修改镜像地址？
 - 一个完整的 React 项目应该安装哪些依赖？哪些是生产依赖？哪些是开发依赖？

@@ -37,14 +37,12 @@
 }
 
 .markdown-section blockquote {
-  background: #f5f5f5;
+  background: rgba(255, 255, 255, 0.5);
   padding: 10px 15px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  border-left: 4px solid #998;
+  border: 1px solid #fff;
   font-size: 13px;
   color: #333;
-  box-shadow: 0px 3px 5px rgb(0 0 0 / 50%);
+  box-shadow: 0px 0px 2px inset rgb(0 0 0 / 10%);
 }
 
 .markdown-section p:last-child {
@@ -65,19 +63,20 @@
 
 :not(pre) > code[class*='language-'],
 pre[class*='language-'] {
-  border-radius: 3px;
-  background: #2d2d2d;
-  padding-top: 24px;
+  border-radius: 5px;
+  background: #000;
   border: 1px solid #ccc;
 }
 
 .markdown-section blockquote,
-.markdown-section dl,
-.markdown-section ol,
 .markdown-section p,
-.markdown-section table,
-.markdown-section ul {
+.markdown-section table {
   text-indent: 2em;
+}
+.markdown-section dl p,
+.markdown-section ol p,
+.markdown-section ul p {
+  text-indent: 0;
 }
 .markdown-section blockquote img,
 .markdown-section dl img,
@@ -86,4 +85,26 @@ pre[class*='language-'] {
 .markdown-section table img,
 .markdown-section ul img {
   margin-left: -2em;
+}
+.footer__author--normal,
+.footer__quote--normal {
+  text-indent: 0 !important;
+}
+.footer__author--normal {
+  padding-bottom: 0 !important;
+}
+.footer__quote--normal {
+  margin-top: 3px !important;
+}
+.footer__main__paragraph--normal {
+  margin: 5px 0 !important;
+}
+.footer__main--normal {
+  bottom: -4px !important;
+}
+.footer__description--normal {
+  margin: 0 !important;
+}
+.footer__author--normal {
+  border-bottom-color: #999 !important;
 }

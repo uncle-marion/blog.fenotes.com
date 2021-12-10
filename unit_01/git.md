@@ -1,6 +1,26 @@
-> Marion 的 react 实战课程 > 第五部分 > GIT 版本管理工具的应用
+> Marion 前端教程 > 前端开发应知应会 > 第一部分 > GIT 版本管理工具的应用
 
-### GIT 的安装
+### 什么是版本管理工具？
+
+版本管理工具是一种通过一个版本号来记录一个或多个文件内容变化，便于将来查阅特定版本修订情况以及回溯的系统。
+
+有了它我们就可以将某个文件回溯到之前的状态，甚至将整个项目都回退到过去某个时间点的状态，可以比较文件的变化细节，查出最后是谁修改了哪个地方，从而找出导致怪异问题出现的原因，又是谁在何时报告了某个功能缺陷等等。
+
+使用版本控制系统通常还意味着，就算你乱来一气把整个项目中的文件改的改删的删，你也照样可以轻松恢复到原先的样子。 但额外增加的工作量却微乎其微。
+
+### 常见的版本管理工具
+
+VSS Visual Source Safe， 微软提供的一个版本工具，没有用过
+
+CVS Concurrent Versions System，与 SVN 是同一家公司出品的，早期用的是这个，后来改用了 SVN
+
+SVN CollabNet Subversion SVN 是在 CVS 的基础上，由 CollabNet 提供开发的，也是开源工具，应用比较广泛。他修正了 cvs 的一些局限性，适用范围同 cvs，目前有一些基于 SVN 的第三方工具，如 TortoiseSVN，是其客户端程序，使用的也相当广泛.在权限管理，分支合并等方面做的很出色，他可以与 Apache 集成在一起进行用户认证。
+
+不过在权限管理方面目前还没有个很好用的界面化工具，SVNManger 对于已经使用 SVN 进行配置的项目来说，基本上是无法应用的，但对于从头开始的项目是可以的，功能比较强大，但是搭建 svnManger 比较麻烦。是一个跨平台的软件，支持大多数常见的操作系统。作为一个开源的版本控制系统，Subversion 管理着随时间改变的数据。这些数据放置在一个中央资料档案库中。这个档案库很像一个普通的文件服务器，不过它会记住每一次文件的变动。这样你就可以把档案恢复到旧的版本，或是浏览文件的变动历史。Subversion 是一个通用的系统，可用来管理任何类型的文件，其中包括了程序源码。
+
+GIT Git 是一个开源的分布式版本控制系统，用以有效、高速的处理从很小到非常大的项目版本管理。Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。Torvalds 开始着手开发 Git 是为了作为一种过渡方案来替代 BitKeeper，后者之前一直是 Linux 内核开发人员在全球使用的主要源代码工具。开放源码社区中的有些人觉得 BitKeeper 的许可证并不适合开放源码社区的工作，因此 Torvalds 决定着手研究许可证更为灵活的版本控制系统。尽管最初 Git 的开发是为了辅助 Linux 内核开发的过程，但是我们已经发现在很多其他自由软件项目中也使用了 Git。例如，最近就迁移到 Git 上来了，很多 Freedesktop 的项目也迁移到了 Git 上。
+
+### Git 的安装
 
 ##### windows 客户端：
 
@@ -18,23 +38,31 @@ brew install git
 
 **一般来说，我们使用 mac 的电脑时都会有一个 xcode，而 xcode 都是自带 git 的，所以你打算安装 git 之前，先在你的终端打印一下 git 的版本号试试是否已经有了 git?**
 
+如果你的系统没有 brew，就需要先安装 brew
+
+```javascript
+//
+```
+
 ### 账号的申请与配置(以码云为例的申请)
 
 这里需要注意的是，企业一般都会有自己的 gitlab(gitlab 是一个 git 库管理软件)，git 账号是不需要你自己申请的，一般进入公司后会给你一个公司的邮箱和密码，你的 leader 会给你的邮箱分配权限。如果在需要登陆 git 库的时候，出现没有账号或无法登陆或报权限错误，那么都可能是你的 leader 忘记给你申请权限，找他询问一下就行了。
 
 ### 注册你的电脑信息到线上仓库
 
-##### 1. 生成公钥
+#### 1. 生成公钥
+
+进入公司，拿到 git 项目的第一步就是生成公钥，有了公钥你才有上传代码的权限。
 
 ```javascript
 ssh-keygen -t rsa -C '你在码云注册的邮箱地址'
 ```
 
-##### 2. 生成的公钥在哪里？
+#### 2. 生成的公钥在哪里？
 
 找你的用户目录下，.ssh 文件夹，id_rsa.pub 文件，复制里面的内容
 
-##### 3. 保存公钥
+#### 3. 保存公钥
 
 鼠标移至码云右上角头像位置，在下拉列表中选择设置，在新打开的页面中右侧菜单项里寻找 SSH 公钥，点击后将复制的公钥粘贴至公钥输入框中并点击确定
 
@@ -111,7 +139,7 @@ git remote add origin <你的项目地址>
 ##### 4. 此步骤为非正常步骤，如果发现因为版本问题有无法 push 也无法 pull，那么极有可能是你新建的仓库版本与线上版本不一致，因为是初始化的项目，所以我一般都是直接清空远程仓库来解决这种问题。但不排除有时候远程项目中存在大量的代码不能清除，所以我们就必须强行合并（此步慎重，不排除有丢代码的可能，曾遇到过，但的确不记得是误操作还是怎么回事，导致线上其他同事的代码被我扔掉了）：
 
 ```javascript
-git pull origin master --allow-unrelated-histories // 这里的意思是强行合并不相关的版本历史, 用这种方式合并的代码，需要自行寻找并解决冲突
+git pull origin master --allow-unrelated-histories // 这里的意思是强行合并不相关的版本历史， 用这种方式合并的代码，需要自行寻找并解决冲突
 ```
 
 ##### 5. 如果有任何冲突，在解除所有冲突以后执行
@@ -216,16 +244,16 @@ git log --pretty=format:"%h %s" --graph // 以ascii图片展示的方式展开�
   name = marion.lau.z
   email = marion.lau.z@gmail.com
 [alias]
-  co = checkout                             # checkout, 切换分支
-  st = status                               # status, 查看是否有新的更改
-  ci = commit                               # commit, 将暂存区中的版本提交到本地库中
-  br = branch                               # branch, 查看本地库分支情况
-  ba = branch -a                            # branch -a, 查看远程库分支情况
-  df = diff                                 # diff, 查看代码修改内容
-  pr = pull --rebase                        # pull --rebase, 从远程库中同步并检查冲突情况
-  acm = !git add . && git commit -m         # add && commit, 将本地所有更改发布到暂存区，然后提交到本地库中
-  cox = !git checkout . && git clean -xdf   # checkout && clean -xdf, 放弃所有本地修改，返回到上一次commit之前的状态
-  clg = reflog                              # reflog, 查看所有分支的所有操作记录，包括被删除的commit和reset操作
+  co = checkout                             # checkout， 切换分支
+  st = status                               # status， 查看是否有新的更改
+  ci = commit                               # commit， 将暂存区中的版本提交到本地库中
+  br = branch                               # branch， 查看本地库分支情况
+  ba = branch -a                            # branch -a， 查看远程库分支情况
+  df = diff                                 # diff， 查看代码修改内容
+  pr = pull --rebase                        # pull --rebase， 从远程库中同步并检查冲突情况
+  acm = !git add . && git commit -m         # add && commit， 将本地所有更改发布到暂存区，然后提交到本地库中
+  cox = !git checkout . && git clean -xdf   # checkout && clean -xdf， 放弃所有本地修改，返回到上一次commit之前的状态
+  clg = reflog                              # reflog， 查看所有分支的所有操作记录，包括被删除的commit和reset操作
   rh = reset --hard HEAD^                   # 回退至上一个版本
   rs = reset --hard                         # 回退至指定版本号
 
