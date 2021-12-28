@@ -216,16 +216,16 @@ class ScrollingList extends React.Component {
 
 > #### 挂载阶段:
 >
-> - constructor: React 在这里完成对数据的初始化，它接受两个参数：props 和 context，当想在函数内部使用这两个参数时，需使用 super()传入这两个参数
-> - render: React 在这里将你写入的 JSX 生成一个虚拟 Dom 树，然后渲染到页面中；
-> - componentDidMount: 组件第一次渲染完成，这个时候 DOM 节点已经生成，我们可以在这里以 refs 的方式获取元素或者调用 ajax 请求，返回数据 setState 后组件会重新渲染
+> - constructor: (kansizhuakete)React 在这里完成对数据的初始化，它接受两个参数：props 和 context，当想在函数内部使用这两个参数时，需使用 super()传入这两个参数
+> - render: (runande)React 在这里将你写入的 JSX 生成一个虚拟 Dom 树，然后渲染到页面中；
+> - componentDidMount(kanponentedidemonte): 组件第一次渲染完成，这个时候 DOM 节点已经生成，我们可以在这里以 refs 的方式获取元素或者调用 ajax 请求，返回数据 setState 后组件会重新渲染
 >
 > #### 更新阶段:
 >
-> - getDerivedStateFromProps: 它提供了两个参数: nextProps 与 prevState;旧版本的 componentWillReceiveProps 方法需要在这里判断前后两个 props 是否相同，如果不同再将新的 props 更新到相应的 state 上去，这样就破坏了 state 数据的单一数据源特性，导致组件状态变得不可控；在这个方法中，我们将不再有权访问 this.props,而只能通过比较 nextProps 与 prevState 的值来判断是否需要更新当前的 state。
+> - getDerivedStateFromProps(gaitedewaidesidetefomupopos): 它提供了两个参数: nextProps 与 prevState;旧版本的 componentWillReceiveProps 方法需要在这里判断前后两个 props 是否相同，如果不同再将新的 props 更新到相应的 state 上去，这样就破坏了 state 数据的单一数据源特性，导致组件状态变得不可控；在这个方法中，我们将不再有权访问 this.props,而只能通过比较 nextProps 与 prevState 的值来判断是否需要更新当前的 state。
 > - shouldComponentUpdate: 它的功能主要是用于优化，它提供了两个参数: nextProps 与 nextState; 在正常的 react 渲染流程中，当我们的父组件 state 发生变化时，无论是否影响到了当前组件的 props 都会造成当前组件的重新渲染。shouldComponentUpdate 可以让我们避免这种情况。同时，react 也给我们推荐了一种避免手动编写 shouldComponentUpdate 函数的方法就是使用 PureComponent
 > - render: 这里就是上面挂载阶段的 Render 方法，只不过在每一次组件更新时，React 会在这里通过其 diff 算法比较更新前后的新旧 DOM 树，比较以后，找到最小的有差异的 DOM 节点，并重新渲染；
-> - getSnapshotBeforeUpdate: 生命周期走到这里，代表着整个 DOM 已经生成完成但还没有渲染到页面中。我们可以在这里读取当前某个 DOM 元素的状态，并在 componentDidUpdate 中进行相应的处理。
+> - getSnapshotBeforeUpdate(gaitesinapushoutebifoapudete): 生命周期走到这里，代表着整个 DOM 已经生成完成但还没有渲染到页面中。我们可以在这里读取当前某个 DOM 元素的状态，并在 componentDidUpdate 中进行相应的处理。
 > - componentDidUpdate: 与挂载阶段的 componentDidMount 几乎一致，唯一的区别是 componentDidMount 只会在组件首次渲染时被触发，而页面每次被更新后都会触发 componentDidUpdate
 >
 > #### 卸载阶段:

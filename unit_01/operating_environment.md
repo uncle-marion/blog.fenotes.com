@@ -8,7 +8,7 @@
 
 ### 配置一个养眼的代码环境
 
-这块不强制安装，以后有时间可以自己研究[附件：windows 下安装 iterm](./install-iterm.md)
+这块不强制安装，以后有时间可以自己研究[附件：windows 下安装 iterm](../enclusore/install-iterm.md)
 
 ### node 版本管理工具 nvm
 

@@ -285,6 +285,12 @@ override(config => {
 ```javascript
 const path = require('path');
 
+// 环境标识（后期可能会被挪到一个独立的全局变量声明文件中，以避免多处重复声明）
+const DEV = 'development';
+const PROD = 'production';
+// 获取接口域名及端口等信息
+const apiBaseUrl = process.env.REACT_APP_API;
+
 const {
   override,
   addWebpackAlias, // 用于配置别名的
@@ -312,7 +318,7 @@ function addProxy() {
         // 拦截器（拦截所有以"/api"开头的http请求）
         '/api': {
           // 配置一个base url
-          target: 'http://data.fenotes.com/mock/608e03fd4025392aa6750b8f',
+          target: apiBaseUrl,
           // 是否修改源，它决定我们是否跨域
           changeOrigin: true,
           // 是否重写我们的拦截关键字

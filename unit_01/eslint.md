@@ -1,37 +1,38 @@
-> Marion 前端教程 > 前端开发应知应会 > 第一部分 > 代码规范与ESLint
+> Marion 前端教程 > 前端开发应知应会 > 第一部分 > 代码规范与 ESLint
 
 ## 为什么要推行代码规范
 
-根源仍然是来自我们第一天课程中的内容，在大力地提倡前端工程化的今天，在多人共同开发一个项目甚至是一个模块的现在，个性化的代码已经成为严重影响团队开发的问题了；比如语义化这块，有使用各种单字母作为变量或方法的名字，或使用拼音作为变量的方法或名字，这些都给我们后续的项目维护造成了极大的阻碍。
+根源仍然是来自我们第一天课程中的内容，在大力地提倡前端工程化的今天，在多人共同开发一个项目甚至是一个模块的现在，个性化的代码已经成为严重影响团队开发的问题了；比如语义化这块，有使用各种单字母作为变量或方法的名字，或使用拼音作为变量的方法或名字；导致我们在维护时不只要在各种逻辑之间跳来跳去，同时还要想办法去理解这些变量名所代表的意义，这无疑会给我们后续的项目维护造成极大的阻碍。
 
 ## 基本的规范
 
-为了让大家养成一个良好的代码习惯，我将之前在瑞幸定制的一套规范拿出来给大家分享一下，这套规范主要参考了国外大厂[Airbnb(爱彼迎)](https://github.com/airbnb/javascript)的规范，目前国内各一线大厂甚至包括ESLint等大多数代码规范工具都是在这套规范上进行修改和完善出来的。我这边参考了原文中的部分，去除了一些感觉不是很重要的内容，期望大家能在从今往后的开发工作中养成一个良好的代码习惯。
-
+为了让大家养成一个良好的代码习惯，我将之前在瑞幸定制的一套规范拿出来给大家分享一下，这套规范主要参考了国外大厂[Airbnb(爱彼迎)](https://github.com/airbnb/javascript)的规范，目前国内各一线大厂的代码规范甚至包括 react 的默认 ESLint 规则都是参考这套规范，然后在这套基础上逐渐完善和调整出来的。我这边参考了原文中的部分和瑞幸特有的一些规则，同时去除了一些感觉不是很重要的规则(不会影响代码提交)，期望大家能在从今往后的开发工作中养成一个良好的代码习惯。
 
 ### 命名规则
 
 - 无论何时, 不要使用单字母来声明变量或函数, 它们的命名应当有一定的描述性
-- 使用驼峰式来命名对象、函数和实例, 使用帕斯卡式命名构造函数或类
+- 使用驼峰式来命名对象、函数和实例, 使用帕斯卡式命名（大驼峰）构造函数或类
 - 不要再使用"\_"开头来定义私有属性, 因为这种约束没有意义, 另外, 也是因为在最新的 ECMA 中已经定义了私有属性修饰符：#
 
 ```javascript
 // #代表的是私有属性, 目前在chrome 浏览器中已经实现
 class User {
-  // 声明私有属性并赋值
-  #id = 'xyz';
-  constructor(name) {
-    this.name = name;
+  // 声明私有属性
+  #name;
+  #id;
+  constructor(name, id = 123) {
+    this.#name = name;
+    this.#id = id;
   }
-  getUserId() {
+  getUserId(name, id) {
     // 内部可以打印
-    console.log(this.#id);
-    return this.#id;
+    console.log(this.#id, this.#name);
+    return [this.#id === id, this.#name === name];
   }
 }
 const tom = new User('tom');
-// 外部不行的
-console.log(tom.getUserId());
+console.log(tom.getUserId('tom', 123));
+console.log(tom.#name, tom.#id);
 ```
 
 - 如果在你的函数或回调中找不到 this 了, 不要使用 self/that 来保存 this, 而是使用箭头函数
@@ -56,10 +57,18 @@ function foo() {
 - 如果你的文件只导出一个类, 那么你的文件名应该与你的类名完全一致, 而在引用时也应该完全一致
 
 ```javascript
-class CheckBox {
+// bad
+export default class CheckBox {
   // ...
 }
-export default CheckBox;
+// ...
+import CheckBox from './checkBox';
+
+// good
+export default class CheckBox {
+  // ...
+}
+// ...
 import CheckBox from './CheckBox';
 ```
 
@@ -180,7 +189,7 @@ function sayHi(name) {
 // Object对象上的prototype, 那么为什么一定要用字面量来创建对象呢？因为{}是字面量, 可
 // 以立即求值, 而new Object()本质上是方法（只不过这个方法是内置的）调用, 既然是方法调
 // 用, 就涉及到在proto链中遍历该方法, 当找到该方法后, 又会生产方法调用必须的堆栈信息,
-// 方法调用结束后, 还要释放该堆栈
+// 方法调用结束后, 还要释放该堆栈，一番折腾下来，它的资源占用要远远大于字面量声明
 const item = {};
 ```
 
@@ -203,6 +212,22 @@ const superman = {
   },
 };
 ```
+
+##### 注： Javascript 关键字与保留字
+
+abstract,arguments,boolean,break,byte;
+case,catch,char,class*,const;
+continue,debugger,default,delete,do;
+double,else,enum*,eval,export*;
+extends*,false,final,finally,float;
+for,function,goto,if,implements;
+import*,in,instanceof,int,interface;
+let,long,native,new,null;
+package,private,protected,public,return;
+short,static,super*,switch,synchronized;
+this,throw,throws,transient,true;
+try,typeof,var,void,volatile;
+while,with,yield;
 
 - 正常情况下, 在同一个位置声明你所有的属性, 哪怕是动态的属性名称
 
@@ -246,52 +271,18 @@ const atom = {
 };
 ```
 
-- 声明对象属性时, 如果有外部已赋值的属性时, 请使用简写, 并为其分组
-
-```javascript
-const anakinSkywalker = "Anakin Skywalker";
-function lukeSkywalker() {
-  console.log(this);
-};
-// 不好的例子, 明显的代码冗余了
-const obj = {
-  episodeOne: 1,
-  twoJedisWalkIntoACantina: 2,
-  lukeSkywalker = lukeSkywalker,
-  episodeThree: 3,
-  mayTheFourth: 4,
-  anakinSkywalker = anakinSkywalker,
-};
-
-// 好的例子, 但没有分组, 我们不能一眼看出来哪些属性是简写
-const obj = {
-  episodeOne: 1,
-  twoJedisWalkIntoACantina: 2,
-  lukeSkywalker,
-  episodeThree: 3,
-  mayTheFourth: 4,
-  anakinSkywalker,
-};
-
-// 最好的写法, 属性名简写, 同时还对简写属性进行了分组, 可以很清晰地看出来哪些属性是简写的
-const obj = {
-  lukeSkywalker,
-  anakinSkywalker,
-  episodeOne: 1,
-  twoJedisWalkIntoACantina: 2,
-  episodeThree: 3,
-  mayTheFourth: 4,
-};
-```
-
 ### 函数
 
 - 如非必要, 请使用函数声明来声明函数
 
 ```javascript
-// 因为函数声明是可命名的, 所以他们在调用栈中更容易被识别。此外,
+// 因为函数本身是可命名的, 所以他们在调用栈中更容易被识别。此外,
 // 函数声明会把整个函数提升（hoisted）, 而函数表达式只会把函数的
 // 引用变量名提升。这条规则使得箭头函数可以取代函数表达式
+// bad
+const foo = function () {};
+
+// good
 function foo() {}
 ```
 
@@ -327,7 +318,7 @@ function handleThings(opts = {}) {
 - 无论是什么环境, 当你想要获取一个对象内的属性时, 请一定要使用解构, 因为解构可以减少临时引用属性
 
 ```javascript
-// 代码冗余, 关键是临时引
+// 代码冗余, 关键是会导致在栈中生成两个临时引用属性
 function getFullName(user) {
   const firstName = user.firstName;
   const lastName = user.lastName;
@@ -342,6 +333,7 @@ function getFullName(obj) {
 }
 
 // best
+// 直接在参数中解构，完全没有了临时引用属性
 function getFullName({ firstName, lastName }) {
   return `${firstName} ${lastName}`;
 }
@@ -382,19 +374,31 @@ function processInput(input) {
 const { left, right } = processInput(input);
 ```
 
-## 什么是ESLint
+## 什么是 ESLint
 
-代码检查是一种静态的分析，常用于寻找有问题的模式或者代码，并且不依赖于具体的编码风格。对大多数编程语言来说都会有代码检查，一般来说编译程序会内置检查工具。而JavaScript 作为一个**动态**的**弱类型**的**解析型**脚本语言，因为不需要通过编译就可以在浏览器中运行，这就导致它可以在编写完成后不经任何检测就发布到执行环境，然后只能通过在执行环境中不断调试来解决各种问题和错误。
+代码检查是一种静态的分析，常用于寻找有问题的模式或者代码，并且不依赖于具体的编码风格。对大多数编程语言来说都会有代码检查，一般来说编译程序会内置检查工具。而 JavaScript 作为一个**动态**的**弱类型**的**解析型**脚本语言，因为不需要通过编译就可以在浏览器中运行，这就导致它可以在编写完成后不经任何检测就发布到执行环境，然后只能通过在执行环境中不断调试来解决各种问题和错误。
 
-ESLint是一个用来识别 ECMAScript/JavaScript 并且按照内置规则给出报告的代码检测工具，我们可以用它来解决这种尴尬的问题，它可以在我们编写JavaScript代码时提示我们一些语法和规范上的问题，而不是等到执行的过程中才发现。
+ESLint 是一个用来识别 ECMAScript/JavaScript 并且按照内置规则给出报告的代码检测工具，我们可以用它来解决这种尴尬的问题，它可以在我们编写 JavaScript 代码时提示我们一些语法和规范上的问题，而不是等到执行的过程中才发现。
 
-## ESLint的特点
+## ESLint 的特点
 
-* 内置规则和自定义规则共用一套规则 API。
-* 内置的格式化方法和自定义的格式化方法共用一套格式化 API。
-* 额外的规则和格式化方法能够在运行时指定。
-* 规则和对应的格式化方法并不强制捆绑使用。
-* 每条规则都是各自独立的，可以根据项目情况选择开启或关闭。
-* 用户可以将结果设置成警告或者错误。
-* ESLint 并不推荐任何编码风格，规则是自由的。
-* 所有内置规则都是泛化的。
+- 内置规则和自定义规则共用一套规则 API。
+- 内置的格式化方法和自定义的格式化方法共用一套格式化 API。
+- 额外的规则和格式化方法能够在运行时指定。
+- 规则和对应的格式化方法并不强制捆绑使用。
+- 每条规则都是各自独立的，可以根据项目情况选择开启或关闭。
+- 用户可以将结果设置成警告或者错误。
+- ESLint 并不推荐任何编码风格，规则是自由的。
+- 所有内置规则都是泛化的。
+
+---
+
+### 课后作业
+
+- 为什么要推行代码规范？代码规范化有什么好处？
+- EsLint 是用来做什么的？它有哪些特性？
+- 列举你之前公司里用到的代码规范，不少于 5 个
+- 什么是变量提升？什么是函数声明提升？
+- const 与 let 和 var 具体的区别是什么？
+- 什么是暂时性死区？怎样解决？
+- 什么是对象字面量？什么是数组字面量？使用它们有什么好处？

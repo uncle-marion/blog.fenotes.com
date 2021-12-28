@@ -15,11 +15,10 @@
   - [lessons_01. 组件与 state](unit_02/component_state.md)
   - [lessons_02. 组件嵌套与通信](unit_02/communication.md)
   - [lessons_03. 生命周期与组件优化](unit_02/life_cycle.md)
-  - [lessons_04. 路由管理与路由守卫](unit_02/route_manage.md)
-  - [lessons_06. 嵌套路由与权限管理](unit_02/route_auth.md)
+  - [lessons_04. 路由与路由懒加载](unit_02/route_manage.md)
+  - [lessons_06. 嵌套路由与路由守卫](unit_02/route_auth.md)
   - [lessons_07. 高阶组件](unit_02/hoc.md)
-  - [lessons_08. 传送门及其它](unit_02/portals.md)
-  - [lessons_09. JSX 与虚拟 DOM](unit_02/dom_jsx.md)
+  - [lessons_08. JSX 与虚拟 DOM](unit_02/dom_jsx.md)
   - [lessons_09. DIFF 与 FIBER](unit_02/diff_fiber.md)
 - 第三部分 React 状态管理
   - [lessons_01. 什么是 Redux](unit_03/redux.md)
@@ -82,5 +81,7 @@
 - 第十二部分 把 Vue 和小程序拉出来遛遛
 - 第十三部分 完整复习
 - 附件
+  - [Terminal 配置](enclusore/install-iterm.md)
   - [项目技术方案](enclusore/tech-scheme.md)
   - [跨域](enclusore/cross-domin.md)
+  - [React 原码](enclusore/react-source.md)
