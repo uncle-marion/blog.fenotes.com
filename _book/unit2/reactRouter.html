@@ -1,0 +1,1885 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第四课 路由与嵌套路由 · React Training</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="marion.lau@foxmail.com">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-tomorrow.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-copyright/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-copyright/gitalk.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../assets/style.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../unit1/container.html" />
+    
+    
+    <link rel="prev" href="regexp.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    第一单元 开发环境与工具封装
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../unit1/operatingEnvironment.html">
+            
+                <a href="../unit1/operatingEnvironment.html">
+            
+                    
+                    第一课 开发环境配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.1" data-path="../unit1/powershell.html">
+            
+                <a href="../unit1/powershell.html">
+            
+                    
+                    附录 1 Windows 下安装 PowerShell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.2" data-path="../unit1/iterm.html">
+            
+                <a href="../unit1/iterm.html">
+            
+                    
+                    附录 2 OSX 下安装 Iterm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../unit1/webpack.html">
+            
+                <a href="../unit1/webpack.html">
+            
+                    
+                    第二课 什么是 Webpack
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.2.1" data-path="../unit1/modular.html">
+            
+                <a href="../unit1/modular.html">
+            
+                    
+                    附录 1 什么是模块化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="../unit1/npm.html">
+            
+                <a href="../unit1/npm.html">
+            
+                    
+                    附录 2 使用 Npm 管理项目依赖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.3" data-path="../unit1/optimize.html">
+            
+                <a href="../unit1/optimize.html">
+            
+                    
+                    附录 3 使用 Webpack 优化项目
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../unit1/customizeCra.html">
+            
+                <a href="../unit1/customizeCra.html">
+            
+                    
+                    第三课 CRA 与 Customize-cra
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../unit1/craco.html">
+            
+                <a href="../unit1/craco.html">
+            
+                    
+                    附录 1 Craco 配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../unit1/vite.html">
+            
+                <a href="../unit1/vite.html">
+            
+                    
+                    附录 2 Vite 配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../unit1/git.html">
+            
+                <a href="../unit1/git.html">
+            
+                    
+                    第四课 什么是 Git
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../unit1/gitFlow.html">
+            
+                <a href="../unit1/gitFlow.html">
+            
+                    
+                    附录 1 Git 工作流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../unit1/gitQuery.html">
+            
+                <a href="../unit1/gitQuery.html">
+            
+                    
+                    附录 2 Git 常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../unit1/gitCommand.html">
+            
+                <a href="../unit1/gitCommand.html">
+            
+                    
+                    附录 3 Git 命令集
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../unit1/codingStandard.html">
+            
+                <a href="../unit1/codingStandard.html">
+            
+                    
+                    第五课 代码规范
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.5.1" data-path="../unit1/eslint.html">
+            
+                <a href="../unit1/eslint.html">
+            
+                    
+                    附录 1 ESLint
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../unit1/utilsPackage.html">
+            
+                <a href="../unit1/utilsPackage.html">
+            
+                    
+                    第六课 小工具封装
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.6.1" data-path="../unit1/th.md">
+            
+                <span>
+            
+                    
+                    附录 1 完整的防抖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.2" data-path="../unit1/storageManage.html">
+            
+                <a href="../unit1/storageManage.html">
+            
+                    
+                    附录 2 Storage 管理工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../unit1/axiosPackage.html">
+            
+                <a href="../unit1/axiosPackage.html">
+            
+                    
+                    第七课 封装 Axios
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.7.1" data-path="../unit1/fetch.html">
+            
+                <a href="../unit1/fetch.html">
+            
+                    
+                    附录 1 Fetch 原码解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.2" data-path="../unit1/axios.html">
+            
+                <a href="../unit1/axios.html">
+            
+                    
+                    附录 2 Axios 原码解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    第二单元 React 基础与关联知识
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="jsx.html">
+            
+                <a href="jsx.html">
+            
+                    
+                    第一课 JSX 与虚拟 DOM
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="soundStructure.html">
+            
+                <a href="soundStructure.html">
+            
+                    
+                    附录 1 react 源码结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="flex.html">
+            
+                <a href="flex.html">
+            
+                    
+                    附录 2 flex 布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="diff.html">
+            
+                <a href="diff.html">
+            
+                    
+                    附录 3 DIFF 与 FIBER
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="component.html">
+            
+                <a href="component.html">
+            
+                    
+                    第二课 组件与状态
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.2.1" data-path="login.code.html">
+            
+                <a href="login.code.html">
+            
+                    
+                    附件 创建登录页 UI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.2" data-path="setState.html">
+            
+                <a href="setState.html">
+            
+                    
+                    附录 2 react setState 任务队列详解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.3" data-path="antd.form.html">
+            
+                <a href="antd.form.html">
+            
+                    
+                    附录 3 antd form 表单组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="lifeCycle.html">
+            
+                <a href="lifeCycle.html">
+            
+                    
+                    第三课 生命周期与组件优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.3.1" data-path="login.fun.html">
+            
+                <a href="login.fun.html">
+            
+                    
+                    附录 1 完成登录页功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2" data-path="componentOptimize.html">
+            
+                <a href="componentOptimize.html">
+            
+                    
+                    附录 2 组件的优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.3" data-path="regexp.html">
+            
+                <a href="regexp.html">
+            
+                    
+                    附录 3 JS 正则表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.4" data-path="reactRouter.html">
+            
+                <a href="reactRouter.html">
+            
+                    
+                    第四课 路由与嵌套路由
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="../unit1/container.html">
+            
+                <a href="../unit1/container.html">
+            
+                    
+                    附录 1 创建全局框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="communication.html">
+            
+                <a href="communication.html">
+            
+                    
+                    附录 2 组件通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="omicron.html">
+            
+                <a href="omicron.html">
+            
+                    
+                    附录 3 算法复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="redux.html">
+            
+                <a href="redux.html">
+            
+                    
+                    第五课 全局状态管理
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.5.1" data-path="middleware.html">
+            
+                <a href="middleware.html">
+            
+                    
+                    附录 1 常用中间件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.2" data-path="devtools.html">
+            
+                <a href="devtools.html">
+            
+                    
+                    附录 2 浏览器调试工具与状态持久化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.3" data-path="reduxToolkit.html">
+            
+                <a href="reduxToolkit.html">
+            
+                    
+                    附录 3 redux-toolkit
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="route_auth.html">
+            
+                <a href="route_auth.html">
+            
+                    
+                    第六课 路由守卫
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.6.1" data-path="../unit1/globalRoutes.html">
+            
+                <a href="../unit1/globalRoutes.html">
+            
+                    
+                    附录 1 配置全站路由
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.2" data-path="../unit1/guard.md">
+            
+                <span>
+            
+                    
+                    附录 2 路由表与用户权限管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.3" data-path="hoc.html">
+            
+                <a href="hoc.html">
+            
+                    
+                    附录 3 高阶组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="hooks.html">
+            
+                <a href="hooks.html">
+            
+                    
+                    第七课 hooks
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.7.1" data-path="commodityManagement.md">
+            
+                <span>
+            
+                    
+                    附录 1 创建商品管理页
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7.2" data-path="hooksOptimize.md">
+            
+                <span>
+            
+                    
+                    附录 2 hooks 组件的优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="moreHook.html">
+            
+                <a href="moreHook.html">
+            
+                    
+                    第八课 更多的 hooks
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.8.1" data-path="hooksRedux.md">
+            
+                <span>
+            
+                    
+                    附录 1 实现全局状态管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="customHook.html">
+            
+                <a href="customHook.html">
+            
+                    
+                    第九课 自定义 hooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    第三单元 ECMAScript 基础知识
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../unit6/lessons_01.html">
+            
+                <a href="../unit6/lessons_01.html">
+            
+                    
+                    第一课 JavaScript 常用 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../unit6/lessons_03.html">
+            
+                <a href="../unit6/lessons_03.html">
+            
+                    
+                    第二课 promise 与 async/await
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../unit6/lessons_07.html">
+            
+                <a href="../unit6/lessons_07.html">
+            
+                    
+                    第三课 原型与原型链以及继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../unit6/lessons_09.html">
+            
+                <a href="../unit6/lessons_09.html">
+            
+                    
+                    第四课 JS 事件循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../unit6/lessons_04.html">
+            
+                <a href="../unit6/lessons_04.html">
+            
+                    
+                    第五课 Set/Map
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../unit6/lessons_05.html">
+            
+                <a href="../unit6/lessons_05.html">
+            
+                    
+                    第六课 Reflect/Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../unit6/lessons_02.html">
+            
+                <a href="../unit6/lessons_02.html">
+            
+                    
+                    第七课 函数式编程的一些小知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../unit6/lessons_06.html">
+            
+                <a href="../unit6/lessons_06.html">
+            
+                    
+                    第八课 ES 笔试题实现
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.8.1" data-path="../unit3/arrayToTree.md">
+            
+                <span>
+            
+                    
+                    附录 1 扁平数据结构转树结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    第四单元 TypeScript 基础知识
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../unit9/lessons_01.html">
+            
+                <a href="../unit9/lessons_01.html">
+            
+                    
+                    第一课 TypeScript 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../unit9/lessons_02.html">
+            
+                <a href="../unit9/lessons_02.html">
+            
+                    
+                    第二课 TypeScript 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../unit9/lessons_03.html">
+            
+                <a href="../unit9/lessons_03.html">
+            
+                    
+                    第三课 TypeScript 与类组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../unit9/lessons_04.html">
+            
+                <a href="../unit9/lessons_04.html">
+            
+                    
+                    第四课 TypeScript 与函数组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" >
+            
+                <span>
+            
+                    
+                    第五课 TypeScript 泛型
+            
+                </span>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    第五单元 UMI 基于 React 的 MVC 框架
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    第六单元 了解一些 VUE
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    第七单元 小程序
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    第八单元 NODEJS
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    第九单元 架构入门
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    第十单元 常见面试问题
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../unit_10/micro_frontend.md">
+            
+                <span>
+            
+                    
+                    第一课 什么是微前端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../unit_10/single_sign_on.md">
+            
+                <span>
+            
+                    
+                    第二课 单点登陆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../unit_10/websocket.md">
+            
+                <span>
+            
+                    
+                    第三课 websocket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../unit_10/cross_domain.md">
+            
+                <span>
+            
+                    
+                    第四课 跨域问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../unit_10/use_mock.md">
+            
+                <span>
+            
+                    
+                    第五课 mock 的配置与使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.6" data-path="../unit_10/server_side_render.md">
+            
+                <span>
+            
+                    
+                    第六课 什么是 ssr
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.7" data-path="../unit_10/npm_publish.md">
+            
+                <span>
+            
+                    
+                    第七课 发布你的 npm 插件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    第十一单元 业务中常见的代码积累
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../unit_10/lessons_02.md">
+            
+                <span>
+            
+                    
+                    lessons_02. 第三方登陆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../unit_10/lessons_03.md">
+            
+                <span>
+            
+                    
+                    lessons_03. 微信支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../unit_10/lessons_03.md">
+            
+                <span>
+            
+                    
+                    lessons_04. 微信支付
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    附件
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../enclusore/install-iterm.html">
+            
+                <a href="../enclusore/install-iterm.html">
+            
+                    
+                    Terminal 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../enclusore/tech-scheme.html">
+            
+                <a href="../enclusore/tech-scheme.html">
+            
+                    
+                    项目技术方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../enclusore/cross-domin.md">
+            
+                <span>
+            
+                    
+                    跨域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../enclusore/react-source.html">
+            
+                <a href="../enclusore/react-source.html">
+            
+                    
+                    React 原码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >第四课 路由与嵌套路由</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>Marion &#x7684; react &#x5B9E;&#x6218;&#x8BFE;&#x7A0B; &gt; &#x7B2C;&#x4E8C;&#x5355;&#x5143; React &#x57FA;&#x7840;&#x4E0E;&#x5173;&#x8054;&#x77E5;&#x8BC6; &gt; &#x8DEF;&#x7531;&#x4E0E;&#x5D4C;&#x5957;&#x8DEF;&#x7531;</p>
+</blockquote>
+<h3 id="&#x4EC0;&#x4E48;&#x662F;-react-router">&#x4EC0;&#x4E48;&#x662F; React Router</h3>
+<p>&#x901A;&#x4FD7;&#x5730;&#x8BF4;&#xFF1A;<strong>&#x8DEF;&#x7531;&#xFF0C;&#x53EF;&#x4EE5;&#x7B80;&#x5355;&#x5730;&#x770B;&#x6210;&#x662F;&#x4E00;&#x4E2A;&#x4E2A;&#x7684;&#x8DEF;&#x6807;&#xFF0C;&#x544A;&#x8BC9;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x8DEF;&#x5F84;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x7EC4;&#x4EF6;</strong>&#x3002;&#x6709;&#x4E86;&#x8DEF;&#x7531;&#xFF0C;&#x6211;&#x4EEC;&#x624D;&#x80FD;&#x901A;&#x8FC7;&#x5728;&#x5730;&#x5740;&#x680F;&#x8F93;&#x5165; url &#x5730;&#x5740;&#x8BBF;&#x95EE;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x8BBF;&#x95EE;&#x7684;&#x9875;&#x9762;&#x3002;</p>
+<p>react-router &#x6700;&#x4E3B;&#x8981;&#x7684;&#x529F;&#x80FD;&#x5C31;&#x662F;&#x7ED9;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x7684;&#x4E00;&#x4E9B;&#x53EF;&#x4EE5;&#x7BA1;&#x7406; URL &#x7684;&#x7EC4;&#x4EF6;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x4E9B;&#x7EC4;&#x4EF6;&#x5B9E;&#x73B0;&#x5BF9; url &#x53D8;&#x5316;&#x7684;&#x76D1;&#x542C;&#xFF0C;&#x7136;&#x540E;&#x6839;&#x636E;&#x8FD9;&#x4E9B;&#x53D8;&#x5316;&#x6765;&#x5B9E;&#x65F6;&#x5207;&#x6362;&#x6211;&#x4EEC;&#x5728; Routes &#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x76F8;&#x5173;&#x5B50;&#x7EC4;&#x4EF6;&#x4EE5;&#x8FBE;&#x5230;&#x5B9E;&#x73B0;&#x9875;&#x9762;&#x8DEF;&#x7531;&#x7684;&#x6620;&#x5C04;&#x3001;&#x53C2;&#x6570;&#x7684;&#x89E3;&#x6790;&#x548C;&#x4F20;&#x9012;&#x3002;</p>
+<h4 id="react-router-&#x63D0;&#x4F9B;&#x7684;&#x7EC4;&#x4EF6;">React Router &#x63D0;&#x4F9B;&#x7684;&#x7EC4;&#x4EF6;</h4>
+<h5 id="browserrouter-&#x6216;-hashrouter-&#x7EC4;&#x4EF6;">BrowserRouter &#x6216; HashRouter &#x7EC4;&#x4EF6;</h5>
+<blockquote>
+<p>Router &#x4E2D;&#x5305;&#x542B;&#x4E86;&#x5BF9;&#x8DEF;&#x5F84;&#x6539;&#x53D8;&#x7684;&#x76D1;&#x542C;, &#x5E76;&#x4E14;&#x4F1A;&#x5C06;&#x76F8;&#x5E94;&#x7684;&#x8DEF;&#x5F84;&#x4F20;&#x9012;&#x7ED9;&#x5B50;&#x7EC4;&#x4EF6;<br>BrowserRouter &#x4F7F;&#x7528;&#x4E86; history &#x6A21;&#x5F0F;<br>HasRouter &#x4F7F;&#x7528;&#x4E86; hash &#x6A21;&#x5F0F;</p>
+</blockquote>
+<h5 id="link-&#x7EC4;&#x4EF6;&#x548C;-navlink-&#x7EC4;&#x4EF6;">Link &#x7EC4;&#x4EF6;&#x548C; NavLink &#x7EC4;&#x4EF6;</h5>
+<blockquote>
+<p>&#x901A;&#x5E38;&#x8DEF;&#x5F84;&#x7684;&#x8DF3;&#x8F6C;&#x65F6;&#x662F;&#x4F7F;&#x7528; Link, &#x6700;&#x7EC8;&#x4F1A;&#x88AB;&#x6E32;&#x67D3;&#x6210; a &#x5143;&#x7D20;<br>NavLink &#x662F;&#x5728; Link &#x57FA;&#x7840;&#x4E4B;&#x4E0A;&#x589E;&#x52A0;&#x4E86;&#x4E00;&#x4E9B;&#x6837;&#x5F0F;&#x5C5E;&#x6027;<br>to &#x5C5E;&#x6027;: link &#x7EC4;&#x4EF6;&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x5C5E;&#x6027;, &#x7528;&#x4E8E;&#x8BBE;&#x7F6E;&#x8DF3;&#x8F6C;&#x5230;&#x7684;&#x8DEF;&#x5F84;</p>
+</blockquote>
+<h5 id="route-&#x7EC4;&#x4EF6;-&#x7528;&#x4E8E;&#x8DEF;&#x5F84;&#x7684;&#x5339;&#x914D;">Route &#x7EC4;&#x4EF6; &#x7528;&#x4E8E;&#x8DEF;&#x5F84;&#x7684;&#x5339;&#x914D;</h5>
+<blockquote>
+<p>path &#x5C5E;&#x6027;: &#x7528;&#x6237;&#x8BBE;&#x7F6E;&#x5339;&#x914D;&#x5230;&#x7684;&#x8DEF;&#x5F84;<br>component &#x5C5E;&#x6027;: &#x8BBE;&#x7F6E;&#x5339;&#x914D;&#x5230;&#x7684;&#x8DEF;&#x5F84;&#x540E;, &#x6E32;&#x67D3;&#x7684;&#x7EC4;&#x4EF6;<br>exact &#x5C5E;&#x6027;: &#x7CBE;&#x51C6;&#x5339;&#x914D;, &#x53EA;&#x6709;&#x7CBE;&#x51C6;&#x5339;&#x914D;&#x5230;&#x5B8C;&#x5168;&#x4E00;&#x81F4;&#x7684;&#x8DEF;&#x5F84;, &#x624D;&#x4F1A;&#x6E32;&#x67D3;&#x5BF9;&#x5E94;&#x7684;&#x7EC4;&#x4EF6;</p>
+</blockquote>
+<h5 id="&#x5B9E;&#x4F8B;">&#x5B9E;&#x4F8B;</h5>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">import</span> <span class="token punctuation">{</span> BrowserRouter <span class="token keyword">as</span> Router<span class="token punctuation">,</span> Switch<span class="token punctuation">,</span> Route <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react-router-dom&apos;</span><span class="token punctuation">;</span>
+
+<span class="token function">render</span><span class="token punctuation">(</span>
+  <span class="token operator">&lt;</span>Router<span class="token operator">&gt;</span>
+    <span class="token punctuation">{</span><span class="token comment">/* Route&#x662F;&#x8DEF;&#x7531;&#x7684;&#x6700;&#x5C0F;&#x7EC4;&#x4EF6;, &#x4E00;&#x822C;&#x6765;&#x8BF4;Router&#x91CC;&#x4F1A;&#x5305;&#x542B;&#x591A;&#x4E2A;Route, &#x5728;&#x6E32;&#x67D3;&#x65F6;&#x6839;&#x636E;path&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x8FDB;&#x884C;&#x6E32;&#x67D3;&#x3002;*/</span><span class="token punctuation">}</span>
+    <span class="token punctuation">{</span><span class="token comment">/* &#x5982;&#x679C;&#x5F53;&#x524D;location.pathname&#x5339;&#x914D;props.path&#x89C4;&#x5219;&#xFF0C;&#x5C31;&#x6E32;&#x67D3;props.component&#x4E2D;&#x7684;&#x5185;&#x5BB9;, &#x5426;&#x5219;&#x6E32;&#x67D3;null */</span><span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token string">&quot;/&quot;</span> component<span class="token operator">=</span><span class="token punctuation">{</span>App<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>Router<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+  <span class="token comment">// &#x83B7;&#x53D6;&#x5BB9;&#x5668;&#x7EC4;&#x4EF6;</span>
+  document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&apos;app&apos;</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>react-router &#x5411;&#x5916;&#x63D0;&#x4F9B;&#x4E24;&#x4E2A;&#x63A5;&#x53E3;&#x7EC4;&#x4EF6;&#x7528;&#x4E8E;&#x7BA1;&#x7406;&#x6D4F;&#x89C8;&#x5668;&#x8DEF;&#x7531;&#xFF0C;&#x4E00;&#x4E2A;&#x662F; hashRouter&#xFF0C;&#x4E00;&#x4E2A;&#x662F; browserRouter&#xFF1B;&#x8FD9;&#x4E24;&#x4E2A; API&#xFF0C;hashRouter &#x4F7F;&#x7528;&#x4E86; location &#x7684; hash &#x7279;&#x6027;&#xFF0C;browserRouter &#x5219;&#x4F7F;&#x7528;&#x4E86; h5 &#x7684; history &#x7279;&#x6027;&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x5148;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;&#x8FD9;&#x4E24;&#x4E2A;&#x7279;&#x6027;&#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#x3002;</p>
+<h4 id="hashrouter">hashRouter</h4>
+<p>hashRouter &#x662F;&#x901A;&#x8FC7;&#x76D1;&#x542C;&#x5730;&#x5740;&#x680F; hash &#x7684;&#x53D8;&#x5316;&#x6765;&#x66F4;&#x65B0; root &#x8282;&#x70B9;&#x4E2D;&#x663E;&#x793A;&#x7684;&#x7EC4;&#x4EF6;&#x5185;&#x5BB9;&#x3002;</p>
+<ul>
+<li>URL &#x7684; hash &#x4E5F;&#x5C31;&#x662F;&#x951A;&#x70B9;(#), &#x672C;&#x8D28;&#x4E0A;&#x662F;&#x6539;&#x53D8; window.location &#x7684; href &#x5C5E;&#x6027;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8D4B;&#x503C; location.hash &#x6539;&#x53D8; url, &#x4F46;&#x662F;&#x9875;&#x9762;&#x4E0D;&#x53D1;&#x751F;&#x5237;&#x65B0;&#x3002;react-router &#x6839;&#x636E; hash &#x7684;&#x8FD9;&#x79CD;&#x7279;&#x6027;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86; hashRouter&#x3002;</li>
+</ul>
+<pre class="language-"><code class="lang-javascript"><span class="token comment">// &#x7528;&#x4E8E;&#x663E;&#x793A;&#x5185;&#x5BB9;&#x7684;&#x4E3B;&#x5BB9;&#x5668;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x6211;&#x4EEC;&#x7684;public&#x4E2D;index.html&#x4E2D;&#x7684;root</span>
+<span class="token keyword">const</span> routerView <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">&apos;.router-view&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// &#x76D1;&#x542C;location&#x7684;hashchange&#x4E8B;&#x4EF6;&#xFF0C;&#x6839;&#x636E;&#x5339;&#x914D;&#x7684;&#x53C2;&#x6570;&#x5207;&#x6362;&#x663E;&#x793A;&#x7684;&#x5185;&#x5BB9;</span>
+window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&apos;hashchange&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span>location<span class="token punctuation">.</span>hash<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token string">&apos;#/home&apos;</span><span class="token operator">:</span>
+      routerView<span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> <span class="token string">&apos;&#x9996;&#x9875;&apos;</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">&apos;#/about&apos;</span><span class="token operator">:</span>
+      routerView<span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> <span class="token string">&apos;&#x5173;&#x4E8E;&#x9875;&apos;</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+      routerView<span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="browserrouter">BrowserRouter</h4>
+<p>&#x4E0E; HashRouter &#x4E0D;&#x540C;&#xFF0C;BrowserRouter &#x7684;&#x5B9E;&#x73B0;&#x662F;&#x5EFA;&#x7ACB;&#x5728; html5 &#x7684;&#x65B0; API history &#x4E0A;&#x7684;&#xFF0C;&#x540C;&#x6837;&#x4E5F;&#x662F;&#x5229;&#x7528;&#x4E86; history &#x7684;&#x6539;&#x53D8; Url &#x5374;&#x4E0D;&#x5237;&#x65B0;&#x9875;&#x9762;&#x7684;&#x65B9;&#x5F0F;&#x3002;</p>
+<ul>
+<li>history &#x63A5;&#x53E3;&#x662F; HTML5 &#x65B0;&#x589E;&#x7684;, &#x5B83;&#x6709;&#x516D;&#x79CD;&#x6A21;&#x5F0F;&#x6539;&#x53D8; URL &#x800C;&#x4E0D;&#x5237;&#x65B0;&#x9875;&#x9762;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">API</th>
+<th style="text-align:left">&#x4F5C;&#x7528;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">replaceState</td>
+<td style="text-align:left">&#x66FF;&#x6362;&#x539F;&#x6765;&#x7684;&#x8DEF;&#x5F84;</td>
+</tr>
+<tr>
+<td style="text-align:right">pushState</td>
+<td style="text-align:left">&#x4F7F;&#x7528;&#x65B0;&#x7684;&#x8DEF;&#x5F84;</td>
+</tr>
+<tr>
+<td style="text-align:right">popState</td>
+<td style="text-align:left">&#x8DEF;&#x5F84;&#x7684;&#x56DE;&#x9000;</td>
+</tr>
+<tr>
+<td style="text-align:right">go</td>
+<td style="text-align:left">&#x5411;&#x524D;&#x6216;&#x5411;&#x540E;&#x6539;&#x53D8;&#x8DEF;&#x5F84;</td>
+</tr>
+<tr>
+<td style="text-align:right">forward</td>
+<td style="text-align:left">&#x5411;&#x524D;&#x6539;&#x53D8;&#x8DEF;&#x5F84;</td>
+</tr>
+<tr>
+<td style="text-align:right">back</td>
+<td style="text-align:left">&#x5411;&#x540E;&#x6539;&#x53D8;&#x8DEF;&#x5F84;</td>
+</tr>
+</tbody>
+</table>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token punctuation">{</span> page_id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> user_id<span class="token operator">:</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> title <span class="token operator">=</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token string">&apos;hello-world.html&apos;</span><span class="token punctuation">;</span>
+
+history<span class="token punctuation">.</span><span class="token function">pushState</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> title<span class="token punctuation">,</span> url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="hashrouter-&#x4E0E;-browserrouter-&#x7684;&#x4E0D;&#x540C;">hashRouter &#x4E0E; BrowserRouter &#x7684;&#x4E0D;&#x540C;</h4>
+<h5 id="&#x5E95;&#x5C42;&#x539F;&#x7406;&#x4E0D;&#x4E00;&#x6837;&#xFF1A;">&#x5E95;&#x5C42;&#x539F;&#x7406;&#x4E0D;&#x4E00;&#x6837;&#xFF1A;</h5>
+<p>BrowserRouter &#x4F7F;&#x7528;&#x7684;&#x662F; H5 &#x7684; history API&#xFF0C;&#x4E0D;&#x517C;&#x5BB9; IE9 &#x53CA;&#x4EE5;&#x4E0B;&#x7248;&#x672C;&#xFF1B;</p>
+<p>HashRouter &#x4F7F;&#x7528;&#x7684;&#x662F; URL &#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x7406;&#x8BBA;&#x4E0A;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x6D4F;&#x89C8;&#x5668;&#x90FD;&#x80FD;&#x652F;&#x6301;&#x3002;</p>
+<h5 id="path-&#x8868;&#x73B0;&#x4E0D;&#x4E00;&#x6837;">path &#x8868;&#x73B0;&#x4E0D;&#x4E00;&#x6837;</h5>
+<p>BrowserRouter &#x7684;&#x8DEF;&#x5F84;&#x4E2D;&#x6CA1;&#x6709;#,&#x4F8B;&#x5982;&#xFF1A;localhost:3000/demo/test</p>
+<p>HashRouter &#x7684;&#x8DEF;&#x5F84;&#x5305;&#x542B;#,&#x4F8B;&#x5982;&#xFF1A;localhost:3000/#/demo/test</p>
+<h5 id="&#x751F;&#x4EA7;&#x5B9E;&#x73B0;&#x4E0D;&#x4E00;&#x6837;">&#x751F;&#x4EA7;&#x5B9E;&#x73B0;&#x4E0D;&#x4E00;&#x6837;</h5>
+<p>&#x56E0;&#x4E3A; BrowserRouter &#x6A21;&#x5F0F;&#x4E0B;&#x8BF7;&#x6C42;&#x7684;&#x94FE;&#x63A5;&#x90FD;&#x662F; ip &#x5730;&#x5740;:&#x7AEF;&#x53E3;/xxxx/xxxx&#xFF0C;&#x56E0;&#x6B64;&#x76F8;&#x5F53;&#x4E8E;&#x6BCF;&#x4E2A; URL &#x90FD;&#x4F1A;&#x8BBF;&#x95EE;&#x4E00;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x540E;&#x7AEF;&#x5730;&#x5740;&#xFF0C;&#x5982;&#x679C;&#x540E;&#x7AEF;&#x6CA1;&#x6709;&#x8986;&#x76D6;&#x5230;&#x8DEF;&#x7531;&#x5C31;&#x4F1A;&#x4EA7;&#x751F; 404 &#x9519;&#x8BEF;&#x3002;</p>
+<p><strong>&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF1A;</strong>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x52A0;&#x5165;&#x4E2D;&#x95F4;&#x4EF6;&#x89E3;&#x51B3;&#xFF0C;&#x653E;&#x5728;&#x670D;&#x52A1;&#x5668;&#x7AEF;&#x8DEF;&#x7531;&#x5339;&#x914D;&#x7684;&#x6700;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x524D;&#x9762;&#x7684; API &#x63A5;&#x53E3;&#x90FD;&#x4E0D;&#x5339;&#x914D;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; index.html &#x9875;&#x9762;&#x3002;</p>
+<p>HashRouter &#x76F8;&#x5F53;&#x4E8E;&#x951A;&#x70B9;&#x5B9A;&#x4F4D;&#xFF0C;&#x8BF7;&#x6C42;&#x7684;&#x94FE;&#x63A5;&#x90FD;&#x662F; ip &#x5730;&#x5740;:&#x7AEF;&#x53E3;/#/xxxx&#xFF0C;&#x56E0;&#x6B64;&#x8BF7;&#x6C42;&#x7684;&#x8D44;&#x6E90;&#x8DEF;&#x5F84;&#x6C38;&#x8FDC;&#x4E3A;/&#xFF0C;&#x76F8;&#x5F53;&#x4E8E; index.html&#x3002;&#x56E0;&#x6B64;&#x4E0D;&#x8BBA;#&#x540E;&#x9762;&#x7684;&#x8DEF;&#x5F84;&#x600E;&#x4E48;&#x53D8;&#x5316;&#xFF0C;&#x8BF7;&#x6C42;&#x7684;&#x90FD;&#x76F8;&#x5F53;&#x4E8E;&#x662F;#&#x4E4B;&#x524D;&#x7684;&#x90A3;&#x4E2A;&#x9875;&#x9762;&#x3002;&#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x7684;&#x8FDB;&#x884C;&#x524D;&#x540E;&#x7AEF;&#x4E0D;&#x5206;&#x79BB;&#x7684;&#x90E8;&#x7F72;(&#x4E5F;&#x5C31;&#x662F;&#x628A;&#x524D;&#x7AEF;&#x6253;&#x5305;&#x540E;&#x7684;&#x6587;&#x4EF6;&#x653E;&#x5230;&#x670D;&#x52A1;&#x5668;&#x7AEF;&#x7684; public &#x6216; static &#x91CC;)&#x3002;</p>
+<p><strong>&#x5B58;&#x5728;&#x95EE;&#x9898;&#xFF1A;</strong>&#x5728;&#x4F7F;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x5206;&#x4EAB;&#x529F;&#x80FD;&#x65F6;&#xFF0C;&#x7531;&#x4E8E; hash &#x7684;&#x72B6;&#x6001;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x7B2C;&#x4E09;&#x65B9;&#x5E73;&#x53F0;&#x5FFD;&#x7565;&#xFF0C;&#x5BFC;&#x81F4; hash &#x540E;&#x7684;&#x53C2;&#x6570;&#x4E22;&#x5931;&#xFF0C;&#x7528;&#x6237;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x771F;&#x5B9E;&#x7684;&#x5206;&#x4EAB;&#x9875;&#x9762;&#x3002;</p>
+<h5 id="&#x5237;&#x65B0;&#x540E;&#x5BF9;&#x8DEF;&#x7531;-state-&#x53C2;&#x6570;&#x7684;&#x5F71;&#x54CD;">&#x5237;&#x65B0;&#x540E;&#x5BF9;&#x8DEF;&#x7531; state &#x53C2;&#x6570;&#x7684;&#x5F71;&#x54CD;</h5>
+<p>BrowserRouter &#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x5F71;&#x54CD;&#xFF0C;&#x56E0;&#x4E3A; state &#x4FDD;&#x5B58;&#x5728; history &#x5BF9;&#x8C61;&#x4E2D;&#x3002;</p>
+<p>HashRouter &#x5237;&#x65B0;&#x540E;&#x4F1A;&#x5BFC;&#x81F4;&#x8DEF;&#x7531; state &#x53C2;&#x6570;&#x7684;&#x4E22;&#x5931;&#xFF01;&#xFF01;&#xFF01;</p>
+<h4 id="browserrouter-&#x7684;-api">BrowserRouter &#x7684; API</h4>
+<p>BrowserRouter &#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684; API, &#x6211;&#x4EEC;&#x76EE;&#x524D;&#x9700;&#x8981;&#x8BB0;&#x4F4F;&#x7684;&#x5C31;&#x662F; basename;
+&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4F7F;&#x7528; react &#x6846;&#x67B6;&#x521B;&#x5EFA;&#x9879;&#x76EE;&#x65F6;&#xFF0C;&#x8FD0;&#x884C; npm start &#x540E;&#xFF0C;&#x4F7F;&#x7528; <a href="http://localhost:3000/home" target="_blank">http://localhost:3000/home</a> &#x5373;&#x53EF;&#x8BBF;&#x95EE;&#x9996;&#x9875;&#x3002;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x5F88;&#x591A;&#x5C0F;&#x516C;&#x53F8;&#x662F;&#x6CA1;&#x6709;&#x72EC;&#x7ACB;&#x7684;&#x524D;&#x7AEF;&#x670D;&#x52A1;&#x5668;&#x7684;&#xFF0C;&#x8FD9;&#x65F6;&#x6211;&#x4EEC;&#x7684;&#x9879;&#x76EE;&#x5C31;&#x5FC5;&#x987B;&#x653E;&#x5230;&#x4E00;&#x4E2A;&#x6307;&#x5B9A;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x53BB;&#xFF0C;&#x7136;&#x540E;&#x4F7F;&#x7528; nginx &#x6765;&#x914D;&#x7F6E;&#x4EE3;&#x7406;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;<a href="http://localhost:3000/project/home&#x3002;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x4F1A;&#x53D1;&#x73B0;&#x9664;&#x4E86;&#x9996;&#x9875;&#xFF0C;&#x5176;&#x5B83;&#x9875;&#x9762;&#x90FD;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86;&#x4E86;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x7684;&#x8DEF;&#x7531;&#x5168;&#x90E8;&#x6307;&#x5411;&#x7684;&#x662F;&quot;/" target="_blank">http://localhost:3000/project/home&#x3002;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x4F1A;&#x53D1;&#x73B0;&#x9664;&#x4E86;&#x9996;&#x9875;&#xFF0C;&#x5176;&#x5B83;&#x9875;&#x9762;&#x90FD;&#x8BBF;&#x95EE;&#x4E0D;&#x4E86;&#x4E86;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x7684;&#x8DEF;&#x7531;&#x5168;&#x90E8;&#x6307;&#x5411;&#x7684;&#x662F;&quot;/</a>&quot;, &#x4F46;&#x5B9E;&#x9645;&#x9700;&#x8981;&#x6307;&#x5411;&quot;/project&quot;&#x3002;</p>
+<ul>
+<li>&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5C31;&#x9700;&#x8981;&#x4F7F;&#x7528; basename, &#x4E3A;&#x6BCF;&#x4E2A;&#x8DEF;&#x7531;&#x6DFB;&#x52A0;&#x548C; nginx &#x914D;&#x7F6E;&#x7684;&#x9879;&#x76EE;&#x540D;&#x4E00;&#x6837;&#x7684;&#x6839;&#x76EE;&#x5F55;&#x3002;&#x672C;&#x4F8B;&#x4E2D;&#x5373;&#x4E3A;/project</li>
+</ul>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">import</span> <span class="token punctuation">{</span> BrowserRouter <span class="token keyword">as</span> Router <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react-router-dom&apos;</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span>Router
+  basename<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;/project&apos;</span><span class="token punctuation">}</span> <span class="token comment">// &#x6839;&#x8DEF;&#x5F84;&#xFF0C;&#x8FD9;&#x4E2A;&#x6BD4;&#x8F83;&#x91CD;&#x8981;&#xFF0C;</span>
+  forceRefresh<span class="token operator">=</span><span class="token punctuation">{</span>bool<span class="token punctuation">}</span> <span class="token comment">// &#x662F;&#x5426;&#x6BCF;&#x6B21;&#x6E32;&#x67D3;&#x90FD;&#x5237;&#x65B0;&#x6574;&#x4E2A;&#x9875;&#x9762;&#xFF0C;&#x9ED8;&#x8BA4;false&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x7BA1;&#x5B83;</span>
+  getUserConfirmation<span class="token operator">=</span><span class="token punctuation">{</span>func<span class="token punctuation">}</span> <span class="token comment">// &#x5207;&#x6362;&#x8DEF;&#x5F84;&#x662F;&#x5426;&#x9700;&#x8981;&#x786E;&#x8BA4;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E0D;&#x9700;&#x8981;&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x7BA1;&#x5B83;</span>
+  keyLength<span class="token operator">=</span><span class="token punctuation">{</span>number<span class="token punctuation">}</span> <span class="token comment">// location.key&#x7684;&#x957F;&#x5EA6;&#xFF0C;key&#x7684;&#x4F5C;&#x7528;&#x662F;&#x5F53;&#x6211;&#x4EEC;&#x70B9;&#x51FB;&#x540C;&#x4E00;&#x4E2A;&#x94FE;&#x63A5;&#x65F6;&#x662F;&#x5426;&#x6BCF;&#x6B21;&#x90FD;&#x5237;&#x65B0;&#x9875;&#x9762;&#xFF0C;&#x4E00;&#x6837;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x4E0D;&#x52A8;&#x5B83;</span>
+<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>Route <span class="token operator">/</span><span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>Router<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="&#x8DEF;&#x7531;&#x5339;&#x914D;">&#x8DEF;&#x7531;&#x5339;&#x914D;</h3>
+<p>&#x8DEF;&#x7531;&#x5339;&#x914D;&#x662F;&#x901A;&#x8FC7;&#x5C06;&#x5F53;&#x524D;&#x7684; location &#x7684; pathname &#x4E0E;&#x8DEF;&#x7531;&#x8868;&#x4E2D; Route &#x7EC4;&#x4EF6;&#x7684; path &#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684; path &#x4E0E;&#x5F53;&#x524D;&#x7684; pathname &#x4E00;&#x81F4;&#xFF0C;&#x5219;&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;&#x7684; component &#x5C5E;&#x6027;&#x6240;&#x6307;&#x5411;&#x7684;&#x7EC4;&#x4EF6;&#x5C06;&#x4F1A;&#x88AB;&#x6E32;&#x67D3;&#x5230;&#x9875;&#x9762;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x5339;&#x914D;&#xFF0C;&#x5219;&#x6E32;&#x67D3; null&#xFF0C;&#x5728;&#x6CA1;&#x6709;&#x4F7F;&#x7528; Switch &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4F1A;&#x904D;&#x5386;&#x6574;&#x4E2A;&#x8DEF;&#x7531;&#x8868;&#x3002;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x5F53;&#x67D0;&#x4E2A; Route &#x6CA1;&#x6709; path &#x65F6;&#xFF0C;&#x5B83;&#x6240;&#x5BF9;&#x5E94;&#x7684; component &#x5C06;&#x4F1A;&#x4E00;&#x76F4;&#x88AB;&#x6E32;&#x67D3;&#x3002;</p>
+<pre class="language-"><code class="lang-javascript"><span class="token comment">// &#x5F53;location = {pathname: &apos;/a&apos;}</span>
+<span class="token operator">&lt;</span>BrowserRouter basename<span class="token operator">=</span><span class="token string">&quot;/admin&quot;</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;/a&apos;</span><span class="token punctuation">}</span> component<span class="token operator">=</span><span class="token punctuation">{</span><span class="token constant">A</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span> <span class="token comment">// &#x5339;&#x914D;&#x6210;&#x529F;&#xFF0C;&#x6E32;&#x67D3;A&#x7EC4;&#x4EF6;</span>
+  <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;/b&apos;</span><span class="token punctuation">}</span> component<span class="token operator">=</span><span class="token punctuation">{</span><span class="token constant">B</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span> <span class="token comment">// &#x5339;&#x914D;&#x5931;&#x8D25;&#xFF0C;&#x6E32;&#x67D3;null</span>
+  <span class="token operator">&lt;</span>Route component<span class="token operator">=</span><span class="token punctuation">{</span><span class="token constant">C</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span> <span class="token comment">// &#x6CA1;&#x6709;path,&#x8BE5;&#x7EC4;&#x4EF6;&#x5728;&#x4EFB;&#x4F55;&#x65F6;&#x5019;&#x90FD;&#x4F1A;&#x88AB;&#x6E32;&#x67D3;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>BrowserRouter<span class="token operator">&gt;</span>
+</code></pre>
+<h3 id="react-router-&#x4E2D;&#x7684;-switch-&#x5173;&#x952E;&#x5B57;&#x6709;&#x4EC0;&#x4E48;&#x7528;&#x5904;">React Router &#x4E2D;&#x7684; switch &#x5173;&#x952E;&#x5B57;&#x6709;&#x4EC0;&#x4E48;&#x7528;&#x5904;</h3>
+<p>&#x5B83;&#x7684;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x662F;&#x4E00;&#x4E2A;&#x5F00;&#x5173;&#x7684;&#x4F5C;&#x7528;&#xFF1A;&#x53EA;&#x8981;&#x6709;&#x4E00;&#x4E2A; path &#x5339;&#x914D;&#x4E0A;&#x4E86;&#x5BF9;&#x5E94;&#x7684;&#x7EC4;&#x4EF6;, &#x540E;&#x7EED;&#x5C31;&#x4E0D;&#x4F1A;&#x518D;&#x8FDB;&#x884C;&#x5339;&#x914D;&#x4E86;;</p>
+<pre class="language-"><code class="lang-javascript"><span class="token comment">// &#x5F53;location = {pathname: &apos;/a&apos;}</span>
+<span class="token operator">&lt;</span>BrowserRouter basename<span class="token operator">=</span><span class="token string">&quot;/admin&quot;</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>Switch<span class="token operator">&gt;</span>
+    <span class="token comment">// &#x5F00;&#x5173;&#xFF0C;&#x8868;&#x793A;&#x53EA;&#x5728;&#x4EE5;&#x4E0B;&#x7684;&#x8DEF;&#x7531;&#x8868;&#x4E2D;&#x5339;&#x914D;&#x4E00;&#x4E2A;&#x7ED3;&#x679C;</span>
+    <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;/a&apos;</span><span class="token punctuation">}</span> component<span class="token operator">=</span><span class="token punctuation">{</span><span class="token constant">A</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span> <span class="token comment">// &#x5339;&#x914D;&#x6210;&#x529F;&#xFF0C;&#x6E32;&#x67D3;A&#x7EC4;&#x4EF6;</span>
+    <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;/b&apos;</span><span class="token punctuation">}</span> component<span class="token operator">=</span><span class="token punctuation">{</span><span class="token constant">B</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span> <span class="token comment">// &#x5339;&#x914D;&#x5931;&#x8D25;&#xFF0C;&#x6E32;&#x67D3;null</span>
+    <span class="token operator">&lt;</span>Route component<span class="token operator">=</span><span class="token punctuation">{</span><span class="token constant">C</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span> <span class="token comment">// &#x6CA1;&#x6709;path,&#x8BE5;&#x7EC4;&#x4EF6;&#x5728;&#x4EFB;&#x4F55;&#x65F6;&#x5019;&#x90FD;&#x4F1A;&#x88AB;&#x6E32;&#x67D3;</span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>Switch<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>BrowserRouter<span class="token operator">&gt;</span>
+</code></pre>
+<h3 id="&#x91CD;&#x5B9A;&#x5411;">&#x91CD;&#x5B9A;&#x5411;</h3>
+<ul>
+<li>Redirect &#x7528;&#x4E8E;&#x8DEF;&#x7531;&#x7684;&#x91CD;&#x5B9A;&#x5411;, &#x5F53;&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;&#x51FA;&#x73B0;&#x540E;, &#x5C31;&#x4F1A;&#x6267;&#x884C;&#x8DF3;&#x8F6C;&#x5BF9;&#x5E94;&#x7684; to &#x8DEF;&#x5F84;&#x4E2D;</li>
+</ul>
+<pre class="language-"><code class="lang-javascript"><span class="token operator">&lt;</span>Redirect to<span class="token operator">=</span><span class="token string">&quot;/login&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+</code></pre>
+<h3 id="&#x624B;&#x52A8;&#x8DF3;&#x8F6C;-withrouter">&#x624B;&#x52A8;&#x8DF3;&#x8F6C; withRouter</h3>
+<p>react-router &#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x5FC5;&#x987B;&#x662F;&#x7ECF;&#x8FC7;&#x8DEF;&#x7531;&#x5339;&#x914D;&#x6E32;&#x67D3;&#x7684;&#x7EC4;&#x4EF6;&#x624D;&#x5B58;&#x5728; this.props&#xFF0C;&#x624D;&#x62E5;&#x6709;&#x8DEF;&#x7531;&#x53C2;&#x6570;&#xFF0C;&#x624D;&#x80FD;&#x4F7F;&#x7528;&#x7F16;&#x7A0B;&#x5F0F;&#x5BFC;&#x822A;&#x7684;&#x5199;&#x6CD5;&#xFF0C;&#x6267;&#x884C; this.props.history.push(&apos;/home&apos;)&#x8DF3;&#x8F6C;&#x5230;&#x5BF9;&#x5E94;&#x8DEF;&#x7531;&#x7684;&#x9875;&#x9762;&#xFF1B;</p>
+<p>&#x7136;&#x800C;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x90FD;&#x76F4;&#x63A5;&#x4E0E;&#x8DEF;&#x7531;&#x76F8;&#x8FDE;&#xFF08;&#x901A;&#x8FC7;&#x8DEF;&#x7531;&#x8DF3;&#x8F6C;&#x5230;&#x6B64;&#x7EC4;&#x4EF6;&#xFF09;&#x7684;&#xFF0C;&#x5F53;&#x8FD9;&#x4E9B;&#x7EC4;&#x4EF6;&#x9700;&#x8981;&#x8DEF;&#x7531;&#x53C2;&#x6570;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; withRouter &#x5C31;&#x53EF;&#x4EE5;&#x7ED9;&#x6B64;&#x7EC4;&#x4EF6;&#x4F20;&#x5165;&#x8DEF;&#x7531;&#x53C2;&#x6570;&#xFF0C;&#x6B64;&#x65F6;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; this.props &#x6765;&#x83B7;&#x53D6; history &#x5BF9;&#x8C61;</p>
+<p>&#x65B9;&#x5F0F;&#x4E00;: &#x5982;&#x679C;&#x8BE5;&#x7EC4;&#x4EF6;&#x662F; <strong>&#x901A;&#x8FC7;&#x8DEF;&#x7531;&#x76F4;&#x63A5;&#x8DF3;&#x8F6C;&#x8FC7;&#x6765;</strong> &#x7684;, &#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4ECE; props &#x5C5E;&#x6027;&#x4E2D;&#x83B7;&#x53D6; history, location, match
+&#x65B9;&#x5F0F;&#x4E8C;: App &#x7EC4;&#x4EF6;&#x4E2D;&#x83B7;&#x53D6;&#x5230; history &#x5BF9;&#x8C61;&#xFF0C;&#x9700;&#x8981;&#x4F7F;&#x7528; whitRouter<strong>&#x9AD8;&#x9636;&#x7EC4;&#x4EF6;</strong></p>
+<blockquote>
+<p>App &#x7EC4;&#x4EF6;&#x5FC5;&#x987B;&#x5305;&#x88F9;&#x5728; BrowserRouter &#x6216; HashRouter &#x7EC4;&#x4EF6;&#x4E4B;&#x5185;<br>App &#x7EC4;&#x4EF6;&#x4F7F;&#x7528; withRouter &#x9AD8;&#x9636;&#x7EC4;&#x4EF6;&#x5305;&#x88F9;</p>
+</blockquote>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> withRouter <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react-router-dom&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">WithRouterDemo</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>b<span class="token operator">&gt;</span> withRouterDemo&#x9875;&#x9762;<span class="token operator">&lt;</span><span class="token operator">/</span>b<span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token function">withRouter</span><span class="token punctuation">(</span>WithRouterDemo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="&#x8DEF;&#x7531;&#x4F20;&#x53C2;">&#x8DEF;&#x7531;&#x4F20;&#x53C2;</h3>
+<p>react-router &#x4E2D;&#x53C2;&#x6570;&#x7684;&#x4F20;&#x9012;&#x6709;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<ul>
+<li>search &#x4F20;&#x9012;&#x53C2;&#x6570;&#xFF1B;</li>
+<li>&#x52A8;&#x6001;&#x8DEF;&#x7531;&#x7684;&#x65B9;&#x5F0F;&#xFF1B;</li>
+<li>Link &#x4E2D; to &#x4F20;&#x5165;&#x5BF9;&#x8C61;&#xFF1B;</li>
+</ul>
+<p>search &#x4F20;&#x9012;&#x53C2;&#x6570;&#x8FD9;&#x4E2A;&#x6211;&#x4EEC;&#x5C31;&#x4E0D;&#x8BE6;&#x7EC6;&#x8BF4;&#x4E86;&#xFF0C;&#x800C; Link &#x4E2D;&#x7684;&#x4F20;&#x53C2;&#x56E0;&#x4E3A; state &#x7684;&#x4E0D;&#x7A33;&#x5B9A;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x4E0D;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x4E00;&#x4E0B;&#x52A8;&#x6001;&#x8DEF;&#x7531;&#x4F20;&#x53C2;&#x8FD9;&#x5757;&#xFF1A;</p>
+<pre class="language-"><code class="lang-javascript"><span class="token operator">&lt;</span>Switch<span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>Route exact<span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">}</span> path<span class="token operator">=</span><span class="token string">&quot;/home&quot;</span> component<span class="token operator">=</span><span class="token punctuation">{</span>Home<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token string">&quot;/book/&quot;</span> component<span class="token operator">=</span><span class="token punctuation">{</span>BookList<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token string">&quot;/book/add&quot;</span> component<span class="token operator">=</span><span class="token punctuation">{</span>Add<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token punctuation">{</span><span class="token comment">/* &#x5E38;&#x89C4;&#x7684;&#x5199;&#x6CD5; */</span><span class="token punctuation">}</span>
+  <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token string">&quot;/book/detail/:id&quot;</span> component<span class="token operator">=</span><span class="token punctuation">{</span>Detail<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token punctuation">{</span><span class="token comment">/* &#x6307;&#x5B9A;&#x8DEF;&#x7531; */</span><span class="token punctuation">}</span>
+  <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token string">&quot;/book/:pageType(detail|edit)/:id?&quot;</span> component<span class="token operator">=</span><span class="token punctuation">{</span>Detail<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token punctuation">{</span><span class="token comment">/* &#x591A;&#x53C2;&#x6570;&#x5199;&#x6CD5; */</span><span class="token punctuation">}</span>
+  <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token string">&quot;/book/:pageType(detail|edit)/:id/:name&quot;</span> component<span class="token operator">=</span><span class="token punctuation">{</span>Detail<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token punctuation">{</span><span class="token comment">/* &#x975E;&#x5FC5;&#x987B;&#x5199;&#x6CD5; */</span><span class="token punctuation">}</span>
+  <span class="token operator">&lt;</span>Route path<span class="token operator">=</span><span class="token string">&quot;/book/:pageType(detail|edit)/:id/:name?&quot;</span> component<span class="token operator">=</span><span class="token punctuation">{</span>Detail<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token punctuation">{</span><span class="token comment">/* &#x6307;&#x5B9A;&#x53C2;&#x6570;&#x89C4;&#x5219; */</span><span class="token punctuation">}</span>
+  <span class="token operator">&lt;</span>Route
+    path<span class="token operator">=</span><span class="token string">&quot;/book/:pageType(detail|edit)/:id(\\\d+)/:name?&quot;</span>
+    component<span class="token operator">=</span><span class="token punctuation">{</span>Detail<span class="token punctuation">}</span>
+  <span class="token operator">/</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span>Route component<span class="token operator">=</span><span class="token punctuation">{</span>NotFound<span class="token punctuation">}</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>Route<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>Switch<span class="token operator">&gt;</span>
+</code></pre>
+<h3 id="&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;">&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;</h3>
+<blockquote>
+<ul>
+<li>&#x4EC0;&#x4E48;&#x662F;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#xFF1F;<br>&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x5EF6;&#x8FDF;&#x52A0;&#x8F7D;&#x6216;&#x6309;&#x9700;&#x52A0;&#x8F7D;&#x3002;&#x5C31;&#x662F;&#x8BF4;&#x8981;&#x5230;&#x7528;&#x7684;&#x65F6;&#x5019;&#x624D;&#x4F1A;&#x53BB;&#x52A0;&#x8F7D;&#x67D0;&#x4E9B;&#x8DEF;&#x7531;&#x6307;&#x5411;&#x7684;&#x7EC4;&#x4EF6;</li>
+<li>&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x4F7F;&#x7528;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#xFF1F;<br> &#x5927;&#x5BB6;&#x90FD;&#x5E94;&#x8BE5;&#x77E5;&#x9053;&#xFF0C;&#x6211;&#x4EEC;&#x76EE;&#x524D;&#x6240;&#x4F7F;&#x7528;&#x7684; vue &#x548C; react &#x6846;&#x67B6;&#x6240;&#x751F;&#x6210;&#x7684;&#x7F51;&#x7AD9;&#x662F;&#x4E00;&#x4E2A;&#x5355;&#x9875;&#x9762;&#x5E94;&#x7528;(single page app)&#xFF0C;&#x53EA;&#x662F;&#x901A;&#x8FC7;&#x8DEF;&#x7531;&#x5728;&#x4E3B;&#x5BB9;&#x5668;&#x5185;&#x52A0;&#x8F7D;&#x4E0D;&#x540C;&#x7684;&#x6A21;&#x5757;&#x6216;&#x7EC4;&#x4EF6;&#x6765;&#x6E32;&#x67D3;&#x5230;&#x6211;&#x4EEC;&#x770B;&#x5230;&#x7684;&#x7A97;&#x53E3;&#x5185;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x5C31;&#x9020;&#x6210;&#x4E86;&#x6211;&#x4EEC;&#x7684;&#x9879;&#x76EE;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x6253;&#x5F00;&#x65F6;&#xFF0C;&#x6D4F;&#x89C8;&#x5668;&#x9700;&#x8981;&#x5C06;&#x6574;&#x7AD9;&#x6240;&#x6709;&#x7684;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x4E0B;&#x8F7D;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x7136;&#x540E;&#x7531; react route &#x6216; vue route &#x8FDB;&#x884C;&#x89E3;&#x6790;&#xFF0C;&#x6700;&#x540E;&#x7531;&#x6D4F;&#x89C8;&#x5668;&#x8FDB;&#x884C;&#x6E32;&#x67D3;&#x3002;&#x5C0F;&#x7684;&#x7F51;&#x7AD9;&#x5012;&#x662F;&#x65E0;&#x6240;&#x8C13;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x7684;&#x4E00;&#x4E9B;&#x540E;&#x53F0;&#x7BA1;&#x7406;&#x5E94;&#x7528;&#x52A8;&#x8F99;&#x51E0;&#x5341;&#x4E2A;&#x6A21;&#x5757;&#x4E0A;&#x5343;&#x4E2A;&#x9875;&#x9762;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x9020;&#x6210;&#x4E86;&#x65E0;&#x8BBA;&#x7528;&#x6237;&#x60F3;&#x8981;&#x8BBF;&#x95EE;&#x54EA;&#x4E2A;&#x6A21;&#x5757;&#x90FD;&#x9700;&#x8981;&#x5C06;&#x6574;&#x7AD9;&#x4EE3;&#x7801;&#x4E0B;&#x8F7D;&#x56DE;&#x6765;&#x624D;&#x80FD;&#x771F;&#x6B63;&#x6267;&#x884C;&#xFF0C;&#x8FD9;&#x5C31;&#x9020;&#x6210;&#x4E86;&#x957F;&#x65F6;&#x95F4;&#x7684;&#x767D;&#x5C4F;&#x548C;&#x7B49;&#x5F85;&#xFF0C;&#x751A;&#x81F3;&#x6709;&#x65F6;&#x5728;&#x7F51;&#x7EDC;&#x4E0D;&#x662F;&#x5F88;&#x597D;&#x60C5;&#x51B5;&#x4E0B;&#x9020;&#x6210;&#x9875;&#x9762;&#x5D29;&#x6E83;&#xFF0C;&#x4E25;&#x91CD;&#x5F71;&#x54CD;&#x4E86;&#x7528;&#x6237;&#x4F53;&#x9A8C;&#x3002;<br>&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#x53EF;&#x4EE5;&#x52A0;&#x5FEB;&#x7F51;&#x7AD9;&#x9996;&#x5C4F;&#x4EE3;&#x7801;&#x7684;&#x4E0B;&#x8F7D;&#x901F;&#x5EA6;&#xFF0C;&#x907F;&#x514D;&#x7528;&#x6237;&#x5728;&#x6253;&#x5F00;&#x7F51;&#x7AD9;&#x65F6;&#x56E0;&#x4E3A;&#x9996;&#x6B21;&#x4E0B;&#x8F7D;&#x4EE3;&#x7801;&#x91CF;&#x8FC7;&#x5927;&#x5BFC;&#x81F4;&#x9996;&#x5C4F;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x8FC7;&#x957F;&#x3002;</li>
+</ul>
+</blockquote>
+<h4 id="&#x4F7F;&#x7528;-react-&#x81EA;&#x5E26;&#x7684;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#x5DE5;&#x5177;&#xFF1A;">&#x4F7F;&#x7528; React &#x81EA;&#x5E26;&#x7684;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#x5DE5;&#x5177;&#xFF1A;</h4>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> lazy<span class="token punctuation">,</span> Suspense <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> BrowserRouter<span class="token punctuation">,</span> Switch <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react-router-dom&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> RouteGuard <span class="token keyword">from</span> <span class="token string">&apos;@/utils/routeGuard&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> Routes <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    path<span class="token operator">:</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">,</span>
+    component<span class="token operator">:</span> <span class="token function">lazy</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">&apos;@/pages/home/&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    auth<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">Router</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token comment">// &#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#xFF0C;&#x4F7F;&#x7528;&#x61D2;&#x52A0;&#x8F7D;&#x5FC5;&#x987B;&#x914D;&#x7F6E;Suspense&#xFF0C;&#x5426;&#x5219;&#x8DEF;&#x7531;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x8BBF;&#x95EE;</span>
+    <span class="token operator">&lt;</span>Suspense fallback<span class="token operator">=</span><span class="token punctuation">{</span><span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>loading<span class="token operator">...</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span><span class="token punctuation">}</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>BrowserRouter<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>Switch<span class="token operator">&gt;</span>
+          <span class="token operator">&lt;</span>RouteGuard Routes<span class="token operator">=</span><span class="token punctuation">{</span>Routes<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>Switch<span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>BrowserRouter<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>Suspense<span class="token operator">&gt;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="&#x4F7F;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x63D2;&#x4EF6;&#x5B9E;&#x73B0;&#x7684;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#xFF1A;">&#x4F7F;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x63D2;&#x4EF6;&#x5B9E;&#x73B0;&#x7684;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#xFF1A;</h4>
+<p>&#x56E0;&#x4E3A;&#x4E0A;&#x9762;&#x7684; React &#x81EA;&#x5E26;&#x7684;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#x5DE5;&#x5177;&#x53EA;&#x5728; 16.6 &#x7248;&#x672C;&#x540E;&#x624D;&#x88AB;&#x652F;&#x6301;&#xFF0C;&#x800C;&#x6211;&#x4EEC;&#x5728;&#x5B9E;&#x9645;&#x4E1A;&#x52A1;&#x4E2D;&#x53EF;&#x80FD;&#x4F1A;&#x9047;&#x5230;&#x66F4;&#x65E9;&#x7248;&#x672C;&#x7684; react &#x7248;&#x672C;&#xFF0C;&#x4E3A;&#x4E86;&#x5728;&#x8FD9;&#x4E9B;&#x7248;&#x672C;&#x7684; react &#x4E2D;&#x5B9E;&#x73B0;&#x8DEF;&#x7531;&#x61D2;&#x52A0;&#x8F7D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x4F9D;&#x8D56;&#xFF1A;</p>
+<pre class="language-"><code class="lang-javascript">npm i <span class="token operator">-</span><span class="token constant">S</span> react<span class="token operator">-</span>loadable
+</code></pre>
+<p>&#x61D2;&#x52A0;&#x8F7D;&#x7BA1;&#x7406;&#xFF1A;utils/loadable.js</p>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> Loadable <span class="token keyword">from</span> <span class="token string">&apos;react-loadable&apos;</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x901A;&#x7528;&#x7684;&#x8FC7;&#x573A;&#x7EC4;&#x4EF6;</span>
+<span class="token keyword">const</span> <span class="token function-variable function">loadingComponent</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>loading<span class="token operator">...</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x8FC7;&#x573A;&#x7EC4;&#x4EF6;&#x9ED8;&#x8BA4;&#x91C7;&#x7528;&#x901A;&#x7528;&#x7684;&#xFF0C;&#x82E5;&#x4F20;&#x5165;&#x4E86;loading&#xFF0C;&#x5219;&#x91C7;&#x7528;&#x4F20;&#x5165;&#x7684;&#x8FC7;&#x573A;&#x7EC4;&#x4EF6;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token parameter">loader<span class="token punctuation">,</span> loading <span class="token operator">=</span> loadingComponent</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">Loadable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    loader<span class="token punctuation">,</span>
+    loading<span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x61D2;&#x52A0;&#x8F7D;&#x8DEF;&#x7531;&#x6587;&#x4EF6;&#xFF1A; router.js</p>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> BrowserRouter<span class="token punctuation">,</span> Switch <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react-router-dom&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> loadable <span class="token keyword">from</span> <span class="token string">&apos;@/utils/loadable&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> RouteGuard <span class="token keyword">from</span> <span class="token string">&apos;@/utils/routeGuard&apos;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> Routes <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    path<span class="token operator">:</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">,</span>
+    component<span class="token operator">:</span> <span class="token function">loadable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">&apos;@/pages/home/&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    auth<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">Router</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>BrowserRouter<span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>Switch<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>RouteGuard Routes<span class="token operator">=</span><span class="token punctuation">{</span>Routes<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>Switch<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>BrowserRouter<span class="token operator">&gt;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="react-router-&#x5B9E;&#x73B0;&#x7684;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x63CF;&#x8FF0;">React Router &#x5B9E;&#x73B0;&#x7684;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x63CF;&#x8FF0;</h3>
+<ol>
+<li>&#x5F15;&#x5165;&#x5E76;&#x5B9E;&#x4F8B;&#x5316; history</li>
+<li>&#x5728;&#x9876;&#x5C42; Router &#x7EC4;&#x4EF6;&#xFF08;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A;&#x5B83;&#x7406;&#x89E3;&#x4E3A;&#x4E00;&#x4E2A;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF09;&#x7684; constructor &#x751F;&#x547D;&#x5468;&#x671F;&#x91CC;&#x76D1;&#x542C; history&#xFF0C;&#x5C06;&#x4E00;&#x4E2A; location &#x5B58;&#x5230;&#x5F53;&#x524D;&#x7684; state &#x4E2D;</li>
+<li>&#x4F7F;&#x7528;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x5B66;&#x8FC7;&#x7684; Context(Provider)&#x6765;&#x5305;&#x62EC;&#x5185;&#x90E8;&#x7684;&#x5B50;&#x7EC4;&#x4EF6;,&#x5B58;&#x5165; history&#x3001;location &#x4E0E; match &#x7B49;&#x5BF9;&#x8C61;</li>
+<li>&#x4F7F;&#x7528; Context(Consumer)&#x6765;&#x5305;&#x88F9;&#x6211;&#x4EEC;&#x4F20;&#x5165;&#x7684; route &#x5217;&#x8868;, &#x4EE5;&#x4FBF;&#x4E8E;&#x6211;&#x4EEC;&#x5728;&#x540E;&#x7EED;&#x7684;&#x7EC4;&#x4EF6;&#x4E2D;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; history &#x7B49; Provider &#x4F20;&#x5165;&#x7684;&#x5BF9;&#x8C61;</li>
+<li><p>&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; matchPath &#x7684;&#x51FD;&#x6570;&#x6765;&#x5224;&#x65AD;&#x6211;&#x4EEC;&#x7684;&#x5B50;&#x7EC4;&#x4EF6;&#x4E2D;&#x662F;&#x5426;&#x6709;&#x5339;&#x914D;&#x7684; path, &#x5982;&#x679C;&#x6709;&#x5219;&#x6E32;&#x67D3;&#x5B50;&#x7EC4;&#x4EF6;</p>
+</li>
+<li><p>&#x5F53; history &#x53D1;&#x751F;&#x53D8;&#x5316;&#x65F6;&#xFF0C;Router &#x7EC4;&#x4EF6;&#x8C03;&#x7528; setState &#x65B9;&#x6CD5;&#x5C06; location &#x9010;&#x7EA7;&#x5411;&#x4E0B;&#x4F20;&#x9012;&#xFF1B;&#x4F7F;&#x7528;&#x904D;&#x5386;&#x7684;&#x65B9;&#x5F0F;&#x5C06; route &#x5217;&#x8868;&#x4E2D;&#x7684; path &#x5C5E;&#x6027;&#x5339;&#x914D; Context &#x4E2D;&#x7684; location &#x6765;&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x663E;&#x793A;&#xFF1B;&#x5982;&#x679C;&#x6709; Switch &#x6807;&#x7B7E;&#x7684;&#x8BDD;&#xFF0C;&#x5339;&#x914D;&#x5230;&#x7B2C;&#x4E00;&#x4E2A;&#x53EF;&#x6E32;&#x67D3;&#x7684;&#x7EC4;&#x4EF6;&#x540E;&#x9000;&#x51FA;&#x904D;&#x5386;</p>
+</li>
+</ol>
+<h3 id="react-router-&#x4E0E;-react-router-dom-&#x7684;&#x533A;&#x522B;">react-router &#x4E0E; react-router-dom &#x7684;&#x533A;&#x522B;</h3>
+<blockquote>
+<p>react-router: &#x5B9E;&#x73B0;&#x4E86;&#x8DEF;&#x7531;&#x7684;&#x6838;&#x5FC3;&#x529F;&#x80FD;<br>react-router-dom: &#x662F;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E; react-router &#x5F00;&#x53D1;&#x7684;&#x6269;&#x5C55;&#x63D2;&#x4EF6;&#xFF0C;&#x52A0;&#x5165;&#x4E86;&#x6211;&#x4EEC;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#x4E0B;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7684;&#x4E00;&#x4E9B;&#x529F;&#x80FD;&#x3002;&#x6BD4;&#x5982;&#xFF1A;&#x53EF;&#x4EE5;&#x6E32;&#x67D3;&#x4E00;&#x4E2A; a &#x6807;&#x7B7E;&#x7684; Link &#x7EC4;&#x4EF6;&#xFF0C;&#x57FA;&#x4E8E; H5 &#x7684; history API &#x5B9E;&#x73B0;&#x7684; BrowserRouter &#x7EC4;&#x4EF6;&#xFF0C;&#x57FA;&#x4E8E; location.hash &#x5B9E;&#x73B0;&#x7684; HashRouter;<br>react-router-native: &#x57FA;&#x4E8E; react-router &#x7684;&#x6269;&#x5C55;&#x63D2;&#x4EF6;&#xFF0C;&#x52A0;&#x5165;&#x4E86;&#x5728; native &#x8FD0;&#x884C;&#x73AF;&#x5883;&#x4E0B;&#x7684;&#x4E00;&#x4E9B;&#x529F;&#x80FD;&#x3002;</p>
+</blockquote>
+<ul>
+<li>&#x56E0;&#x4E3A; react-router-dom &#x4F1A;&#x81EA;&#x5DF1;&#x5B89;&#x88C5; react-router &#x4F9D;&#x8D56;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x6B63;&#x5E38;&#x7684; web app &#x5F00;&#x53D1;&#x4E2D;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5B89;&#x88C5; react-router-dom &#x5C31;&#x884C;&#x4E86;,&#x5728;&#x5F00;&#x53D1; react-native &#x65F6;&#x4E5F;&#x53EA;&#x9700;&#x8981;&#x5B89;&#x88C5; react-router-native.</li>
+</ul>
+<p><footer class="footer"><div class="footer__container--normal"><div class="footer__description--normal"><p class="paragraph footer__author--normal" style="color: #000 !important;">&#x524D;&#x7AEF;&#x7B14;&#x8BB0;<sup class="super">&#xAE;</sup></p><p class="paragraph footer__quote--normal" style="color: #000 !important;">&#x81F4;&#x6240;&#x6709;&#x60F3;&#x8981;&#x8FDB;&#x5165;&#x524D;&#x7AEF;&#x5F00;&#x53D1;&#x884C;&#x4E1A;&#x7684;&#x65B0;&#x4EBA;&#x4EEC;  -- marion.lau</p><div class="footer__main--normal"><p class="paragraph footer__main__paragraph--normal copyright" style="color: #666 !important;">Copyright &#xA9; marion.lau@foxmail.com all right reserved</p><p class="paragraph footer__main__paragraph--normal footer__modifyTime--normal" style="color: #666 !important;"><span style="color: #666 !important;">modified at</span>
+2022-08-01 18:44:43
+</p></div>&lt;/div&gt;&lt;/div&gt;<div id="gitalk-container"></div><script>var gitalk = new Gitalk({clientID: '1dd340a7923ebd556673',clientSecret: '1dd340a7923ebd556673',repo: 'blog.fenotes.com',owner: 'uncle-marion',admin: ['uncle-marion'],id: window.location.pathname,distractionFreeMode: false,});gitalk.render('gitalk-container');</script></div></div></footer></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="regexp.html" class="navigation navigation-prev " aria-label="Previous page: 附录 3 JS 正则表达式">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../unit1/container.html" class="navigation navigation-next " aria-label="Next page: 附录 1 创建全局框架">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第四课 路由与嵌套路由","level":"1.3.4","depth":2,"next":{"title":"附录 1 创建全局框架","level":"1.3.4.1","depth":3,"path":"unit1/container.md","ref":"unit1/container.md","articles":[]},"previous":{"title":"附录 3 JS 正则表达式","level":"1.3.3.3","depth":3,"path":"unit2/regexp.md","ref":"unit2/regexp.md","articles":[]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","prism","-highlight","page-copyright","custom-favicon"],"styles":{"website":"./assets/style.css"},"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"search":{},"page-copyright":{"wisdom":"致所有想要进入前端开发行业的新人们  -- marion.lau","noPowered":true,"copyright":"Copyright &#169; marion.lau@foxmail.com","styles (normal, symmetrical)":"normal","style":"normal","isShowQRCode":false,"timeColor":"#666","utcOffset":"8","format":"YYYY-MM-dd hh:mm:ss","signature":"前端笔记","baseUri":"http://www.fenotes.com","copyrightColor":"#666","description":"modified at"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":"./assets/m.png","custom-favicon":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"marion.lau@foxmail.com","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React Training","gitbook":"*","description":"前端开发人员应知应会，如果你想要入职前端这个行业，建议你将本书中的内容都过一遍，已经了解的知识就当是复习了，不了解的知识，特别是项目这块的，作为一个好的前端，应该都要知道要养成习惯。","theme-default":{"showLevel":true}},"file":{"path":"unit2/reactRouter.md","mtime":"2022-08-01T10:44:43.874Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-10T09:16:49.688Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-page-copyright/gitalk.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,117 @@
+.book.without-animation {
+  background: url(bg.jpeg);
+}
+/* 左侧菜单 */
+.book.without-animation .book-summary {
+}
+.book-summary ul.summary > li {
+  border-bottom: 1px solid #ccc;
+  background: rgba(255, 255, 255, 0.5);
+}
+.book-summary ul.summary > li:first-child {
+  background: #fff;
+}
+.book-summary ul.summary > li:last-child {
+  border: none;
+}
+.book-summary ul.summary > .expanded {
+  background: rgba(232, 255, 232, 0.25);
+}
+/* 文章部分 */
+.book.without-animation .book-body {
+  background-color: rgba(232, 255, 232, 0.25);
+  font-size: 15px;
+}
+.page-inner {
+  max-width: 1024px;
+}
+.markdown-section ul li p:last-child {
+  padding-bottom: 10px;
+}
+.markdown-section {
+  padding: 0 5px;
+}
+.markdown-section hr {
+  height: 1px;
+  background-color: #999;
+}
+
+.markdown-section blockquote {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px 15px;
+  border: 1px solid #fff;
+  font-size: 13px;
+  color: #333;
+  box-shadow: 0px 0px 2px inset rgb(0 0 0 / 10%);
+}
+
+.markdown-section p:last-child {
+  margin: 0;
+}
+
+.copy-code-button {
+  font-size: 12px !important;
+  border: 1px solid #000 !important;
+  color: #999 !important;
+  border-radius: 2px !important;
+  right: 4px !important;
+  top: 6px !important;
+  padding: 1px 3px !important;
+  font-family: 'FontAwesome';
+  box-shadow: 1px 1px 1px inset rgb(255 255 255 / 25%);
+}
+
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+  border-radius: 5px;
+  background: #000;
+  border: 1px solid #ccc;
+}
+
+.markdown-section blockquote,
+.markdown-section p,
+.markdown-section table {
+  text-indent: 2em;
+}
+.markdown-section dl p,
+.markdown-section ol p,
+.markdown-section ul p {
+  text-indent: 0;
+}
+.markdown-section blockquote img,
+.markdown-section dl img,
+.markdown-section ol img,
+.markdown-section p img,
+.markdown-section table img,
+.markdown-section ul img {
+  margin-left: -2em;
+}
+.footer__author--normal,
+.footer__quote--normal {
+  text-indent: 0 !important;
+}
+.footer__author--normal {
+  padding-bottom: 0 !important;
+}
+.footer__quote--normal {
+  margin-top: 3px !important;
+}
+.footer__main__paragraph--normal {
+  margin: 5px 0 !important;
+}
+.footer__main--normal {
+  bottom: -4px !important;
+}
+.footer__description--normal {
+  margin: 0 !important;
+}
+.footer__author--normal {
+  border-bottom-color: #999 !important;
+}
+
+@media (max-width: 1240px) {
+  .navigation-next,
+  .navigation-prev {
+    display: none !important;
+  }
+}
