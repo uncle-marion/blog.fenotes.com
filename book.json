@@ -7,7 +7,8 @@
     "prism",
     "-highlight",
     "page-copyright",
-    "custom-favicon"
+    "custom-favicon",
+    "katex"
   ],
   "pluginsConfig": {
     "prism": {
@@ -26,7 +27,9 @@
       "utcOffset": "8",
       "style": "normal",
       "baseUri": "http://www.fenotes.com",
-      "noPowered": true
+      "noPowered": true,
+      "clientID": "1dd340a7923ebd556673",
+      "clientSecret": "4981d6b240efb08d88e19b395d3b7ea12300e0ec"
     }
   },
   "theme-default": {

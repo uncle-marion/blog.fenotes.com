@@ -1,6 +1,15 @@
 .book.without-animation {
   background: url(bg.jpeg);
 }
+sub,
+sup {
+  display: inline-block;
+  transform: scale(0.75, 0.75);
+  transform-origin: left;
+}
+sub {
+  bottom: -0.5em;
+}
 /* 左侧菜单 */
 .book.without-animation .book-summary {
 }
@@ -68,10 +77,11 @@ pre[class*='language-'] {
   border: 1px solid #ccc;
 }
 
-.markdown-section blockquote,
-.markdown-section p,
-.markdown-section table {
+.markdown-section p {
   text-indent: 2em;
+}
+.markdown-section blockquote p {
+  text-indent: 0;
 }
 .markdown-section dl p,
 .markdown-section ol p,

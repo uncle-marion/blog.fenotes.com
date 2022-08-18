@@ -38,13 +38,14 @@
     - [附录 2 组件的优化](unit2/componentOptimize.md)
     - [附录 3 JS 正则表达式](unit2/regexp.md)
   - [第四课 路由与嵌套路由](unit2/reactRouter.md)
-    - [附录 1 创建全局框架](unit1/container.md)
+    - [附录 1 创建全局框架](unit2/container.md)
     - [附录 2 组件通信](unit2/communication.md)
-    - [附录 3 算法复杂度](unit2/omicron.md)
+    - [附录 3 算法](unit2/omicron.md)
   - [第五课 全局状态管理](unit2/redux.md)
     - [附录 1 常用中间件](unit2/middleware.md)
     - [附录 2 浏览器调试工具与状态持久化](unit2/devtools.md)
     - [附录 3 redux-toolkit](unit2/reduxToolkit.md)
+    - [附录 4 完善全局框架](unit2/container.fun.md)
   - [第六课 路由守卫](unit2/route_auth.md)
     - [附录 1 配置全站路由](unit1/globalRoutes.md)
     - [附录 2 路由表与用户权限管理](unit1/guard.md)
@@ -68,15 +69,16 @@
 - 第四单元 TypeScript 基础知识
   - [第一课 TypeScript 基础](unit9/lessons_01.md)
   - [第二课 TypeScript 入门](unit9/lessons_02.md)
+  - [第三课 TypeScript 泛型详解]()
   - [第三课 TypeScript 与类组件](unit9/lessons_03.md)
   - [第四课 TypeScript 与函数组件](unit9/lessons_04.md)
-  - [第五课 TypeScript 泛型]()
 - 第五单元 UMI 基于 React 的 MVC 框架
-- 第六单元 了解一些 VUE
-- 第七单元 小程序
-- 第八单元 NODEJS
-- 第九单元 架构入门
-- 第十单元 常见面试问题
+- 第六单元 React-Native
+- 第七单元 了解一些 VUE
+- 第八单元 uniapp 与小程序
+- 第九单元 NODEJS
+- 第十单元 架构入门
+- 第十一单元 常见面试问题
   - [第一课 什么是微前端](unit_10/micro_frontend.md)
   - [第二课 单点登陆](unit_10/single_sign_on.md)
   - [第三课 websocket](unit_10/websocket.md)
@@ -84,7 +86,7 @@
   - [第五课 mock 的配置与使用](unit_10/use_mock.md)
   - [第六课 什么是 ssr](unit_10/server_side_render.md)
   - [第七课 发布你的 npm 插件](unit_10/npm_publish.md)
-- 第十一单元 业务中常见的代码积累
+- 第十二单元 业务中常见的代码积累
   - [lessons_02. 第三方登陆](unit_10/lessons_02.md)
   - [lessons_03. 微信支付](unit_10/lessons_03.md)
   - [lessons_04. 微信支付](unit_10/lessons_03.md)
