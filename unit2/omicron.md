@@ -177,13 +177,14 @@ for (let i = 0; i <= n; i++) {
 
 这个就不举例了，它就是个三层嵌套的遍历。
 
-- 指数复杂度 Exponential Complexity: $$O(2^n)$$
+- 指数复杂度 Exponential Complexity: $$O(k^n)$$
 
 ```javascript
 function fibonacci(n) {
   if (n === 1 || n === 2) {
     return 1;
   }
+  // n的值+1，这里则需要增加n^n次计算
   return fibonacci(n - 1) + fibonacci(n - 2);
 }
 console.time('start');
@@ -276,16 +277,9 @@ for (var i = 0; i < n && arr[i] !== 1; i++) {
 
 3. 平均时间复杂度和最坏时间复杂度是否一致，和算法有关，如下表所示：
 
-| 算法 | 平均复杂度     | 最好情况        | 最坏情况        | 稳定性 | 空间复杂度 | 排序方式  | 备注                   |
-| ---- | -------------- | --------------- | --------------- | ------ | ---------- | --------- | ---------------------- |
-| 冒泡 | $$O(n2)$$      | O(n)            | $$O(n2)$$       | 稳定   | $$O(1)$$   | In-place  | 适用于 n 较小时        |
-| 选择 | $$O(n2)$$      | $$O(n2)$$       | $$O(n2)$$       | 不稳定 | $$O(1)$$   | In-place  | 适用于 n 较小时        |
-| 插入 | $$O(n2)$$      | O(n)            | $$O(n2)$$       | 稳定   | $$O(1)$$   | In-place  | 大部分都已排序时比较好 |
-| 希尔 | $$O(n log n)$$ | $$O(n log^2n)$$ | $$O(n log^2n)$$ | 不稳定 | $$O(1)$$   | In-place  |                        |
-| 归并 | $$O(n log n)$$ | $$O(n log n)$$  | $$O(n2)$$       | 不稳定 | $$O(1)$$   | Out-place | 适用于 n 较大时        |
-| 快排 | $$O(n log n)$$ | $$O(n log^2n)$$ | $$O(n log^2n)$$ | 不稳定 | $$O(1)$$   | In-place  | 适用于 n 较大时        |
-| 基数 | $$O(n2)$$      |                 | $$O(n2)$$       | 稳定   | $$O(1)$$   | In-place  | n 较小时比较快速       |
-| 交换 | $$O(n2)$$      |                 | $$O(n2)$$       | 不稳定 | $$O(1)$$   | In-place  | n 较小时比较快速       |
+<img src="../assets/images/unit_02/sort.png">
+
+[十大经典排序算法](./sortAlgorithm.md)
 
 #### 空间复杂度
 
@@ -442,7 +436,7 @@ function fibonacci(n) {
 }
 ```
 
-#### 更好的实现
+##### 更好的实现
 
 ```javascript
 function fibonacci(n) {
@@ -461,7 +455,7 @@ function fibonacci(n) {
 }
 ```
 
-#### 最优的实现
+##### 最优的实现
 
 ```javascript
 function fibonacci(n) {

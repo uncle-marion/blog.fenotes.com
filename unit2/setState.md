@@ -775,6 +775,125 @@ function commitRootImpl(root, renderPriorityLevel) {
 }
 ```
 
+---
+
+### 练习：模拟实现一个简单的 setState
+
+在早期版本的 React 的 setState 函数实现中, 会根据一个变量 isBatchingUpdates (yisibaiqinapudeici)判断是直接更新 this.state 还是放到 enqueueSetState(enkuiseitesidete) 队列中, isBatchingUpdates 默认值是 false, 也就表示 setState 会同步更新 this.state。
+
+但是 setState 中有一个函数 batchedUpdates(baiqindeapudeici), 这个函数会把 isBatchingUpdates 修改为 true, 而当 React 在进行队列事件处理之前就会调用这个 batchedUpdates 函数, 造成的后果, 就是由 React 在接收到一个 setState 请求时, 不会直接更新 state。关于 isBatchingUpdates 方法，除了 enqueueSetState 队列更新时会调用 batchedUpdates 来标记当前更新状态, 所有的 React 生命周期函数在执行的时候也会修改 isBatchingUpdates 的值为 true。
+
+最后有一种例外不得不提的是，当我们在一些类似于 setTimeout(setaimuaote) 这种异步函数中执行 setState 时, 因为 React 无法感知我们的渲染顺序, 所以它放弃了修改 isBatchingUpdates 而是直接更新了 state。
+
+```javascript
+// 为了看清代码执行步骤，在这定义一个无用的变量
+let step = 1;
+// 定义一个状态树
+let oldState = { msg: '原始值' };
+// 定义一个用于判断是否正在执行setState事件的标记
+let isBatchingUpdates = false; // false表示未更新
+// 定义一个队列，用于储存所有的setState调用
+let enqueueSetState = [];
+// 定义一个队列，用于储存setState第二个参数，也就是更新完成的回调函数
+let callbackList = [];
+// 定义一个方法，模拟React.setState方法
+function mySetState(state, callback) {
+  // 将当前需要更新的state存入setState队列
+  if (state) {
+    Object.prototype.toString.call(state) === '[object Object]' &&
+      enqueueSetState.push(state);
+  } else {
+    console.log('%c递归调用，没有传值', 'color:#f00');
+  }
+  console.log(
+    `%c看看它们调用的顺序:${step} ${JSON.stringify(
+      state ? state : '这是函数内部调用的'
+    )}`,
+    'color: #060'
+  );
+  step += 1;
+  // 如果有回调函数把回调函数则存入回调队列里
+  callback &&
+    // 这里是判断它是否是一个函数，只有当它是函数时才存储，避免无法执行报错
+    Object.prototype.toString.call(callback) === '[object Function]' &&
+    callbackList.push(callback);
+
+  // 判断是否正在更新,如果正在更新，等待更新完成后第45行的调用
+  if (isBatchingUpdates) {
+    console.log(`%c看看谁被挡出去了${JSON.stringify(state)}`, 'color:#00f');
+    return;
+  }
+  // 修改状态表示正在更新state，新加入队列的setState不再进行处理
+  // 因为前面已经将state存入了enqueueSetState队列，所以不用担心这个state会丢失
+  isBatchingUpdates = true;
+
+  // 创建一个队列副本
+  // 这个副本的作用是避免当我们对enqueueSetState队列进行操作时，有新的setState命令进入导致队列长度发生变化
+  const newSetState = [...enqueueSetState];
+  // 清空原有队列，保证当新的setState命令进入时不与原有操作发生冲突
+  enqueueSetState = [];
+  const newCallback = [...callbackList];
+  callbackList = [];
+
+  // 写state的方法
+  function setState(state) {
+    // 使用新的state覆盖旧的state
+    oldState = Object.assign(oldState, state);
+    // 打印结果
+    console.log('%c处理完毕，over!', 'color: #909');
+    // 检查是否有回调，如果有，执行它
+    for (let cb of newCallback) {
+      cb(oldState);
+    }
+  }
+  console.log('主线程执行到这，mysetState已经执行完成，被弹出');
+  setTimeout(() => {
+    // 如果没有在更新状态，开始处理数据
+    const newState = newSetState.reduce((prev, next) => {
+      return Object.assign(prev, next);
+    }, {});
+    console.log('看看有哪些数据被合并了', newSetState);
+    // 数据合并完成，写入当前state
+    setState(newState);
+
+    // 数据写入完成，修改更新状态，表示可以进行另一个队列的操作了
+    isBatchingUpdates = false;
+    // 检查是不是还有数据在排队，如果有排队的，从头再来
+    if (enqueueSetState.length) {
+      mySetState();
+    }
+  });
+}
+mySetState({ msg: '哥是第一个,后来的等着' }, state => {
+  console.log('第一步更新完成', state);
+});
+mySetState({ msg: '后来的排个队' }, state => {
+  console.log('第二步更新完成', state);
+});
+mySetState({ msg: '排队ing...' }, state => {
+  console.log('第三步更新完成', state);
+});
+setTimeout(() => {
+  mySetState({ msg: '又没赶上。。继续排队ing...' }, state => {
+    console.log('第四步更新完成', state);
+  });
+});
+setTimeout(() => {
+  mySetState({ msg: 'me too...' }, state => {
+    console.log('第五步更新完成', state);
+  });
+});
+```
+
+上面这段代码比较简单，只是让大家理解 setState 的异步操作是怎样实现的，真实的 setState 源码可以看这里
+[setState 源码](setState.md)
+
+什么是组件，什么是 state，这两个问题，这是 react 运行的基本构成，大家一定要有自己的理解，后续才能更好地学习接下来的内容。不一定要精确地描述出来，但要大致能说清逻辑。
+
+setState 是一个很灵活的方法，它接受两个参数，参数一可以是一个 state 对象，也可以是一个实时返回 state 对象的函数，参数二是一个回调，用于实时获取改变后的 state 进行更多的业务处理
+
+然后，setState 的简单描述也要记一下，最好是把这些英文单词发音都背下来，这样面试时一旦问起，你娴熟的术语描述将会大大提升你在面试官眼中的形象，关键是，这段描述代表着你已经把 setState 的这段代码看完且理解了。
+
 ### 总结
 
 在 17.0.2 版本的 setState 中，整体明高优先级任务插队，低优先级任务重做的整个过程共有四个关键点：

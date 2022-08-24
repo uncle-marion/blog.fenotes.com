@@ -1,46 +1,237 @@
-> Marion 的 react 实战课程 > 第三部分 > 什么是 Redux
+> Marion 的 react 实战课程 > 第三部分 > React 全局状态管理
 
-## 什么是 Redux
+之前在组件中有提到，React 中的状态管理工具库目前比较流行的有 mobx 与 redux，因为时间有限，我们优先学习 redux。对于 mobx，有时间我们会用一到两节课时来学习，否则就只能让大家自学了。
 
-- 由于 React 并没有官方的状态管理机制, 所以 Redux 其实是 React 事实上的状态管理工具, 提供一个应用于 JavaScript 的可预测的状态容器, 提供可预测的状态管理。
+### 一、什么是 Redux
 
-> 因为我在使用 React 时并没有太复杂的应用需要使用 Redux, 所以我也是在最近在梳理 React 知识的过程中学习的 Redux, 有些词语描述的可能不是太精准, 大家理解这个意思就行。
+- Redux 是用于解决 React 没有官方的状态管理机制问题的, 所以 Redux 其实是 React 事实上的状态管理工具, 它的功能是提供一个应用于 JavaScript 的可预测的状态容器, 提供可预测的状态管理。
 
-> 在我看来, Redux 其实只是一个简单的对象管理程序, 它内部存储了一棵对象树, 向外暴露了一些方法让我们对这个树中的内容做一些增删改查的工作。 它可以应用在任何的 JS 程序中, 包括 vue 或 jquery, 而不是仅适用于 React。
+这句话是官方的解释，但可能大多数同学还是没有办法理解 Redux，所以为了让大家能更好地理解什么是 redux，我们先不去理解 Redux，只是在项目中使用 redux 简单地实现一个状态管理操作：
 
-> 因为 Redux 并非是为 React 定制开发的, 所以我们在平时使用中与 React 配合还需要另一个库 React-Redux, 这是一种被称之为“绑定”(官方文档中称之为 binding)的方法, 用来把 React 和 Redux 集成到一块工作。
+1. #### Redux 的简单配置
+
+首先我们需要安装 redux 及 react 的 redux 辅助工具：react-redux
+
+```bash
+yarn add redux react-redux
+```
+
+我们昨天在 src 目录下创建了一个 models 目录，这个目录就是用来存储数据相关的文件的，首先在 models 目录下建立一个叫 store.js 的文件：
+
+```javascript
+// 导入creageStaore 用于创建store库
+import { createStore } from 'redux';
+
+/**
+ * 用于管理状态的方法，redux会以当前这个函数名在状态库中创建一个状态树用于保存数据
+ * @param {*} state 当前状态库中对应于这个方法的状态树，状态初始化时需要传入默认值
+ * @param {*} action 用于描述改变状态的对象
+ */
+function reducer(state = { count: 0 }, action) {
+  // 加法操作
+  if (action.type === 'add') {
+    return { ...state, count: state.count++ };
+  }
+  // 减法操作
+  if (action.type === 'sub') {
+    return { ...state, count: state.count-- };
+  }
+  // 因为store在被调用时会同时激活所有的reducer，所以，我们在无法匹配到正确的action.type时，必须要返回原有的state，否则会造成store中对应的属性变成undefined的情况
+  return state;
+}
+
+// 调用createStore方法创建store库
+const store = createStore(reducer);
+
+// 抛出store库
+export default store;
+```
+
+修改根目录下的 index.jsx 文件，加入 store 配置信息：
+
+```javascript
+// 导入生产者用于注入store库
+import { Provider } from 'react-redux';
+// 导入store库
+import Store from '@/models/store';
+
+// ...
+Root.render(
+  // 使用生产者组件包裹路由组件，使得每个路由所访问的组件都会被生产者组件包裹并注入store库
+  <Provider store={Store}>
+    <Router />
+  </Provider>
+);
+```
+
+然后回到我们的首页，将 store 中的数据渲染到页面中并且传入修改数据的方法：
+
+```javascript
+import React, { Component } from 'react';
+// 导入connect用于读写store中的数据
+import { connect } from 'react-redux';
+
+class Index extends Component {
+  render() {
+    return (
+      <div>
+        <h1>{this.props.count}</h1>
+        {/* 数字加减事件按钮 */}
+        <button onClick={this.props.add}>+</button>
+        <button onClick={this.props.sub}>-</button>
+      </div>
+    );
+  }
+}
+
+// 通过connect方法将store中的数据及用于处理数据的方法以props的形式传入组件中
+export default connect(state => state, {
+  // action函数，这里返回的action对象必须包含有type属性
+  // 调用action函数后返回的内容会被react-redux接收到并派发到store中去，由store分发给所有的reducer函数进行匹配处理
+  add() {
+    return { type: 'add' };
+  },
+  sub() {
+    return { type: 'sub' };
+  },
+})(Index);
+```
+
+2. #### 理解 Redux
+
+通过上面的例子，我们知道了 Redux 大致的工作方式以及它的功能，通俗点来说，Redux 是通过 Context 在 root 下注入了一个全局可用的状态的管理工具。使用了 Redux 后，我们就可以比较简单地实现**统一的全局状态通讯**。
+
+或者换个说法：Redux 其实只是一个高级的对象管理程序, 它内部存储了一棵对象树, 同时向外暴露了一些方法让我们可以通过调用这些方法来对树中的内容做一些增删改查的工作，同时会通过一些内部的事件订阅来通知所有的组件有哪些状态发生了变化，以便于我们的组件在对应的状态发生变化时进行状态更新和渲染。
 
 ---
 
-## 什么是状态, 为什么要使用 Redux 来管理状态
+### 二、相关名词解释
 
-- 所谓状态, 一般用来描述人或事物表现出来的形态。是指某种事物处于生成、生存、发展、消亡时期或各转化临界点时的形态或事物态势。在这里可以简单地理解为变量, 即 React 组件自身的一些能影响它自己长什么样子的变量。
+在开始理解之前，我们必须要了解一些术语和概念：
 
-> Redux 可以帮助我们更好地管理应用的共享状态, 这就是我们平时说的组件通讯。
+#### 1. Immutable 不可变性
 
-> 因为 React 只能通过 Props 来处理一些简单的父子组件的通讯, 通过 Context 来处理一些深层嵌套的组件的通讯, 但对于兄弟节点、两个不相关的节点等这些状态的管理就有些力不从心了。
+在我们之前所学习到的与 JavaScript 有关的知识中，都在说 JavaScript 的自由的、可变的：
 
-> 而 Redux 作为一个“前端状态管理器”, 不仅能让我们方便且有条理地存储状态数据, 还能容易地在任何位置快速获取指定的数据, 我们只需要告诉 Redux 需要哪个数据, 它就会处理好一切后将数据传出。
+```javascript
+const obj = { a: 1, b: 2 };
+// 内存地址不变，但引用内容发生变化
+obj.c = 3;
 
----
+const arr = [1, 2, 3, 4];
+// 内存地址不变，但引用内容发生变化
+arr.push(5);
+```
 
-## Redux 有三大原则, 分别是哪些原则
+上面的代码，演示的是当我们定义了一个对象或数组以后，可以通过各种方式去改变它里面的内容而不会影响它在内存中的地址，这就是 JavaScript 的不可变性。
 
-- 单一数据源: 整个应用的 State 存储在全站唯一的一个 Store 中的对象/状态树里
+Immutable 的意思是不可以改变原有的对象或数组，如果需要改变，必须先复制原来对象或数组的引用，然后再去更新这个复制出来的对象
 
-> 单一的 State 树可以更容易地跟踪变化、进行调试或检查应用程序
+```javascript
+const obj = { a: 1, b: 2 };
+// 通过展开运算符可以轻易地复制原有对象中的属性，从而为变量建立一个全新的引用对象而不改变原有对象中的内容
+const obj2 = { ...obj, c: 3 };
 
-- State 是只读的: 改变状态的唯一方法是去触发一个 Action
+const arr = [1, 2, 3, 4];
+const arr2 = [...arr, 5];
+```
 
-> 这样确保了视图或网络请求或其它用户操作都无法直接修改 State, 而只能通过 Action 来表示需要改变的意图。Action 只是一个用来描述变化的普通 JS 对象。就像 State 是数据的最小表示一样, 该操作是对数据更改的最小表示;
+Redux 内部的状态比较机制是基于内存地址的，所以，如果我们在原对象中进行改变会导致 Redux 无法察觉到状态的变化，从而无法激活 subscribe 方法导致状态更新不能映射到组件中去，所以，Redux 要求我们所有的状态更新都是使用不可变的方式。
 
-- 使用纯函数来修改 State
+#### 2. store
 
-> 为了指定状态树如何通过操作进行转换, 我们需要一个纯函数来处理参数并返回我们处理过的内容, 纯函数是那些返回值仅取决于其参数值的函数。
+store 是 redux 用于存储数据的仓库，对于整个项目来说，它是一个由 createStore 方法创建的全局对象，它的内部提供了以下几种方法用于访问对象中的属性：
 
----
+- getState
 
-## 什么是纯函数
+getState 方法用于获取当前的状态树
+
+- dispatch
+
+dispatch 方法用于派发 action 对象，redux 只允许使用这种方式来改变 store 中的状态
+
+- subscribe
+
+subscribe 方法可以传入回调函数来创建一个订阅 store 中状态变化的监听器，每当 store 中的状态变化时，我们传入的回调函数就会被执行
+
+- replaceReducer
+
+replaceReducer 用于替换 store 中的 reducer 函数，这是一个高级 API，尽量避免使用它
+
+#### 3. action
+
+action 是一个用于描述怎样改变 state 的对象。它必须有一个属性 type，type 属性用于向 reducer 描述需要发生的变化，以及其它的我们在 reducer 中用于处理变化的属性，业内约定的属性名是 payload。reducer 在接收到这个 action 对象后，开始匹配其内部是否有匹配的处理程序，如果有，则按照定义的计算方式对 state 进行计算并返回，如果没有，则返回之前的 state。
+
+```javascript
+// action对象
+const action = {
+  // type 用于描述做什么事情
+  type: 'add',
+  // payload传递用于计算的参数及其它描述
+  payload: Math.ceil(Math.random() * 100),
+};
+```
+
+- action creator
+
+用于创建 action 的函数，它的功能是当我们需要传递变量时可以避免每次变量发生变化都要重写 action 对象：
+
+```javascript
+/**
+ * action生成器
+ * @param {any} payload 需要传递给reducer的计算参数
+ * @returns action
+ */
+function actionCreator(payload) {
+  return {
+    type: 'add',
+    payload,
+  };
+}
+```
+
+#### 4. reducer
+
+reducer 是用来创建 store 中 state 的方法，同时也是用于处理 store 中接收到的 action 对象的方法，它是一个**纯函数**，也就是说它的返回值只允许使用 state 和 action 来计算，而且在计算的过程中不会影响外部变量。reducer 方法接受两个参数：
+
+- 参数一 state
+
+用于初始化 store 中的属性，它被定义成一个需要有默认值的参数。当我们的项目运行时，redux 会将当前的 reducer 函数名作为 key，以默认值为 value 存储在 store 中；当我们通过 dispatch 派发 action 时，redux 会将当前 store 中对应的属性作为这个参数传入，然后根据 action 的描述来决定是否修改并返回新的 state。需要注意的是，即便是我们没有任何修改也必须返回原有的 state，否则会造成 store 中当前对应的属性值被修改为 undefined。
+
+- 参数二 action
+
+```javascript
+/**
+ * reducer方法
+ * @param {object} state 存入到store中的状态集，必须指定默认值，否则会导致错误发生
+ * @param {object} action 用于描述变化的对象
+ * @returns state 返回到store中的状态集，如果没有变化也必须返回原有的state，否则会导致错误发生
+ */
+function reducer(state = { count: 0 }, action) {
+  switch (type) {
+    case 'add':
+      // 必须在保证原有数据结构的基础上作修改，否则会造成状态丢失导致组件发生错误
+      return { ...state, count: state.count + action.data };
+    default:
+      // 没匹配成功也需要返回state，否则会导致store中的state变成undefined从而导致组件发生错误
+      return state;
+  }
+}
+```
+
+reducer 函数必须符合以下规则：
+
+- 仅使用 state 和 action 参数计算新的状态值
+
+- 禁止直接修改 state。必须通过复制现有的 state 并对复制的值进行更改的方式来做**不可变更新**（immutable updates）。
+
+- 禁止任何异步逻辑、依赖随机值或导致其他“副作用”的代码
+
+reducer 还有一个比较核心的问题, 就是 state 数据结构的规划。我们应该尽量避免嵌套的数据结构, 而应该尽量定义为扁平的数据结构, 这个思想其实有点类似于关系型数据库（如 MySQL）的数据组织方式。这一部分讲起来比较冗长, 就不在这里详细论述了, 目前从学校已经毕业的其他同学那里, 也没有反馈过这种面试题, 所以大家也不必要深究, 只需要**记得, 尽量扁平化**。
+
+#### 5. 纯函数
+
+纯函数是来自于数学中的概念：
 
 - 输入输出数据流是显式的：如果函数的调用参数相同，则永远返回相同的结果。
 
@@ -92,73 +283,40 @@ onChage() {
 
 > 纯函数的主要好处是它们使得我们维护和重构代码变得更加容易。我们可以随时随地放心地重构一个纯函数而不必担心因为没注意到的修改影响到整个应用。
 
----
+#### 6. 三大原则
 
-## 什么是 Action
+- 单一数据源: 整个应用的 State 存储在全站唯一的一个 Store 中的对象/状态树里
 
-- Action 是把数据从**应用**传到 store 的有效载荷。它是 store 数据的唯一来源。在不使用任何插件的情况下，我们需要通过 store.dispatch() 将 action 传回到 store。
+> 单一的 State 树可以更容易地跟踪变化、进行调试或检查应用程序
 
-> 这里之所以不叫 view 是因为这些数据有可能是服务器响应, 用户输入或其它非 view 的数据
+- State 是只读的: 改变状态的唯一方法是去触发一个 Action
 
-```javascript
-{
-  type: 'ORDER_DISHES',              // 描述动作
-  payload: '谁谁谁要了一份西红杮炒鸡蛋'  // 描述内容
-}
-const reducer = function(state = '最简单的redux', action) {
-  if (action.type === 'changeText') {
-    // 我们把action里的内容直接返回，redux会将这个返回值写到store中对应的属性里
-    // 这样我们下一次getState时就是新的内容了
-    return action.text;
-  }
-  return state;
-}
-```
+> 这样确保了视图或网络请求或其它用户操作都无法直接修改 State, 而只能通过 Action 来表示需要改变的意图。Action 只是一个用来描述变化的普通 JS 对象。就像 State 是数据的最小表示一样, 该操作是对数据更改的最小表示;
 
-Action 本质上是一个 JavaScript 普通对象。所以我们约定, Action 内必须使用一个字符串类型的 Type 字段来表示将要执行的动作。多数情况下, Type 会被定义成字符串常量。当应用规模越来越大时, 可以使用单独的模块或文件来存放 Action
+- 使用纯函数来修改 State
 
-```javascript
-// actionTypes.js
-export const ORDER_DISHES = "ORDER_DISHES";
-
-// action.js
-import { MSG_NAME } from "../actionTypes";
-
-export function orderDishes() {
-  return {
-    type: "ORDER_DISHES", // 描述动作
-    payload: "谁谁谁要了一份西红杮炒鸡蛋", // 描述内容
-  };
-}
-
-// 注意：reduce方法接受两个参数
-// 参数一是一个函数, 该函数接受两个参数, 如果调用reduce时没有传入第二个参数, 就是数组的第一个元素, 如果传值就是传进来的值
-// 比如这里, 我把上面定义的elList传了进来, 那参数一就是esList
-// 参数二是当前循环的数组元素
-```
-
-reduxDevTools 的安装
-
-reducer 使用中的一些注意事项
-
-1. reducer 要求必须是一个“纯函数”, 也就是不要调用任何可能引起副作用的操作, 如发起网络请求等。
-2. reducer 的返回值必须是一个新的对象, 它的 previousState 参数一定不能被修改
-3. reducer 还有一个比较核心的问题, 就是 state 数据结构的规划。我们应该尽量避免嵌套的数据结构, 而应该尽量定义为扁平的数据结构, 这个思想其实有点类似于关系型数据库（如 MySQL）的数据组织方式。这一部分讲起来比较冗长, 就不在这里详细论述了, 目前从学校已经毕业的其他同学那里, 也没有反馈过这种面试题, 所以大家也不必要深究, 只需要记得, 尽量扁平化。
+> 为了指定状态树如何通过操作进行转换, 我们需要一个纯函数来处理参数并返回我们处理过的内容, 纯函数是那些返回值仅取决于其参数值的函数。
 
 ---
 
-## 一个纯的 Redux Demo
+### 三、react-redux
+
+因为 Redux 并非是为 React 定制开发的, 所以我们在平时使用中与 React 配合还需要另一个库 React-Redux, 这是一种被称之为“绑定”(官方文档中称之为 binding)的方法, 用来把 React 和 Redux 集成到一块工作。
+
+- #### 不使用 React-Redux 实现状态管理
+
+下面这段代码是在没有使用 react-redux 时实现组件中的状态管理，我们可以在这里去理解一下 redux 提供的用于访问 store 的那些方法：
 
 ```javascript
-import { PureComponent } from "react";
+import { PureComponent } from 'react';
 // 从redux中引入一个createStore
-import { createStore } from "redux";
+import { createStore } from 'redux';
 
 // 定义一个reduce方法
 // reduce方法需要两个参数，一个当前状态对象state，一个用于描述将要对store做些什么的对象
-function clickReduce(state = { text: "这是什么" }, action) {
+function clickReduce(state = { text: '这是什么' }, action) {
   // 如果是指定的点击事件，新建一个对象，将原有的state与新的属性合并后返回
-  if (action.type === "BTN_CLICK") {
+  if (action.type === 'BTN_CLICK') {
     // 这里我们不能直接改变state的内容，只需要返回一个我们修改完成的对象就行
     return Object.assign({}, state, action);
   }
@@ -171,20 +329,19 @@ function clickReduce(state = { text: "这是什么" }, action) {
 // 参数一, 必填 reducer 一个reduce或reduce的集合
 // 参数二, 可选 preloadedState 一个state或state的集合
 // 参数三, 可选 store增强器，一个柯里化工具
-const store = createStore(clickReduce, { a: "aa", b: "bb" });
+const store = createStore(clickReduce, { a: 'aa', b: 'bb' });
 // 我们来看看store里面有些什么内容
 // store.dispatch 用于向store派发action消息的方法
 // store.getState 用于向store获取state的方法
 // store.subscribe 用于监听store内部的值的变化，当它被调用时，我们可以拿到最新的store
-
 console.log(store, store.getState());
 
 // action对象
 const clickAction = {
   // reduce里注册的事件type
-  type: "BTN_CLICK", // action用于区别与其它action的标记
+  type: 'BTN_CLICK', // action用于区别与其它action的标记
   // 需要传入的状态
-  text: "这是redux返回的内容", // payload必须是同步的
+  text: '这是redux返回的内容', // payload必须是同步的
 };
 
 export default class MiniRedux extends PureComponent {
@@ -220,7 +377,9 @@ export default class MiniRedux extends PureComponent {
 }
 ```
 
-## 什么时候应该用 Redux
+---
+
+### 什么时候应该用 Redux
 
 - 随着单页面应用变得越来越复杂, 正确地管理状态这一需求更加重要。什么时候用 redux, 什么时候不应该用 redux?
 
