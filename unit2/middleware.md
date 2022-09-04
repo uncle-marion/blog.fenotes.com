@@ -218,7 +218,7 @@ function compose() {
     // 这个就是我们在中间件里获取到的next函数
     return function () {
       // 根据javascript的赋值表达式(参数===隐性赋值)，先计算后赋值，所以这里需要先调用b函数，
-      // 就是funs数组里的下一个函数，传入的参数则是next函数接收到的action
+      // 就是funs数组里的下一个函数，而参数arguments则是next函数接收到的action
       return a(b.apply(void 0, arguments));
     };
   });
@@ -487,4 +487,47 @@ function promiseMiddleware(_ref) {
 }
 ```
 
+可以看到，redux-promise 相对于 redux-thunk 来说对应的场景更加精准，它就是为了解析 promise 对象而生的：
+
+```javascript
+// 页面
+connect(
+  (state, ownProps) => {
+    // ...
+  },
+  (dispatch, ownProps) => {
+    return {
+      getInfo(value) {
+        // 派发一个action
+        dispatch({
+          type: 'getInfo',
+          // payload是一个axios返回的promise对象
+          payload: Sapi.get('/adminapi/login/info', { value }),
+        });
+      },
+    };
+  }
+)(
+  class Test extends Component {
+    render() {
+      <button onClick={this.props.getInfo}>获取用户信息</button>;
+    }
+  }
+);
+
+// reducer
+function Test(state = {}, { type, payload }) {
+  switch (type) {
+    // 匹配到type
+    case 'getInfo':
+      // 使用展开运算符合并state和获取到的数据
+      return { ...state, ...payload };
+    default:
+      return state;
+  }
+}
+```
+
 #### redux-saga
+
+redux-saga，相比起 thunk 和 promise 来说，它的应用场景是拥有复杂的异步需求，对异步处理要求特别高的大型或超大型项目。因为 saga 入门知识相对较复杂，难上手，而且目前都是使用在 dva 库或 umi 框架中，所以，我们这边暂时先不讲这块，到了第五单元 Umi 的时候再详细讲解。

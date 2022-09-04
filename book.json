@@ -1,7 +1,7 @@
 {
-  "title": "React Training",
+  "title": "平安蜀黍的前端教程",
   "author": "marion.lau@foxmail.com",
-  "description": "前端开发人员应知应会，如果你想要入职前端这个行业，建议你将本书中的内容都过一遍，已经了解的知识就当是复习了，不了解的知识，特别是项目这块的，作为一个好的前端，应该都要知道要养成习惯。",
+  "description": "从运行环境到代码编辑，从react基础知识与项目搭建开始，引导学员逐步熟悉javascript与typescript，在教程的后期，还介绍了Nodejs、Vue、Uniapp等前端程序员必须了解的知识点",
   "plugins": [
     "expandable-chapters",
     "prism",
