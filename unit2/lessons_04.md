@@ -26,7 +26,7 @@ useReducer：通过 action 的传递，更新复杂逻辑的状态，主要是�
 import React from 'react';
 
 export default function Theme() {
-  return <div style={{ color: 'red' }}>字体颜色为红色</div>;
+  return <div style={ { color: 'red' }}>字体颜色为红色</div>;
 }
 ```
 
@@ -89,7 +89,7 @@ export default function Color(props) {
   }
   return (
     // 嵌套封装，创建value容器，向下传递属性和方法
-    <ColorContext.Provider value={{ color, colorList, changeColor }}>
+    <ColorContext.Provider value={ { color, colorList, changeColor }}>
       {props.children}
     </ColorContext.Provider>
   );
@@ -133,7 +133,7 @@ export default function Theme() {
     color: { color, desc },
   } = useContext(ColorContext);
   // 渲染
-  return <div style={{ color: color }}>字体颜色为{desc}</div>;
+  return <div style={ { color: color }}>字体颜色为{desc}</div>;
 }
 ```
 
@@ -152,7 +152,7 @@ export default function Buttons() {
     <div>
       {Reflect.ownKeys(colorList).map(item => (
         <button
-          style={{ color: item, margin: '4px 8px' }}
+          style={ { color: item, margin: '4px 8px' }}
           onClick={() => changeColor(item)}
         >
           {colorList[item].desc}
@@ -209,7 +209,7 @@ export default function Color(props) {
 
   return (
     // 嵌套封装，创建value容器，向下传递属性和方法
-    <ColorContext.Provider value={{ color, desc, dispatch }}>
+    <ColorContext.Provider value={ { color, desc, dispatch }}>
       {props.children}
     </ColorContext.Provider>
   );
@@ -255,7 +255,7 @@ export default function Buttons() {
       {Reflect.ownKeys(colorList).map(item => (
         <button
           key={item}
-          style={{ color: item, margin: '4px 8px' }}
+          style={ { color: item, margin: '4px 8px' }}
           onClick={() => changeColorAction(item)}
         >
           {colorList[item].desc}

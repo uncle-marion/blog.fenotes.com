@@ -290,7 +290,7 @@ class App extends React.Component {
   }
   return (
     // Provider 接收一个 value 属性，传递给消费组件
-    <TestContext.Provider value={{
+    <TestContext.Provider value={ {
       name: 'abc',
       clickName: this.nameClick
     }}>

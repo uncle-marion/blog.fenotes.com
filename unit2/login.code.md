@@ -39,8 +39,8 @@ export default class Login extends Component {
           <div className="form-wrap">
             {/* Form是由阿里推出的适用于react的第三方UI库ant design中的一个组件，它对html的form表单进行了比较全面的功能和样式封装，让我们可以在构建表单时更加容易 */}
             <Form
-              labelCol={{ span: 7 }}
-              wrapperCol={{ span: 16 }}
+              labelCol={ { span: 7 }}
+              wrapperCol={ { span: 16 }}
               {/*禁用自动完成*/}
               autoComplete="off"
             >

@@ -302,7 +302,7 @@ class Index extends Component {
               {/* 下拉搜索框 */}
               <Select
                 showSearch
-                style={{ width: 200 }}
+                style={ { width: 200 }}
                 placeholder="Select a person"
                 optionFilterProp="children"
                 onChange={this.onChange}

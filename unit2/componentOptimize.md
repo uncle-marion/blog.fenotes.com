@@ -354,7 +354,7 @@ function Children() {
 
 ```javascript
 return (
-  <div className="user-info" style={{ width: '800px' }}>
+  <div className="user-info" style={ { width: '800px' }}>
     <Children {...this.state} />
     <div className="sex">{sex}</div>
   </div>

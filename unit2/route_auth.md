@@ -154,7 +154,7 @@ export default class RouteGuard extends Component {
     // 需要登陆的带上当前路径跳转到登陆
     return (
       <Redirect
-        to={{
+        to={ {
           pathname: '/login',
           state: {
             origin: pathname,

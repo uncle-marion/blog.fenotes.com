@@ -79,12 +79,12 @@
   - [第三课 TypeScript 泛型详解]()
   - [第三课 TypeScript 与类组件](unit9/lessons_03.md)
   - [第四课 TypeScript 与函数组件](unit9/lessons_04.md)
-- 第五单元 UMI 基于 React 的 MVC 框架
+- 第五单元 Ts + React实用编程
 - 第六单元 React-Native
-- 第七单元 了解一些 VUE
-- 第八单元 uniapp 与小程序
-- 第九单元 NODEJS
-- 第十单元 架构入门
+- 第七单元 复习一下 VUE
+- 第八单元 Uniapp 与小程序
+- 第九单元 NodeJS + NestJS
+- 第十单元 架构师入门
 - 第十一单元 常见面试问题
   - [第一课 什么是微前端](unit_10/micro_frontend.md)
   - [第二课 单点登陆](unit_10/single_sign_on.md)

@@ -145,7 +145,7 @@ var cc = new Map([
   [aa, 123],
   [bb, 'abc'],
 ]);
-console.log(cc.keys()); // MapIterator {{a: 'aa'}, [1,2,3]}
+console.log(cc.keys()); // MapIterator { {a: 'aa'}, [1,2,3]}
 console.log(cc.values()); // MapIterator {123, 'abc'}
 console.log(cc.entries()); // MapIterator {Object => 123, Array(3) => 'abc'}
 // for of遍历

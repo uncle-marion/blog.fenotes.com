@@ -92,7 +92,7 @@ export default class ContextDemo extends Component {
     return (
       // Provider 生产者，在这里创建属性和方法
       <Provider
-        value={{
+        value={ {
           // 能使用简易写法的就必须使用简易写法，这也是规范
           text,
           value,

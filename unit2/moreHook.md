@@ -29,7 +29,7 @@ export default class Page extends Component {
     return (
       <div>
         <ThemeContext.Provider
-          value={{ theme: this.state.theme, onChangeTheme: this.onChangeTheme }}
+          value={ { theme: this.state.theme, onChangeTheme: this.onChangeTheme }}
         >
           <List data={data} />
         </ThemeContext.Provider>
@@ -61,7 +61,7 @@ export default function Item(props) {
   const context = useContext(ThemeContext);
   return (
     <div>
-      <p style={{ color: context.theme }}>
+      <p style={ { color: context.theme }}>
         {props.children}
         <button onClick={() => context.onChangeTheme(props.color)}>
           {' '}

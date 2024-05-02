@@ -313,8 +313,8 @@ class Login extends Component {
     const { captchaImg, changeCaptcha, createLoginAction } = this.props
     // ...
     <Form
-      labelCol={{ span: 7 }}
-      wrapperCol={{ span: 16 }}
+      labelCol={ { span: 7 }}
+      wrapperCol={ { span: 16 }}
       autoComplete="off"
       initialValues={remember}
       // 输入内容全部验证通过会调用这个方法
@@ -689,8 +689,8 @@ class Login extends Component {
           {/* 所有的样式名不应该包含大写，如果是多个单词线成，应使用“-”号来连接，不要用大写，也不要用下划线 */}
           <div className="form-wrap">
             <Form
-              labelCol={{ span: 7 }}
-              wrapperCol={{ span: 16 }}
+              labelCol={ { span: 7 }}
+              wrapperCol={ { span: 16 }}
               autoComplete="off"
               initialValues={remember}
               // 输入内容全部验证通过会调用这个方法
