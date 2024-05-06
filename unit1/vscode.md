@@ -133,20 +133,26 @@ EditorConfig 是一款用来规范代码风格的插件，我们使用EditorConf
 
 #### Git Graph
 
+Git Graph 是服务于 Git 分支管理的一种可视化工具，帮助我们直观地理解 Git 仓库的繁杂分支信息。 从 HEAD 指针一直往下找到分叉节点的上一个 commit 就是衍生 Branch 的 commit。
+
+点击窗口左侧的Git Graph图标可以唤出Git Graph窗口。
+
 #### GitHub Copilot
 
 #### GitHub Copilot Chat
 
-#### GitHub Pull Request
-
-#### GitLens -- Git supercharged
-
-
-
 ### 自动完成
 
-### Elm Emment
+#### JavaScript(ES6) code snippets
 
-### JavaScript(ES6) code snippets
+#### ES7 React/Redux/GraphQL/React-Native snippets
 
-### ES7 React/Redux/GraphQL/React-Native snippets
+### 界面美化
+
+#### Chinese (Simplified) (简体中文) Language Pack for Visual Studio Code
+
+简体中文语言包
+
+
+
+### 其它

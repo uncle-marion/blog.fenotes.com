@@ -80,10 +80,16 @@
   - [第三课 TypeScript 与类组件](unit9/lessons_03.md)
   - [第四课 TypeScript 与函数组件](unit9/lessons_04.md)
 - 第五单元 Ts + React实用编程
-- 第六单元 React-Native
-- 第七单元 复习一下 VUE
-- 第八单元 Uniapp 与小程序
-- 第九单元 NodeJS + NestJS
+- 第六单元 复习一下 VUE
+- 第七单元 Uniapp 与小程序
+- 第八单元 App开发 React-Native
+- 第九单元 后端开发入门 NestJS + MongoDB
+  - [第一课 NestJS 环境与项目创建](unit9/nestjs.md)
+  - [第二课 MongoDB 环境与项目创建](unit9/mongodb.md)
+  - [第三课 NestJS 连接 MongoDB](unit9/nestjs-mongodb.md)
+  - [第四课 接口与图片上传](unit9/api-upload.md)
+  - [第五课 实战：用户登陆](unit9/nestjs.md)
+  - [第六课 实战：商品列表](unit9/nestjs.md)
 - 第十单元 架构师入门
 - 第十一单元 常见面试问题
   - [第一课 什么是微前端](unit_10/micro_frontend.md)
