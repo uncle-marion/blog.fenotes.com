@@ -1,0 +1,107 @@
+/* base */
+#app {
+  background-color: #fff;
+  background-image: url(../assets/images/bg.jpg);
+  /*text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.75);*/
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+}
+#app .Layout {
+  height: 100vh;
+  overflow: hidden;
+}
+#app .Layout .VPDoc .main p {
+  text-indent: 2em;
+}
+/* side */
+.Layout .VPSidebar {
+  padding-top: 0;
+  background: transparent;
+  margin-top: 64px;
+}
+.Layout .VPSidebar .curtain {
+  background: transparent;
+}
+.Layout .VPNav .container {
+  background: rgba(224, 255, 255, 0.75);
+}
+
+/* nav */
+.Layout .VPNavBar:not(.home.top) .content-body {
+  background: transparent;
+}
+.Layout .VPNavBar:not(.home.top) .VPNavBarAppearance {
+  display: none;
+}
+/* main */
+.Layout .VPContent {
+  padding-top: 0;
+  padding-right: 0 !important;
+  height: calc(100vh - 64px);
+  overflow-x: auto;
+  margin-top: 64px !important;
+}
+.Layout .aside-curtain {
+  background: transparent;
+}
+.Layout .VPDoc.has-aside {
+  padding: 96px 32px 0;
+}
+.VPDoc.has-aside .content .content-container {
+  max-width: 1080px;
+}
+
+.content .vp-doc blockquote:first-child {
+  width: 100%;
+  font-size: 12px;
+  color: #999;
+  position: absolute;
+  top: -72px;
+  padding: 0 0 10px 0;
+  border: none;
+  border-bottom: 1px solid #999;
+}
+.content .vp-doc blockquote:first-child p {
+  text-indent: 0 !important;
+}
+
+.content .vp-doc .language-javascript.vp-adaptive-theme {
+  background: rgba(224, 255, 255, 0.75);
+  box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  width: 6px;
+  background: rgba(#101f1c, 0.1);
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(144, 147, 153, 0.5);
+  background-clip: padding-box;
+  min-height: 28px;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(144, 147, 153, 0.3);
+}
+
+@media (min-width: 1280px) {
+  .container .content {
+    order: 1;
+    margin: 0;
+    min-width: 960px;
+  }
+}

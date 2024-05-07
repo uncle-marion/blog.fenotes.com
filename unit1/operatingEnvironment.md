@@ -1,24 +1,30 @@
 > 平安蜀黍的前端教程 > 第一单元 开发环境与工具封装 > 项目的基本运行环境
 
-工欲善其事，必先利其器。一个好的开发环境可以让我们更容易进行代码的编辑与问题的查找。所以，在开始学习撸码之前，我们需要先配置好工作环境。本节课内容是为了更好的进行日常开发工作，属于常用但并不是必须了解，所以，请一定要在今天的课程之内将你所有的环境配置完成！
+### 工欲善其事，必先利其器。
 
-在开始一切操作之前，请伪装一下你的专业性，**工作路径中的目录名应该都是由英文单词构成而且符合项目语义！**然后，如果你是 windows 用户，将你的工作目录设定在 c 盘或 d 盘根路径下；如果你是 osx 用户，可以在桌面直接建立一个工作目录，并将其命名为 Example 或 Workspace。这样可以尽量避免我们在开发的过程中会遇上的一些**因为中文路径而导致的奇怪且棘手的问题**。不要花时间去学习解决这种没有普适性的问题，人的精力是有限的，没必要浪费在这里。
+一个好的开发环境，可以让我们更容易对代码进行编辑或者是查找问题，所以，在开始撸码之前，我们需要先配置好工作环境。本节课内容是为了更好的进行日常开发工作，否则在我们的后续开发过程中会遇到一些问题。
 
-### 一、代码编写工具 VsCode
+在开始一切操作之前，需要大家记住一个原则：**工作路径中的目录名应该都是由英文单词构成而且符合项目语义！**
 
-vscode，全称 Visual Studio Code，基于 Electron 与 Javascript 开发的代码编辑器，目前是前端使用最多的一款代码编辑器[下载地址](https://code.visualstudio.com/Download)
+然后，如果你是 Windows 用户，**请在 c 盘或 d 盘根路径下建立你的工作目录，并将其命名为 Example 或 WorkSpace；**
 
-注意：如果你是 windows 用户，一定要使用管理员权限开启 vscode，因为在 windows 下因为很多操作都需要管理员权限，所以将 vscode 设置为管理员权限启动可以**避免**很多因为**权限不足**而造成的问题。
-另外，vscode 下的终端也是需要权限的。一般来说，vscode 会将你系统中所有的命令行工具读进来，这里我建议你们使用 powershell，[powershell](https://zhuanlan.zhihu.com/p/366637644) 是微软开发的一款用于编辑复杂脚本的命令行工具。如果觉得系统的 1.x 版本不够用，我在下面还给出了 powershell 7 的安装和配置方式，你们可以在课后自己安装和配置。
+如果你是 OSX 用户，**可以在桌面直接建立一个工作目录，并将其命名为 Example 或 Workspace。**
 
-#### 通过修改 powershell 的执行策略来获取管理员权限
+固定且统一的目录名称可以让我们在需要浏览文件目录时尽快地找到，纯英文目录名可以避免我们在开发的过程中会遇上的一些因为中文路径而导致的奇怪且棘手的问题。不要花时间去学习解决这种没有普适性的问题，人的精力是有限的，没必要浪费在这些无聊的地方。
 
-```javascript
-// 获取当前执行策略
-Get-ExecutionPolicy
-// 修改当前执行策略
-Set-ExecutionPolicy unrestricted
-```
+---
+
+### 一、代码编写工具 VSCode
+
+VSCode，全称 Visual Studio Code，基于 Electron 与 JavaScript 开发的代码编辑器，目前是前端使用最多的一款代码编辑器：
+
+[下载地址：https://code.visualstudio.com/Download](https://code.visualstudio.com/Download)
+
+Windows 用户在这里需要**注意**：一定要使用管理员权限开启 VSCode，因为在 Windows 下因为很多操作都需要管理员权限，所以将 VSCode 设置为管理员权限启动可以**避免很多因为权限不足**而造成的问题。
+
+另外，VSCode 下的终端也是需要权限的。一般来说，VSCode 会将你系统中所有的命令行工具读进来，这里我建议你们使用 PowerShell，[powershell](https://zhuanlan.zhihu.com/p/366637644) 是微软开发的一款用于编辑复杂脚本的命令行工具。如果觉得系统的 1.x 版本不够用，我在下面还给出了 PowerShell 7 的安装和配置方式，你们可以在课后自己安装和配置。
+
+#### 通过修改 PowerShell 的执行策略来获取管理员权限
 
 | 描述         | 功能                                                                   |
 | :----------- | :--------------------------------------------------------------------- |
@@ -28,15 +34,26 @@ Set-ExecutionPolicy unrestricted
 | Unrestricted | 允许所有的脚本运行, 但是在运行前会提示是否进行操作                     |
 | Bypass       | 允许所有的脚本运行, 没有任何的提示和警告                               |
 
+##### 执行命令
+
+```javascript
+// 获取当前执行策略
+Get-ExecutionPolicy
+// 修改当前执行策略(PowerShell 必须是管理员权限，否则修改失败)
+Set-ExecutionPolicy unrestricted
+```
+
 #### 配置一个养眼的代码环境
 
 这块不强制安装，下课后有时间可以自己安装，如果遇到问题可以百度，百度解决不了的我们自习课再研究:
-windows 用户看这里：[windows 下安装 iterm 及 pownshell 7](powershell.md)
-osx 用户看这里：[mac 系统下安装 iterm](iterm.md)
 
-#### vscode 常用插件
+> Windows 用户看这里：[Windows 下安装 iterm 及 pownshell 7](powershell.md)
 
-vscode 只提供了一个基础的代码编辑环境，所以我们还需要安装一些插件才能更好地使用它：[vscode 常用插件与使用](vscode.md)
+> OSX 用户看这里：[mac 系统下安装 iterm](iterm.md)
+
+#### VSCode 常用插件
+
+VSCode 只提供了一个基础的代码编辑环境，为了更方便撸码，我们还需要安装一些插件：[VSCode 常用插件与使用](vscode.md)
 
 ---
 
@@ -46,35 +63,45 @@ Node.js 是一个开源和跨平台的 JavaScript 运行时环境，NodeJs 可�
 
 注：IDE：Integrated Development Environment 集成开发环境，比如 IDEA，当下最流行的 java 开发环境；eclipse，老牌的集成开发环境。
 
-因为 NodeJS 的相关知识量比较庞大，为了节约时间，我在这里就不详细讲解了，下面给出了 NodeJs 官方文档的地址，希望大家在有时间的时候都去学一下，这对于我们未来的职业规划和发展来说，是属于非常重要的一部分。进，可以成为全栈；退，也能增加在日常工作中对后端同事代码的理解能力。
+因为 NodeJS 的相关知识量比较庞大，为了节约时间，我在这里就不详细讲解了，下面给出了 NodeJs 官方文档的地址，希望大家在有时间的时候都去看一下，这对于我们未来的职业规划和发展来说，是属于非常重要的一部分。进，可以成为全栈；退，也能增加在日常工作中对后端同事代码的理解能力。
 
 [NodeJs 入门教程](http://nodejs.cn/learn)
 
-#### node 版本管理工具 nvm 的安装与使用
+#### Node 版本管理工具 nvm 的安装与使用
 
-**记住，公司配给你的电脑到手以后第一件事绝不是使用 nodejs 官网下载的安装包来安装 node!!! 而是先安装 nvm，然后使用 nvm 来安装 node!!!**
+**记住，公司配给你的电脑到手以后第一件事绝不是使用 NodeJS 官网下载的安装包来安装 Node!!! 一定要先安装 nvm，然后使用 nvm 来安装 Node!!!**
 
-nvm 则是用来管理 nodejs 版本的管理工具，我们之中有很多人，都是直接上 nodejs 官网上下载 node 安装包进行安装。但在实际业务中这样是行不通的，因为我们无法保证自己接手维护的项目是最新的项目，极有可能这个项目已经开发完成很久了，比如一个 16 年建的项目，它可能还在正常运行，也没什么大毛病，但当你需要维护它的时候你就会发现：它无法**兼容**于现有的 node 版本。所以这时候我们就需要一个工具，可以对开发环境的 **node 版本**作一个快速的切换。**nvm 就是用于管理 nodejs 版本的管理工具**。
+nvm 全名 Node.js Version Manager，是用来管理 NodeJS 版本的管理工具，我们之中有很多人，都是直接上 NodeJS 官网上下载 Node 安装包进行安装。但是在实际业务中这样可能会遇到些问题，比如：
 
-nvm 链接地址：https://github.com/coreybutler/nvm-windows/releases
-windows 环境推荐下载第三个，nvm-setup.zip
+在正常工作中我们经常需要维护几年以前的老项目，它们可能还在正常运行，也没什么大毛病，但当我们需要运行这个项目的时候发现它无法**兼容**于现有的 Node 版本，运行起来各种报错。所以，这时候我们就需要一个工具，可以对开发环境的 **Node 版本**作一个快速的切换。**nvm** 就是用于**管理 NodeJS 版本**的管理工具。
 
-[相关应用下载](https://pan.baidu.com/s/1mLjR0juTLcT6RvxHg7-jbg)
-因为国内网络对于 github 不是很友好，我将初始化开发环境的相关应用都转到了我的网盘，提取码是 z6xe，可能你们看到这篇文档时已经无法下载或版本过时了，那么就参考上面的地址，自己去下载吧。
+##### OSX 用户看这里：https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script
 
-**注意：因为我的学员使用 mac 的人数较少，mac 下的安装参考[这篇文档](https://learnku.com/docs/environment-setup/install-nvm-under-mac/3132), 此处就不再赘述。**
+苹果用户安装 nvm 非常简单，找到下面这行代码复制到终端并执行就行了
 
-如果你之前安装过 nodejs，那么现在安装 nvm 会稍有些麻烦，未安装过的同学可以跳过下面这一段直接开始安装！
+如果安装中出现问题，暂时照着[这篇文档](./homebrew.md)走，后续我再整理安装文档。
 
-> 1. 使用系统管理工具卸载 nodejs
+```javascript
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+```
 
-> 2. 检查 c 盘根目录下是否有残留 node 相关文件目录
+##### Windows 用户到这里：https://github.com/coreybutler/nvm-windows/releases
 
-> 3. 检查系统环境变量中是否残留 node 相关配置
+找到 nvm-setup.exe，将它下载回来，如果无法访问 github，可以到我的网盘下载一个：[相关应用下载](https://pan.baidu.com/s/1mLjR0juTLcT6RvxHg7-jbg)
+
+[本教程中相关应用下载：提取码：z6xe](https://pan.baidu.com/s/1mLjR0juTLcT6RvxHg7-jbg)
+
+Windows 用户首先需要检查电脑中是否已经有了 NodeJS，如果有需要卸载掉原有的 NodeJS 并重启。未安装过的同学可以跳过下面这一段直接开始安装！
+
+> 1. 使用系统管理工具卸载 NodeJS
+
+> 2. 检查 c 盘根目录下是否有残留 Node 相关文件目录
+
+> 3. 检查系统环境变量中是否残留 Node 相关配置
 
 > 4. 重启系统
 
-> 附：环境变量的修改方法（win10）：左下角放大镜 => 输入”编辑账户的环境变量“
+> 附：环境变量的修改方法（win10）：左下角放大镜 => 输入"编辑账户的环境变量"
 
 一切就绪后，双击下载完成的 nvm 安装文件运行，要注意的是，nvm 默认安装在 c 盘 program files 目录下，但它自己又无法识别带有空格的文件路径，所以，我们需要将 nvm 安装在根目录或指定不包含中文和空格的文件夹下。
 
@@ -86,7 +113,7 @@ nvm version
 
 应该可以看到关于 npm 等软件的版本号，这就证明你的 nvm 安装成功了。
 
-##### 使用 nvm 安装和切换 node 环境
+##### 使用 nvm 安装和切换 Node 环境
 
 nvm 与 npm 或 yarn 一样，需要配置指定的库，如果没有配置，则可能会出现一些比如 **timeout** 等问题，所以我们需要配置安装路径到 taobao 的**镜像库**。
 找到你的 nvm 安装文件夹，打开 settings 文件，在文件最后输入：
@@ -97,7 +124,7 @@ npm_mirror: https://npm.taobao.org/mirrors/npm/
 // 上面两行代码的意思是将node的镜像和npm的镜像都指向淘宝，mirror的意思是镜像的意思，在这里指获取应用的仓库
 ```
 
-然后执行 nvm list available 命令，检索远端服务器可安装的 node 版本。因为我们是学习，所以，就以目前较稳定的 14.16.1 为例。
+然后执行 nvm list available 命令查找一下当前可用的 Node 版本。建议安装 LTS 版本。
 
 ##### 查看远程可安装版本
 
@@ -107,7 +134,7 @@ npm_mirror: https://npm.taobao.org/mirrors/npm/
 nvm install 14.16.1
 ```
 
-windows 系统同学在安装时需要注意观察控制台输出的内容，node 与 npm 两个是分开安装的，可能会因为各种原因存在安装失败的提示，如果有任意一个应用安装失败，就必须使用 uninstall 命令卸载当前版本后重新安装。
+windows 系统同学在安装时需要注意观察控制台输出的内容，Node 与 npm 两个是分开安装的，可能会因为各种原因存在安装失败的提示，如果有任意一个应用安装失败，就必须使用 uninstall 命令卸载当前版本后重新安装。
 
 安装完成之后，使用 use 命令应用/切换：
 
@@ -115,14 +142,14 @@ windows 系统同学在安装时需要注意观察控制台输出的内容，nod
 nvm use 14.16.1
 ```
 
-然后在你的 powershell 或 cmd 中输入：
+然后在你的 PowerShell 或 cmd 中输入：
 
 ```javascript
 node - v;
 npm - v;
 ```
 
-如果都能正常显示版本号，证明你的 node 也安装完成了。如果不能正常显示版本号，那么可能是你的 node 配置未能自动生效，可能就需要进行一些比较麻烦的排错处理。
+如果都能正常显示版本号，证明你的 Node 也安装完成了。如果不能正常显示版本号，那么可能是你的 Node 配置未能自动生效，可能就需要进行一些比较麻烦的排错处理。
 
 **排错**
 
@@ -132,15 +159,13 @@ npm - v;
 
 ##### nvm 常用命令
 
-| 指令                         | 功能                                   |
-| :--------------------------- | :------------------------------------- |
-| nvm list                     | 查看本地已安装的 node 版本             |
-| nvm list available           | 查看远程可安装的 node 版本             |
-| nvm install <node version>   | 安装指定版本的 nodejs                  |
-| nvm uninstall <node version> | 卸载指定版本的 nodejs                  |
-| nvm use <node version>       | 使用指定的 nodejs 版本为当前 node 环境 |
-
-**注意，上面的 "node version"表示的是 node 版本号，比如：**
+| 描述                 | 功能                                   |
+| :------------------- | :------------------------------------- |
+| nvm list             | 查看本地已安装的 Node 版本             |
+| nvm list available   | 查看远程可安装的 Node 版本             |
+| nvm install 版本号   | 安装指定版本的 NodeJS                  |
+| nvm uninstall 版本号 | 卸载指定版本的 NodeJS                  |
+| nvm use 版本号       | 使用指定的 NodeJS 版本为当前 Node 环境 |
 
 ```javascript
 nvm install 16.14.2 // 表示安装16.14.2版本的nodejs到你的系统

@@ -8,7 +8,7 @@
 
 这个 Powershell Core 与系统自带的 Powershell 是完全不同的两个东西，除了功能相似和名字相同，两者内在已经天差地别。自带的 Powershell 错误提示冗长，颜值低，速度慢，总之就是特别不值得去用。
 
-Powershell Core 下载地址：https://github.com/PowerShell/PowerShell/releases/tag/v7.0.1
+Powershell Core 下载地址：https://github.com/PowerShell/PowerShell/tags
 
 软件安装没什么难度，按照提示一路点击就行。
 
@@ -56,7 +56,7 @@ Set-PoshPrompt aliens
 
 powershell 与 window terminal 配置完成，现在你的控制台可以展示更多内容了，而且支持各种高亮。
 
-### 几个常用命令
+### Windows 控制台下几个常用命令
 
 ```javascript
 mkdir <文件夹名称>             // 创建文件夹

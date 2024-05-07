@@ -1,6 +1,6 @@
 > 平安蜀黍的前端教程 > 第一单元 开发环境与工具封装 > 代码构建工具 Webpack
 
-注意：在学习 webpack 之前，我们需要了解什么是模块化，对这块不够了解的，可以参考[什么是模块化](modular.md)
+注意：在学习 webpack 之前，我们需要了解什么是模块化，对这块不够了解的，可以参考这篇附录：[什么是模块化](modular.md)
 
 了解了模块化规范后，我们来学习如何通过构建工具来将各个模块进行代码合并与项目构建。
 
@@ -50,7 +50,7 @@ webpack 默认的入口文件为**./src/index.js**。不过我们可以在 confi
 
 ```javascript
 module.exports = {
-  entry: './bin/main.js',
+  entry: "./bin/main.js",
 };
 ```
 
@@ -59,8 +59,8 @@ webpack 同时也支持多个入口文件
 ```javascript
 module.exports = {
   entry: {
-    app: './src/app.js',
-    adminApp: './src/adminApp.js',
+    app: "./src/app.js",
+    adminApp: "./src/adminApp.js",
   },
 };
 ```
@@ -71,12 +71,12 @@ output 属性告诉 webpack 在哪里输出它所创建的 bundle，以及如何
 
 ```javascript
 // path是nodejs核心模块提供的一个用于处理文件路径的小工具，不需要安装，直接require
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: './bin/main.js',
+  entry: "./bin/main.js",
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, "build"),
   },
 };
 
@@ -95,8 +95,8 @@ loader 有两个常用属性：test 和 use，我们通过 test 属性来告诉 
 module.exports = {
   module: {
     rules: [
-      { test: /\.css$/, use: 'css-loader' },
-      { test: /\.ts$/, use: 'ts-loader' },
+      { test: /\.css$/, use: "css-loader" },
+      { test: /\.ts$/, use: "ts-loader" },
     ],
   },
 };
@@ -111,7 +111,7 @@ module.exports = {
       {
         test: /\.css$/,
         // 注意，这里的解析规则，与css一样，是从右到左解析的，先使用postcss-loader编译，然后使用css-loader编译，最后使用style-loader编译；最终将编译后的结果返回给webpack
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
     ],
   },
@@ -127,21 +127,21 @@ webpack 插件是一个具有 apply 方法的 JavaScript 对象。apply 方法�
 ```javascript
 // 用来生成html文件的依赖
 // https://webpack.docschina.org/plugins/html-webpack-plugin/
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 // 引入webpack中的内置文件
-const webpack = require('webpack');
+const webpack = require("webpack");
 //
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   // 指定入口
-  entry: './src/index.js',
+  entry: "./src/index.js",
   // 出口配置
   output: {
     // 输出文件的名称
-    filename: 'index.bundle.js',
+    filename: "index.bundle.js",
     // 文件输出的位置
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, "build"),
   },
   // 所有的loader需要放置在module属性中
   module: {
@@ -150,7 +150,7 @@ module.exports = {
         // 匹配所有的后缀为js和jsx的文件
         test: /\.(js|jsx)$/,
         // 使用babel-loader来加载这个文件
-        use: 'babel-loader',
+        use: "babel-loader",
       },
     ],
   },
@@ -158,7 +158,7 @@ module.exports = {
     // webpack构建进度展示
     new webpack.ProgressPlugin(),
     // 生成编译好的html文件，我们打包成功后的js文件都需要通过这个文件来导入
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new HtmlWebpackPlugin({ template: "./src/index.html" }),
   ],
 };
 ```
@@ -228,11 +228,11 @@ package.json 文件是项目的清单。 它可以做很多完全互不相关的
 在项目根目录创建 src 文件夹，然后在 src 文件夹下创建 index.jsx 文件，这个文件是 webpack 的入口文件，文件中 import 进来的文件都会被加入依赖图，然后这些文件中 import 进来的文件也会被加入依赖图
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 // 这里这个root对应的是html文件中的容器div的id
-ReactDOM.render(<div>hello webpack !!!</div>, document.getElementById('root'));
+ReactDOM.render(<div>hello webpack !!!</div>, document.getElementById("root"));
 ```
 
 #### 第五步，创建 webpack 主配置文件
@@ -240,11 +240,11 @@ ReactDOM.render(<div>hello webpack !!!</div>, document.getElementById('root'));
 在项目的根目录，创建 webpack.config.js 文件
 
 ```javascript
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   // 入口
-  entry: './src/index.js',
+  entry: "./src/index.js",
   // loader
   module: {
     // 所有的loader都需要写在这里面
@@ -254,14 +254,14 @@ module.exports = {
         exclude: /node_modules/, // 排除 node_modules 文件夹
         use: {
           // loader 是 babel
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             // babel 转义的配置选项
             babelrc: false,
             presets: [
               // 添加 preset-react
-              require.resolve('@babel/preset-react'),
-              [require.resolve('@babel/preset-env'), { modules: false }],
+              require.resolve("@babel/preset-react"),
+              [require.resolve("@babel/preset-env"), { modules: false }],
             ],
             cacheDirectory: true,
           },
@@ -272,8 +272,8 @@ module.exports = {
   plugins: [
     // 根据public目录下的index.html来生成项目的首页
     new HtmlWebPackPlugin({
-      template: 'public/index.html',
-      filename: 'index.html',
+      template: "public/index.html",
+      filename: "index.html",
       inject: true,
     }),
   ],
@@ -422,10 +422,10 @@ npm i -D file-loader url-loader
 
 ```javascript
 // router/index.js
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 // 为什么要用index.jsx? index代表了索引页, 也是当前目录的默认首页。所以, 在这里我们不需要指定文件名就能直接将目录中的index导入, 可以减少文件名称的输入以减少因为文件名输入错误造成的一些问题
-import Homepage from '@pages/Homepage';
+import Homepage from "@pages/Homepage";
 
 function Router() {
   return (
