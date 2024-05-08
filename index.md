@@ -3,9 +3,12 @@
 layout: home
 
 hero:
-  name: "前端记事"
-  text: "森"
-  tagline: My great project tagline
+  image:
+    src: /assets/images/M.png
+    alt: 前端记事
+  name: 前端记事
+  text:
+  tagline: 结合本人在前端工作十余年的经验与互联网官方教程，编撰本课教程，旨在帮助广大想要进入前端开发行业的新人们
   actions:
     - theme: brand
       text: Markdown Examples
@@ -22,4 +25,3 @@ features:
   - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
-

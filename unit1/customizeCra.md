@@ -133,7 +133,7 @@ npm start
 
 #### 配置代理服务器
 
-正常来说，我们的开发环境如果没有配置 node 服务，那么在请求接口时必然是会发生[跨域](../enclusore/cross-domin.md)的，也就是说我们无法向远程服务器获取数据。那怎么解决呢？customize-cra 提供了在开发环境配置开发服务器的接口：overrideDevServer，我们可以在这里配置跨域代理
+正常来说，我们的开发环境如果没有配置 node 服务，那么在请求接口时必然是会发生[跨域](/)的，也就是说我们无法向远程服务器获取数据。那怎么解决呢？customize-cra 提供了在开发环境配置开发服务器的接口：overrideDevServer，我们可以在这里配置跨域代理
 
 ```javascript
 const {
@@ -218,7 +218,7 @@ fixBabelImports('import', {
 
 ```javascript
 // antd的生产者组件
-import { ConfigProvider } from 'antd';
+import {ConfigProvider} from 'antd';
 // antd中文化
 import zhCN from 'antd/lib/locale/zh_CN';
 // antd的样式文件

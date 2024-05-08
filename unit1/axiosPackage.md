@@ -129,7 +129,7 @@ $.ajax = options => {
 
 ### 了解 fetch
 
-fetch 首先解决了回调地狱的问题，他返回的结果是一个 Promise 对象。如果你对 Promise 不熟，可以看这篇[《Promise 详解》]()
+fetch 首先解决了回调地狱的问题，他返回的结果是一个 Promise 对象。如果你对 Promise 不熟，可以看这篇[《Promise 详解》]
 
 #### fetch 的基本用法
 
@@ -147,7 +147,7 @@ fetch('http://example.com/movies.json', config)
   });
 ```
 
-[fetch 原码解析](/fetch.md)
+[fetch 原码解析](/unit1/fetch.md)
 
 #### fetch 优势：
 
@@ -175,7 +175,7 @@ fetch('http://example.com/movies.json', config)
 
 ### 了解 axios
 
-axios 是一款非常强大的 HTTP 客户端工具，在浏览器环境中，它是基于 Promise 封装的 XHR，所以我们不仅可以用它来实现远程数据请求，还能调用取消请求、超时处理及进程管理等一系列接口。同时，如果我们需要在服务器端调用，它也可以建立一个 httpy 请求。
+axios 是一款非常强大的 HTTP 客户端工具，在浏览器环境中，它是基于 Promise 封装的 XHR，所以我们不仅可以用它来实现远程数据请求，还能调用取消请求、超时处理及进程管理等一系列接口。同时，如果我们需要在服务器端调用，它也可以建立一个 http 请求。
 
 #### axios 的基本用法
 
