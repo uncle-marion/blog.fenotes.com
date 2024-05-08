@@ -3,6 +3,7 @@ import {defineConfig} from 'vitepress';
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: '前端记事',
+  base: '/blog.fenotes.com',
   description: 'A VitePress Site',
   lastUpdated: true,
   themeConfig: {
