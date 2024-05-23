@@ -1,6 +1,6 @@
 > 平安蜀黍的前端教程 > 备选知识点 > git 版本管理之常用命令
 
-### git 快捷命令配置
+## git 快捷命令配置
 
 快捷命令，也可以理解为对一些常用命令配置别名，要注意的是，这种方式可能会影响你对整个 git 命令的记忆，如下：
 
@@ -42,13 +42,13 @@ vim c:\\users\\你的用户名\\.gitconfig
         postBuffer = 524288000
 ```
 
-### git 命令及用法完整版
+## git 命令及用法完整版
 
-下面这些命令，可能不会常用，大家可以保存一下，以备万一，当然，找度娘也可以。
+因为 VSCode 下的 Git 扩展功能越来越完善，你们可能会更喜欢使用 GitLens 或 GitGraph 来进行操作，下面这些命令，可能不会常用，大家可以保存一下，以备万一。当然，需要的时候找度娘也可以。
 
-#### 查看、添加、提交、删除、找回，重置修改文件
+### 查看、添加、提交、删除、找回，重置修改文件
 
-```bash
+```shell
 git help <command>                # 显示 command 的 help
 git show                          # 显示某次提交的内容 git show $id
 git co -- <file>                  # 抛弃工作区修改
@@ -65,9 +65,9 @@ git revert <$id>                  # 恢复某次提交的状态，恢复动作�
 git revert HEAD                   # 恢复最后一次提交的状态
 ```
 
-#### 查看文件 diff
+### 比较文件 diff
 
-```bash
+```shell
 git diff <file>                   # 比较当前文件和暂存区文件差异 git diff
 git diff <id1><id2>               # 比较两次提交之间的差异
 git diff <branch1>..<branch2>     # 在两个分支之间比较
@@ -76,18 +76,18 @@ git diff --cached                 # 比较暂存区和版本库差异
 git diff --stat                   # 仅仅比较统计信息
 ```
 
-#### 查看提交记录
+### 查看提交记录
 
-```bash
+```shell
 git log git log <file>            # 查看该文件每次提交记录
 git log -p <file>                 # 查看每次详细修改内容的 diff
 git log -p -2                     # 查看最近两次详细修改内容的 diff
 git log --stat                    # 查看提交统计信息
 ```
 
-#### 查看、切换、创建和删除分支
+### 查看、切换、创建和删除分支
 
-```bash
+```shell
 git br -r                         # 查看远程分支
 git br <new_branch>               # 创建新的分支
 git br -v                         # 查看各个分支最后提交信息
@@ -102,35 +102,35 @@ git br -d <branch>                # 删除某个分支
 git br -D <branch>                # 强制删除某个分支 (未被合并的分支被删除的时候需要强制)
 ```
 
-#### 分支合并和 rebase
+### 分支合并和 rebase
 
-```bash
+```shell
 git merge <branch>                # 将 branch 分支合并到当前分支
 git merge origin/master --no-ff   # 不要 Fast-Foward 合并，这样可以生成 merge 提交
 git rebase master <branch>        # 将 master rebase 到 branch，相当于下面这行命令集：
 git co <branch> && git rebase master && git co master && git merge <branch>
 ```
 
-#### 补丁管理(方便在多台机器上开发同步时用)
+### 补丁管理(方便在多台机器上开发同步时用)
 
-```bash
+```shell
 git diff > ../sync.patch          # 生成补丁
 git apply ../sync.patch           # 打补丁
 git apply --check ../sync.patch   # 测试补丁能否成功
 ```
 
-#### 暂存区管理
+### 暂存区管理
 
-```bash
+```shell
 git stash                         # 暂存
 git stash list                    # 列所有 stash
 git stash apply                   # 恢复暂存的内容
 git stash drop                    # 删除暂存区
 ```
 
-#### 远程分支管理
+### 远程分支管理
 
-```bash
+```shell
 git pull                          # 抓取远程仓库所有分支更新并合并到本地
 git pull --no-ff                  # 抓取远程仓库所有分支更新并合并到本地，不要快进合并
 git fetch origin                  # 抓取远程仓库更新
@@ -144,9 +144,9 @@ git push origin <local_branch>:<remote_branch>        # 创建远程分支
 git push origin :<remote_branch>  # 先删除本地分支(git br -d <branch>)，然后再 push 删除远程分支
 ```
 
-#### 远程仓库管理
+### 远程仓库管理
 
-```bash
+```shell
 git remote -v                     # 查看远程服务器地址和仓库名称
 git remote show origin            # 查看远程服务器仓库状态
 git remote add origin git@ github:robbin/robbin_site.git          # 添加远程仓库地址
@@ -154,9 +154,9 @@ git remote set-url origin git@ github.com:robbin/robbin_site.git  # 设置远程
 git remote rm <repository>        # 删除远程仓库
 ```
 
-#### 创建远程仓库
+### 创建远程仓库
 
-```bash
+```shell
 git clone --bare robbin_site robbin_site.git                      # 用带版本的项目创建纯版本仓库
 scp -r my_project.git git@ git.csdn.net:~                         # 将纯仓库上传到服务器上
 mkdir robbin_site.git && cd robbin_site.git && git --bare init    # 在服务器创建纯仓库

@@ -328,13 +328,13 @@ function getFullName(user) {
 
 // good
 function getFullName(obj) {
-  const { firstName, lastName } = obj;
+  const {firstName, lastName} = obj;
   return `${firstName} ${lastName}`;
 }
 
 // best
 // 直接在参数中解构，完全没有了临时引用属性
-function getFullName({ firstName, lastName }) {
+function getFullName({firstName, lastName}) {
   return `${firstName} ${lastName}`;
 }
 ```
@@ -367,11 +367,11 @@ const [left, __, top] = processInput(input);
 // good
 function processInput(input) {
   // then a miracle occurs
-  return { left, right, top, bottom };
+  return {left, right, top, bottom};
 }
 
 // 调用时只选择需要的数据
-const { left, right } = processInput(input);
+const {left, right} = processInput(input);
 ```
 
 差不多就这些吧，还有的内容我们可以通过配置.prettierrc.json 在代码保存时自动处理。同时，我们也可以关注下 ESLint()

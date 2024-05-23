@@ -8,7 +8,7 @@
  *
  * Each colors have exact same color scale system with 3 levels of solid
  * colors with different brightness, and 1 soft color.
- * 
+ *
  * - `XXX-1`: The most solid color used mainly for colored text. It must
  *   satisfy the contrast ratio against when used on top of `XXX-soft`.
  *
@@ -43,7 +43,7 @@
  *   in custom container, badges, etc.
  * -------------------------------------------------------------------------- */
 
- :root {
+:root {
   --vp-c-default-1: var(--vp-c-gray-1);
   --vp-c-default-2: var(--vp-c-gray-2);
   --vp-c-default-3: var(--vp-c-gray-3);
@@ -137,3 +137,61 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+.VPDoc .vp-doc > div > p {
+  text-indent: 2em;
+}
+.Layout .VPSidebar {
+  background-image: url(/assets/images/bg.png);
+  box-shadow: 0px 5px 80px rgba(0, 0, 0, 0.25);
+}
+.Layout .VPContent {
+  background-image: url(/assets/images/bg_side.png);
+  box-shadow: inset 0px 5px 80px rgba(0, 0, 0, 0.25);
+}
+.Layout .vp-doc pre {
+  box-shadow: 1px 1px 5px inset rgba(0, 0, 0, 0.25);
+}
+.dark .Layout .VPSidebar {
+  background-image: url(/assets/images/bg_side_dark.png);
+  box-shadow: 0px 5px 80px rgba(255, 255, 255, 0.25);
+}
+.dark .Layout .VPContent {
+  background-image: url(/assets/images/bg_dark.png);
+  box-shadow: inset 0px 5px 80px rgba(255, 255, 255, 0.25);
+}
+
+.Layout .logo {
+  width: 144px;
+  height: 36px;
+  border-radius: 2px;
+}
+.Layout .VPNavBarMenuLink span {
+  width: 72px;
+    text-wrap: wrap;
+    line-height: 18px;
+    text-align: center;
+}
+.dark .Layout .vp-doc pre {
+  box-shadow: -1px -1px 2px inset rgba(255, 255, 255, 0.5);
+}
+.Layout .VPNav .VPNavBar.has-sidebar .content {
+  padding-right: 0;
+  padding-left: 0;
+  border-bottom: #999;
+}
+.container .aside .aside-curtain {
+  display: none;
+}
+.Layout .VPNavBar:not(.home.top) .content-body {
+  padding-right: 32px;
+}
+.Layout .VPNavBarTitle.has-sidebar .title {
+  border: none;
+}
+.Layout .VPNav .divider {
+  display: none;
+}
+.Layout strong,
+.Layout b {
+  text-shadow: 1px 1px 1px var(--vp-c-brand-soft);
+}

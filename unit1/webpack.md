@@ -1,14 +1,10 @@
 > 平安蜀黍的前端教程 > 第一单元 开发环境与工具封装 > 代码构建工具 Webpack
 
-注意：在学习 webpack 之前，我们需要了解什么是模块化，对这块不够了解的，可以参考这篇附录：[什么是模块化](modular.md)
-
-了解了模块化规范后，我们来学习如何通过构建工具来将各个模块进行代码合并与项目构建。
+- 注意：在学习 webpack 之前，我们可能还需要了解什么是模块化，对这块不够了解的，稍后可以参考这篇附录：[什么是模块化](modular.md)
 
 **前端工程化**中很重要的一个步骤就是对**项目的构建合并**。Webpack 是当下最热门的**前端资源模块化管理和打包工具**。它可以将许多松散的模块按照**依赖和规则**打包成符合生产环境部署的前端资源。还可以**将按需加载的模块进行代码分隔**，等到实际**需要的时候再异步加载**。通过 loader 的转换，任何形式的**资源都可以视作模块**，比如 CommonJs 模块、AMD 模块、ES6 模块、CSS、图片、JSON、LESS 等。相对于 gulp、grunt 等，它的工作重心更偏重于模块打包处理。
 
----
-
-### 一、webpack 的特点
+## 一、webpack 的特点
 
 - 可以解析 JSX 语法
 
@@ -36,13 +32,11 @@
 
 Webpack 的工作方式是：把你的项目当做一个整体，通过一个或多个给定的主文件（如：index.js），Webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们的关系并根据关系生成依赖图，最后通过各种 plugin 打包为一个浏览器可识别的 JavaScript 文件并输出到 output 文件夹中。
 
-<img src="../assets/images/unit_01/webpack_dep.png">
+<img src="/assets/images/unit_01/webpack_dep.png">
 
----
+## 二、webpack 的四大核心概念
 
-### 二、webpack 的四大核心概念
-
-#### 1. entry 入口
+### 1. entry 入口
 
 entry 属性主要用于指示 webpack 应该使用哪个文件来作为构建其内部**依赖图(dependency graph) **的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。
 
@@ -65,7 +59,7 @@ module.exports = {
 };
 ```
 
-#### 2. output 出口
+### 2. output 出口
 
 output 属性告诉 webpack 在哪里输出它所创建的 bundle，以及如何命名这些文件。主要输出文件的默认值是 ./dist/main.js，其他生成文件默认放置在 ./dist 文件夹中。同样的，我们可以在 config 中自定义一个输出文件夹：
 
@@ -85,7 +79,7 @@ module.exports = {
 // 2. ，常见方法有resolve，用于将相对路径解析成绝对路径；relative用于将绝对路径解析成相对路径；具体可以在课后关注https://www.runoob.com/nodejs/nodejs-path-module.html
 ```
 
-#### 3. loader
+### 3. loader
 
 webpack 只能理解 JavaScript 和 JSON 文件，这是 webpack 开箱可用的自带能力。对于其它文件 webpack 就无法读取了，所以我们需要使用 loader 来让 webpack 能够去处理其他类型的文件，并将它们转换为有效**模块**，以供应用程序使用，以及被添加到依赖图中。
 
@@ -118,7 +112,7 @@ module.exports = {
 };
 ```
 
-#### 4. pluging
+### 4. plugin
 
 当我们使用 loader 读取完成文件以后，接来来还要对文件做一些操作比如合并，比如转义和压缩。这个时候就需要用到插件了。插件是 webpack 的支柱功能，它的目的在于解决 loader 无法实现的其它问题。
 
@@ -163,27 +157,26 @@ module.exports = {
 };
 ```
 
----
-
-### 三、实战：使用 webpack 构建一个项目
+## 三、实战：使用 webpack 构建一个项目
 
 了解完了 webpack 和它的四大核心概念后，我们来使用 webpack 构建一个项目：
 
-#### 第一步，新建项目
+### 第一步，新建项目
 
-```javascript
-mkdir react-test // 创建项目
-cd react-test // 进入目录
-npm init -y // 初始化项目
+```shell
+mkdir react-test # 创建项目
+cd react-test # 进入目录
+npm init -y # 初始化项目
 ```
 
-#### 第二步，配置包管理文件 package.json
+### 第二步，配置包管理文件 package.json
 
 package.json 文件是项目的清单。 它可以做很多完全互不相关的事情。 例如，它是用于工具的配置中心。 它也是 npm 和 yarn 存储所有已安装软件包的名称和版本的地方。
 
-```javascript
+```json
 {
   "name": "react_temp", // 项目名称，必须有
+  "description": "使用Webpack新建的一个React项目", // 项目描述
   "version": "0.1.0", // 项目版本号，每次发布，必须递增相对应的版本号
   // 版本号规则：注意，这是npm约定的规则，所有项目版本号必须遵循这个规则
   // 第一位 大版本，有重大更新或不再向下兼容时，必须修改大版本号
@@ -192,10 +185,12 @@ package.json 文件是项目的清单。 它可以做很多完全互不相关的
   "private": true, // 如果设置为 true，则可以防止应用程序/软件包被意外地发布到 npm
   "main": "/main/index.js", // 项目的入口
   "proxy": "http://shop.fenotes.com", // 服务器代理配置，为了避免跨域问题，我们可以在这里添加proxy属性，将其指向目标服务器
-  "scripts": { // 用于运行的 node 脚本
+  "scripts": {
+    // 用于运行的 node 脚本
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build"
   },
+  "license": "MIT", // 许可证
   // 非执行依赖都不要往这里写，也就是说，在使用npm 或 yarn命令安装时，需要带上 -D
   "dependencies": {}, // 生产依赖，安装到这里的依赖，会在执行 npm build 时将相关代码合并到包代码中
   // 执行依赖不能往这里写，否则会造成项目运行时报错
@@ -205,7 +200,7 @@ package.json 文件是项目的清单。 它可以做很多完全互不相关的
 }
 ```
 
-#### 第三步，创建容器文件
+### 第三步，创建容器文件
 
 在项目根目录创建 public 文件夹，然后在 public 文件夹下创建 index.html 文件，这个文件用来提供给 webpack 编译成我们未来的项目入口文件。
 
@@ -223,7 +218,7 @@ package.json 文件是项目的清单。 它可以做很多完全互不相关的
 </html>
 ```
 
-#### 第四步，创建项目主文件
+### 第四步，创建项目主文件
 
 在项目根目录创建 src 文件夹，然后在 src 文件夹下创建 index.jsx 文件，这个文件是 webpack 的入口文件，文件中 import 进来的文件都会被加入依赖图，然后这些文件中 import 进来的文件也会被加入依赖图
 
@@ -235,7 +230,7 @@ import ReactDOM from 'react-dom';
 ReactDOM.render(<div>hello webpack !!!</div>, document.getElementById('root'));
 ```
 
-#### 第五步，创建 webpack 主配置文件
+### 第五步，创建 webpack 主配置文件
 
 在项目的根目录，创建 webpack.config.js 文件
 
@@ -280,7 +275,7 @@ module.exports = {
 };
 ```
 
-#### 第六步，安装依赖
+### 第六步，安装依赖
 
 我们刚刚创建的三个文件，里面引用了大量的依赖，比如 react，比如 webpack 等等，所以，需要在项目中安装它们才能正常使用。安装的时候我们需要区分哪些是生产环境使用的，哪些是开发环境使用的。
 
@@ -307,16 +302,16 @@ yarn add -D webpack webpack-cli babel-loader @babel/core @babel/preset-env @babe
 yarn add react react-dom
 ```
 
-#### 第七步，配置本地开发环境
+### 第七步，配置本地开发环境
 
 现在我们的项目已经可以在打包后运行起来了，但这样开发起来会很不方便，我们每改动一部分内容就需要执行打包命令，然后在浏览器中检查是否显示或功能正确。怎么解决这个问题呢？
 webpack 提供了一个开发服务器，我们只需要配置好就行了。
 
 先安装 webpack 开发服务器
 
-```javascript
+```shell
 yarn add -D webpack-dev-server
-// 或者
+# 或者
 npm i -D webpack-dev-server
 ```
 
@@ -342,20 +337,19 @@ module.exports = {
 
 很复杂是不是？比起 npx create-react-app 麻烦太多太多了，但是在企业里有很多独特的需求必须要使用 webpack 来配置项目，比如图片压缩，比如按需加载。所以，webpack 的相关配置是我们必须要学会且熟记的，这也是我们将来获取高薪的一个必备技能点！
 
-#### 更多的配置
+## 四、Webpack 常用功能
 
-##### 样式文件的加载：cssload & lessload & styleload
+### 样式文件的加载：cssload & lessload & styleload
 
 安装用于读取编译 less 文件的 loader
 
-```javascript
+```shell
 npm i -D style-loader css-loader less-loader less
 ```
 
 配置 loader
 
 ```javascript
-// 前面说过，loader的执行是倒序的，所以这里你们应该要能看懂
 {
   test: /\.css$/,
   use: [
@@ -383,14 +377,17 @@ npm i -D style-loader css-loader less-loader less
 },
 ```
 
-##### 文件加载与图片加载：file-loader & url-loader
+### 文件加载与图片加载：file-loader & url-loader
 
 file-loader 与 url-loader 一般用来处理图片
 
-```javascript
+```shell
 npm i -D file-loader url-loader
+```
 
-// 配置
+配置
+
+```javascript
 {
   test: /\.(png|jpg|gif|jpeg)$/i,
   type:'asset',
@@ -402,7 +399,7 @@ npm i -D file-loader url-loader
 }
 ```
 
-##### 配置代码格式
+### 配置代码格式
 
 在项目根目录下新建一个.prettierrc.json 文件，这个文件是配给 prettierrc 插件使用的, 主要是对于一些其它同事 coding 时未遵循规范, 代码可读性较差时, 可以顺手帮忙右键格式一下。内容如下：
 
@@ -414,11 +411,11 @@ npm i -D file-loader url-loader
   "tabWidth": 2,           // 缩进字节数
   "semi": true,            // 句尾添加分号
   "singleQuote": true,     // 使用单引号代替双引号
-  "arrowParens": "avoid",  // (x) => {} 箭头函数参数只有一个时是否要有小括号。avoid：省略括号
+  "arrowParens": "avoid",  // (x) => {} 箭头函数参数只有一个时是否要有小括号。avoid：允许省略括号
 }
 ```
 
-##### 添加路由管理
+### 添加路由管理
 
 ```javascript
 // router/index.js
@@ -440,4 +437,8 @@ function Router() {
 export default Router;
 ```
 
----
+### 代码压缩 & 添加文件指纹
+
+### 图片压缩
+
+### Gzip 压缩

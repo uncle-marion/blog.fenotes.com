@@ -29,49 +29,76 @@ ESLint 是一个用来识别 ECMAScript/JavaScript 并且按照内置规则给�
 
 进入我们之前创建的项目目录，然后安装 eslint
 
-```shell
-npm i -D eslint
-```
-
-安装完成后执行
+#### 安装 ESLint
 
 ```shell
-eslint --init
+yarn add -D eslint@8.57.0
+# ESLint 9对Node环境比较挑剔，为了兼容我们以前的项目，在这里我们只能使用8.57.0
 ```
 
-终端会显示选择操作：
+#### 初始化 ESLint
 
-<img src="../assets/images/unit_01/eslint_9.png" />
+##### 自动生成
 
-这里是询问我们怎样使用 eslint，上下键切换，选择 to check syntax and find problems，校验语法且匹配问题，回车：
+初始化 ESLint 可以使用下面的方法自动生成 eslint.config.mjs 文件，但是因为最新版的 ESLint 对老项目不太友好，所以自动初始化 ESLint 环境我们暂时了解即可，后续你们可以自己去了解学习新的 ESLint 配置。
 
-<img src="../assets/images/unit_01/eslint_8.png" />
+```shell
+#
+npm init @eslint/config
+# 或者
+npx eslint --init
 
-这里是询问我们的项目使用的是哪种模块化规范，选择 Javascript modules(import/export)，回车
+```
 
-<img src="../assets/images/unit_01/eslint_7.png" />
+执行上面的命令后，ESLint 需要我们做出一些选择：
 
-这里是询问我们项目中具体使用了哪种框架，选择 React，回车
+<img src="/assets/images/unit_01/eslint_init_01.png" alt="选择需要ESLint怎么做" />
 
-<img src="../assets/images/unit_01/eslint_6.png" />
+第一个问题是问我们需要 ESLint 做什么，选项一是检查语法，选项二是检查语法并发现问题，我们选第二个
 
-这里是询问我们的项目是否使用 typescript，左右键切换，选择 yes
+<img src="/assets/images/unit_01/eslint_init_02.png" alt="选择项目的模块化类型" />
 
-<img src="../assets/images/unit_01/eslint_5.png" />
+第二个问题是问我们的项目采用了哪种类型的模块化语言，选择 JavaScript modules
 
-这里是询问我们的项目主要运行在什么环境，选择 Browser，回车
+<img src="/assets/images/unit_01/eslint_init_03.png" alt="选择项目使用了哪种框架或库" />
 
-<img src="../assets/images/unit_01/eslint_4.png" />
+第三个问题是问我们的项目采用了哪种框架，选择 React
 
-这里是询问我们需要生成哪种类型的配置文件，选择 JavaScript，回车
+<img src="/assets/images/unit_01/eslint_init_04.png" alt="选择是否使用了Typescript" />
 
-<img src="../assets/images/unit_01/eslint_3.png" />
+第四个问题是问我们项目中是否使用 TypeScript， 选择是
 
-这里是告诉我们刚才那些选择的配置项需要哪些依赖，是否立刻安装，选择 yes
+<img src="/assets/images/unit_01/eslint_init_05.png" alt="选择未来代码主要的运行环境" />
 
-<img src="../assets/images/unit_01/eslint_1.png" />
+第五个问题问的是未来代码主要的运行环境，按 A 键全选
 
-这里是询问我们使用哪种方式安装，npm 或 yarn 都可以，回车后开始安装。安装完成后，会在我们的项目根目录下生成一个.eslintrc.js 文件：
+<img src="/assets/images/unit_01/eslint_init_06.png" alt="选择是否需要立刻安装依赖" />
+
+第六个问题是告诉我们上面选择的这些内容需要哪些依赖，同时问我们是否需要立刻安装，选择是
+
+<img src="/assets/images/unit_01/eslint_init_07.png" alt="选择依赖管理器" />
+
+最后一个问题是问我们项目使用了哪种包管理器，选择 yarn
+
+最后等待依赖安装完成，我们的 ESLint 就初始化完成了，ESLint 会在我们的项目根目录下生成一个 eslint.config.mjs 的文件：
+
+```javascript
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js';
+
+export default [
+  { languageOptions: { globals: globals.browser } },
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReactConfig,
+];
+```
+
+##### 手动设置
+
+在我们的项目根目录下新建一个.eslintrc.js 文件，并将下面的内容粘贴进去
 
 ```javascript
 // 根目录.eslintrc.js
@@ -108,13 +135,11 @@ module.exports = {
   },
   // 依赖的插件
   plugins: ['react', '@typescript-eslint'],
+  // 自定义规则
   rules: {
     // 在这里面写我们自己定义的规则
-
-    // 示例：如果定义了变量但并未在后面的代码中使用
-    no-unused-vars: 'error'
   },
-}
+};
 ```
 
 ##### 注意：错误的级别
@@ -148,6 +173,18 @@ module.exports = {
     "lint": "eslint --ext .js --ext .jsx src"
   }
 }
+```
+
+#### 忽略不需要检查的文件
+
+在项目根目录添加.eslintignore 文件并粘贴下面的代码
+
+```json
+.eslintrc.js
+node_modules
+dist
+.DS_Store
+*.local
 ```
 
 ### eslint 规则解析

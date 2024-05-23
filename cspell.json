@@ -1,0 +1,13 @@
+{
+  "version": "0.2",
+  "language": "en",
+
+  // 自定义正确的单词，通常是一些库名字和专有api,
+  "words": ["vitepress"],
+
+  //确实是单词，但是自认为在项目中一定是错的，设定后就会报错，例如单词the容易写成hte,blog写成blg
+  "flagWords": [],
+
+  //忽略检查的路径，例如忽略安装的包中的所有代码的检查，忽略svg图片，package.json,readme.md中的单词的检查，还是很有用的
+  "ignorePaths": ["node_modules/**", "**/*.{svg,txt,json,md}"]
+}
